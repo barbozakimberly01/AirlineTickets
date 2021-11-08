@@ -1,4 +1,4 @@
-package edu.gsu.cis3270.tp_AirlineReservation;
+package com.book_it;
 
 public class TestClass {
 
