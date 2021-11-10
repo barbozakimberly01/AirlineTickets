@@ -6,5 +6,9 @@ public class TestClass {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public static void testByRon() {
+		System.out.println("This is a test by Ron.");
+	}
 
 }
