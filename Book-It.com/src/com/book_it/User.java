@@ -5,5 +5,9 @@ public class User {
 		System.out.println("Hello World");
 		
 	}
+	
+	public static void testByRon() {
+		System.out.println("This is a test by Ron.");
+	}
 
 }
