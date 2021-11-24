@@ -1,8 +1,0 @@
-Team Project Notes
-
-DB:
-	Use online version of DB
-	
-UI:
-
-Classes:
