@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//import com.bookit.db.PassEncTech1;
 import com.bookit.common.Customer;
 import com.bookit.common.Flight;
 import com.bookit.exceptions.LoginException;
@@ -13,39 +14,49 @@ import com.bookit.exceptions.LoginException;
 
 public class DBQueries {
 	
-	public static void login(Customer co) throws Exception {
+	public static Connection GetConnecton() throws SQLException {
 		
-		Connection connection = null;
+		Connection conn = null;
 		
 		try {
-			connection = DriverManager.getConnection
-					      ("jdbc:mysql://localhost/test","root","password");
-					       // ("jdbc:mysql://104.196.113.68/test","root","password");
-					
+		
+			// Connect to Google Cloud MySQL DB
+			conn = DriverManager.getConnection("jdbc:mysql://35.237.105.213","cisuser","B00kit!");
 			System.out.println("Database connected");
-
-			// Create a statement
-			PreparedStatement statement = connection.prepareStatement(Authenticate.LOGIN);
-				    
-			statement.setString(1, co.getUserName());
-			statement.setString(2, co.getPassword());
-				    
-			// Execute a statement
-			ResultSet resultSet = statement.executeQuery();
+		}
+		catch (SQLException e) {
 			
-			int count = 0;
-
-			// Iterate through the result and print the user names
-			while (resultSet.next()) {
-				System.out.println("Number of Users:" + resultSet.getInt(1));
-				count = resultSet.getInt(1);
+			System.out.println(e);
+			throw e;
+		}
+		
+		return conn;
+		
+	}
+	
+	public static ResultSet sqlCmd(String query, String[] args) throws SQLException {
+		
+		Connection connection = GetConnecton();
+		ResultSet resultSet;
+		
+		try {
+			
+			// Create the statement
+			PreparedStatement statement = connection.prepareStatement(query);
+			int len = args.length;
+			
+			// Add the string variables values
+			if (len > 0) {
+				for (int i=1;i<=args.length;i++) {
+					statement.setString(i,args[i]);
+				}
 			}
 			
-			if (count == 0)
-				throw new LoginException("Invalid UserName or Password!");
-				     
-	    
-		} catch (SQLException e) {
+			// Execute a statement
+			resultSet = statement.executeQuery();
+
+		}
+		catch (SQLException e) {
 			
 			System.out.println(e);
 			throw e;
@@ -54,6 +65,43 @@ public class DBQueries {
 			
 			connection.close();
 		}
+		
+		return resultSet;
+	}
+	
+	public static void login(Customer co) throws Exception {
+		
+		try {
+			
+			// Encrypt the Password
+//			String pwd = co.getPassword();
+//			PassEncTech1 encrypt = new PassEncTech1();
+//			String ePass = encrypt.encryptPassword(pwd);
+//			String[] args = {co.getUserName(), ePass};
+			
+			// Build String array
+			String[] args = {co.getUserName(), co.getPassword()};
+			
+			// Execute SQL command
+			ResultSet resultSet = sqlCmd(SQLQueries.LOGIN, args);
+				    
+			int count = 0;
+
+			// Iterate through the result set
+			while (resultSet.next()) {
+				System.out.println("Number of Users:" + resultSet.getInt(1));
+				count = resultSet.getInt(1);
+			}
+			
+			if (count == 0)
+				throw new LoginException("Invalid UserName or Password!");
+				     
+		} catch (SQLException e) {
+			
+			System.out.println(e);
+			throw e;
+		}
+
 	}    
 	
 	
