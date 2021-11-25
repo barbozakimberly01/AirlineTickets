@@ -12,7 +12,7 @@ import com.bookit.common.Flight;
 import com.bookit.exceptions.LoginException;
 
 
-public class DBQueries {
+public class DBCommand {
 	
 	public static Connection GetConnecton() throws SQLException {
 		
@@ -83,7 +83,7 @@ public class DBQueries {
 			String[] args = {co.getUserName(), co.getPassword()};
 			
 			// Execute SQL command
-			ResultSet resultSet = sqlCmd(SQLQueries.LOGIN, args);
+			ResultSet resultSet = sqlCmd(SQLStmt.LOGIN, args);
 				    
 			int count = 0;
 
@@ -104,10 +104,45 @@ public class DBQueries {
 
 	}    
 	
-	
+	public static void bookFlight(Customer co, Flight fl) throws Exception {
+		
+		// can I run a query on reservation table that select all the rows with customerID comes from co
+		
+		// Build String array
+		String[] args = {co.getUserName(), co.getPassword()};
+		
+		// Execute SQL command
+		ResultSet resultSet = sqlCmd(SQLStmt.LOGIN, args);
+		
+		
+		Flight f1 = new Flight();
+		f1.setAirlineName("Delta 303");
+		
+		Flight f2 = new Flight();
+		f2.setAirlineName("Delta 500");
+		
+		Flight f3 = new Flight();
+		f3.setAirlineName("Delta 777");
+		
+		co.getFlights().add(f1);
+		co.getFlights().add(f2);
+		co.getFlights().add(f3);
+		
+		/* Error returned from DB when user tries to book the same flight twice:
+		 * 		SQL Error [1062] [23000]: Duplicate entry '123456789-1' for key 'SSN'
+		 */
+		
+	}
+
 	public static void getFlights(Customer co) throws Exception {
 		
 		// can I run a query on reservation table that select all the rows with customerID comes from co
+		
+		// Build String array
+		String[] args = {co.getUserName(), co.getPassword()};
+		
+		// Execute SQL command
+		ResultSet resultSet = sqlCmd(SQLStmt.LOGIN, args);
 		
 		Flight f1 = new Flight();
 		f1.setAirlineName("Delta 303");

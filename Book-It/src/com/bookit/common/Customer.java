@@ -9,6 +9,7 @@ public class Customer {
 	private String lastName;
 	private String userName;
 	private String password;
+	private int ssn;
 	private ArrayList<Flight> flights;
 	private String action;
 	
@@ -26,6 +27,12 @@ public class Customer {
 	}
 	public String getLastName() {
 		return lastName;
+	}
+	public Integer setSSN() {
+		return ssn;
+	}
+	public Integer getSSN() {
+		return ssn;
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;

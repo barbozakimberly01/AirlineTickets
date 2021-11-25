@@ -2,7 +2,7 @@ package com.bookit.bizlogic;
 
 import com.bookit.common.Action;
 import com.bookit.common.Customer;
-import com.bookit.db.DBQueries;
+import com.bookit.db.DBCommand;
 
 public class BizLogicProcess {
 
@@ -12,10 +12,10 @@ public class BizLogicProcess {
 		
 			case Action.LOGIN:
 			
-				DBQueries.login(co);
+				DBCommand.login(co);
 				break;
 			case Action.GET_FLIGHTS:
-				DBQueries.getFlights(co);
+				DBCommand.getFlights(co);
 				break;
 		    
 		}
