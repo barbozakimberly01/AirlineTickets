@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600" prefWidth="850" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.SignupController">
+   <children>
+      <AnchorPane layoutY="-2.0" prefHeight="600" prefWidth="850">
+         <children>
+            <Label alignment="CENTER" layoutY="1.0" prefHeight="60.0" prefWidth="642.0" style="-fx-background-color: #2ae1b9;" text="Sign Up">
+               <font>
+                  <Font name="System Bold" size="38.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="479.0" fitWidth="642.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Charles/Book-It/cloudbackground.jpg" />
+               </image>
+            </ImageView>
+            <TextField fx:id="firstNameField" layoutX="124.0" layoutY="75.0" onAction="#UserSignup" />
+            <TextField fx:id="lastNameField" layoutX="479.0" layoutY="76.0" onAction="#UserSignup" />
+            <TextField fx:id="addressField" layoutX="124.0" layoutY="138.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="505.0" />
+            <Label layoutX="29.0" layoutY="75.0" text="First name: ">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="357.0" layoutY="75.0" text="Last name: ">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="137.0" text="Address: ">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="189.0" text="City:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="244.0" layoutY="189.0" text="State:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="431.0" layoutY="190.0" text="Zipcode:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cityField" layoutX="80.0" layoutY="190.0" onAction="#UserSignup" />
+            <TextField fx:id="stateField" layoutX="307.0" layoutY="190.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
+            <TextField fx:id="zipcodeField" layoutX="510.0" layoutY="190.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
+            <Label layoutX="99.0" layoutY="233.0" text="Username:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Button fx:id="submit" layoutX="281.0" layoutY="492.0" mnemonicParsing="false" onAction="#UserSignup" prefHeight="32.0" prefWidth="79.0" text="Submit" />
+            <Label layoutX="63.0" layoutY="441.0" text="Security Answer:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="395.0" text="Security Question:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="securityAnswerField" layoutX="244.0" layoutY="442.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="178.0" />
+            <TextField disable="true" layoutX="246.0" layoutY="396.0" opacity="0.84" prefHeight="25.0" prefWidth="227.0" text="What was your favorite food as a child?" />
+            <TextField fx:id="usernameField" layoutX="199.0" layoutY="234.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <Label layoutX="337.0" layoutY="233.0" text="Password:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="passwordField" layoutX="431.0" layoutY="234.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <Label layoutX="248.0" layoutY="328.0" text="SSN:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ssnField" layoutX="305.0" layoutY="328.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" promptText="Enter 9 numbers" />
+            <Label layoutX="175.0" layoutY="286.0" text="Email Address:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailField" layoutX="305.0" layoutY="286.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
