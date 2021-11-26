@@ -11,6 +11,8 @@ public class SignupController {
 	@FXML
 	private Button submit;
 	@FXML
+	private Button backToLogin;
+	@FXML
 	private TextField firstNameField;
 	@FXML
 	private TextField lastNameField;
@@ -80,6 +82,17 @@ public class SignupController {
 	            alert.show();
 			}		
 	    }
+		catch (Exception e) {
+	        System.out.println(e);
+	        e.printStackTrace();
+	    }
+	}
+	
+	@FXML
+	private void BackToLogin(Event event) {
+		try {
+		SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
+		}
 		catch (Exception e) {
 	        System.out.println(e);
 	        e.printStackTrace();
