@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="Manage Flights">
+         <font>
+            <Font name="System Bold" size="39.0" />
+         </font>
+      </Label>
+      <Button layoutX="1098.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" text="Logout" />
+      <Button layoutX="922.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" text="My Flights" />
+      <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Manage Flights" />
+      <Label alignment="CENTER" layoutY="56.0" prefHeight="33.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="Flights">
+         <font>
+            <Font name="System Bold" size="39.0" />
+         </font>
+      </Label>
+      <Button layoutX="1010.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" text="Book Flights" />
+      <Button layoutX="14.0" layoutY="56.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Create Flights" />
+      <TableView layoutX="51.0" layoutY="163.0" prefHeight="332.0" prefWidth="752.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Flight ID" />
+            <TableColumn prefWidth="75.0" text="Flight Name" />
+            <TableColumn prefWidth="75.0" text="From" />
+            <TableColumn prefWidth="75.0" text="To" />
+            <TableColumn prefWidth="75.0" text="Departure Date" />
+            <TableColumn prefWidth="75.0" text="Time" />
+            <TableColumn prefWidth="75.0" text="Price" />
+            <TableColumn prefWidth="75.0" text="Total Seats" />
+            <TableColumn prefWidth="75.0" text="Delete" />
+            <TableColumn prefWidth="75.0" text="Edit" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -4,6 +4,7 @@ import com.bookit.db.*;
 import com.bookit.gui.*;
 
 public class User {
+	//TODO:Move to common.
 	private int id;
 	private String firstname;
 	private String lastname;

@@ -1,7 +1,4 @@
 package com.bookit.gui;
-	
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -38,12 +35,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			 Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
-			Scene scene = new Scene(root);
+			Scene scene = new Scene(root, 1200, 650);
 			Main.primaryStage = primaryStage;
 			primaryStage.setTitle("Book-It Airline Reservation System");
 			primaryStage.setScene(scene);
-			
 			primaryStage.show();
+			
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

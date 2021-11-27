@@ -1,8 +1,6 @@
 package com.bookit.gui;
 
 import java.io.IOException;
-
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +11,6 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 import javafx.stage.Stage.*;
-
 import com.bookit.db.*;
 
 public class LoginController {
@@ -31,6 +28,7 @@ public class LoginController {
 	
 	
 	@FXML
+	//Take the user to the SignUp Scene
 	private void goToSignUp(Event event) {
 		
 		try {
@@ -46,7 +44,9 @@ public class LoginController {
 	    }
 	
 	}
-@FXML
+	
+	@FXML
+	//Take the user to the ForgotPassword Scene
 	private void goToForgotPassword(Event event) {
 		try {
 	    	SceneCreator.launchScene("/com/bookit/gui/ForgotPassword.fxml");
@@ -59,12 +59,12 @@ public class LoginController {
 	        System.out.println(e);
 	        e.printStackTrace();
 	    }
-	
 	}
-@FXML
+
+	@FXML
+	//Connect to database, Ensure that the user is valid then take them to Search Scene.
 	private void validateUser(Event event) {
 		try {
-            //Database.CheckConnection();
 			DataAccess.GetConnecton();
             System.out.println("CheckConnection true");
         } catch (Exception e) {
@@ -89,9 +89,6 @@ public class LoginController {
 	            alert.show();
 	            SceneCreator.launchScene("/com/bookit/gui/Login.fxml"); 
 			}
-			
-			
-
 	    } catch (IOException ex) {
 	        System.out.println("Error loading Login FXML !");
 	        System.out.println(ex);
@@ -100,8 +97,5 @@ public class LoginController {
 	        System.out.println(e);
 	        e.printStackTrace();
 	    }
-	
 	}
-	
-
 }

@@ -37,6 +37,7 @@ public class SignupController {
 	public static User user;
 	
 	@FXML
+	// Connect to the database, Make sure all fields are not null and blank, then create user
 	private void UserSignup(Event event) {
 		try {
             DataAccess.GetConnecton();
@@ -89,6 +90,7 @@ public class SignupController {
 	}
 	
 	@FXML
+	//Take the user back to the Login Scene
 	private void BackToLogin(Event event) {
 		try {
 		SceneCreator.launchScene("/com/bookit/gui/Login.fxml");

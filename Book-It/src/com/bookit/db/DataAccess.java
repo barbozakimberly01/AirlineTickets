@@ -1,16 +1,30 @@
 package com.bookit.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 //import com.bookit.db.PassEncTech1;
 import com.bookit.common.Customer;
 import com.bookit.common.Flight;
+import com.bookit.common.SearchFlight;
 import com.bookit.exceptions.LoginException;
 import com.bookit.gui.User;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.*;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.util.Callback;
 
 public class DataAccess {
 	//Establish a connection to the database
@@ -33,7 +47,7 @@ public class DataAccess {
 	}
 	// Check username and password from database and validate if true.
 	public static boolean validUser(User user) throws SQLException {
-		Connection con = DriverManager.getConnection("jdbc:mysql://35.237.105.213", "cisuser", "B00kit!");
+		Connection con = GetConnecton();
 		try {
 			
 	        if (user.getUsername() != null && user.getPassword() != null) {
@@ -57,8 +71,8 @@ public class DataAccess {
 	// check if security answer is true.
 	public static boolean validSecurityAnswer(User user) {
 		try {
-	        if (user.getUsername() != null) {
-	        	Connection con = DriverManager.getConnection("jdbc:mysql://35.237.105.213", "cisuser", "B00kit!");	        	
+	        if (user.getUsername() != null && !user.getUsername().isBlank() && !user.getSecurityQuestion().isBlank() && user.getSecurityQuestion() != null) {
+	        	Connection con = GetConnecton();      	
 			    PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.GETPASSWORD);			    
 			    preparedStmt.setString(1, user.getUsername());
 			    preparedStmt.setString(2, user.getSecurityAnswer());
@@ -79,7 +93,7 @@ public class DataAccess {
 	}
 	//Insert new user and login information into USER and LOGIN table.
 	public static boolean UserSignup(User user) throws SQLException{
-		Connection con = DriverManager.getConnection("jdbc:mysql://35.237.105.213", "cisuser", "B00kit!");
+		Connection con = GetConnecton();
 		
 		try {
 	            PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.INSERTUSER);			    		     
@@ -110,6 +124,9 @@ public class DataAccess {
             return false;  
 	    }				
 	}
+	
+	
+	
 	
 	//************************sample**************************************
 	public static ResultSet sqlCmd(String query, String[] args) throws SQLException {

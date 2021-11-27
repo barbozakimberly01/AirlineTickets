@@ -4,99 +4,97 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600" prefWidth="850" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.SignupController">
+<AnchorPane prefHeight="600" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.SignupController">
    <children>
-      <AnchorPane layoutY="-2.0" prefHeight="600" prefWidth="850">
+      <AnchorPane layoutY="-2.0" prefHeight="600" prefWidth="1200.0">
          <children>
-            <Label alignment="CENTER" layoutY="1.0" prefHeight="60.0" prefWidth="642.0" style="-fx-background-color: #2ae1b9;" text="Sign Up">
+            <Label alignment="CENTER" layoutY="1.0" prefHeight="60.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="Sign Up">
                <font>
                   <Font name="System Bold" size="38.0" />
                </font>
             </Label>
-            <ImageView fitHeight="479.0" fitWidth="642.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Charles/Book-It/cloudbackground.jpg" />
-               </image>
-            </ImageView>
-            <TextField fx:id="firstNameField" layoutX="124.0" layoutY="75.0" onAction="#UserSignup" />
-            <TextField fx:id="lastNameField" layoutX="479.0" layoutY="76.0" onAction="#UserSignup" />
-            <TextField fx:id="addressField" layoutX="124.0" layoutY="138.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="505.0" />
-            <Label layoutX="29.0" layoutY="75.0" text="First name: ">
+            <TextField fx:id="firstNameField" layoutX="375.0" layoutY="87.0" onAction="#UserSignup" />
+            <TextField fx:id="lastNameField" layoutX="730.0" layoutY="88.0" onAction="#UserSignup" />
+            <TextField fx:id="addressField" layoutX="375.0" layoutY="150.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="505.0" />
+            <Label layoutX="280.0" layoutY="87.0" text="First name: ">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="357.0" layoutY="75.0" text="Last name: ">
+            <Label layoutX="608.0" layoutY="87.0" text="Last name: ">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="37.0" layoutY="137.0" text="Address: ">
+            <Label layoutX="288.0" layoutY="149.0" text="Address: ">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="29.0" layoutY="189.0" text="City:">
+            <Label layoutX="280.0" layoutY="201.0" text="City:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="244.0" layoutY="189.0" text="State:">
+            <Label layoutX="495.0" layoutY="201.0" text="State:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="431.0" layoutY="190.0" text="Zipcode:">
+            <Label layoutX="682.0" layoutY="202.0" text="Zipcode:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="cityField" layoutX="80.0" layoutY="190.0" onAction="#UserSignup" />
-            <TextField fx:id="stateField" layoutX="307.0" layoutY="190.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
-            <TextField fx:id="zipcodeField" layoutX="510.0" layoutY="190.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
-            <Label layoutX="99.0" layoutY="233.0" text="Username:">
+            <TextField fx:id="cityField" layoutX="331.0" layoutY="202.0" onAction="#UserSignup" />
+            <TextField fx:id="stateField" layoutX="558.0" layoutY="202.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
+            <TextField fx:id="zipcodeField" layoutX="761.0" layoutY="202.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
+            <Label layoutX="350.0" layoutY="245.0" text="Username:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Button fx:id="submit" layoutX="275.0" layoutY="492.0" mnemonicParsing="false" onAction="#UserSignup" prefHeight="32.0" prefWidth="85.0" text="Submit" />
-            <Label layoutX="63.0" layoutY="441.0" text="Security Answer:">
+            <Button fx:id="submit" layoutX="406.0" layoutY="504.0" mnemonicParsing="false" onAction="#UserSignup" prefHeight="33.0" prefWidth="125.0" text="Submit" />
+            <Label layoutX="314.0" layoutY="453.0" text="Security Answer:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="62.0" layoutY="395.0" text="Security Question:">
+            <Label layoutX="313.0" layoutY="407.0" text="Security Question:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="securityAnswerField" layoutX="244.0" layoutY="442.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="178.0" />
-            <TextField disable="true" layoutX="246.0" layoutY="396.0" opacity="0.84" prefHeight="25.0" prefWidth="227.0" text="What was your favorite food as a child?" />
-            <TextField fx:id="usernameField" layoutX="199.0" layoutY="234.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
-            <Label layoutX="337.0" layoutY="233.0" text="Password:">
+            <TextField fx:id="securityAnswerField" layoutX="495.0" layoutY="454.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="178.0" />
+            <TextField editable="false" layoutX="497.0" layoutY="408.0" opacity="0.84" prefHeight="25.0" prefWidth="227.0" text="What was your favorite food as a child?" />
+            <TextField fx:id="usernameField" layoutX="450.0" layoutY="246.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <Label layoutX="588.0" layoutY="245.0" text="Password:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="248.0" layoutY="328.0" text="SSN:">
+            <Label layoutX="499.0" layoutY="340.0" text="SSN:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="ssnField" layoutX="305.0" layoutY="328.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" promptText="Enter 9 numbers" />
-            <Label layoutX="175.0" layoutY="286.0" text="Email Address:">
+            <TextField fx:id="ssnField" layoutX="556.0" layoutY="340.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" promptText="Enter 9 numbers" />
+            <Label layoutX="426.0" layoutY="298.0" text="Email Address:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="emailField" layoutX="305.0" layoutY="286.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
-            <PasswordField fx:id="passwordField" layoutX="436.0" layoutY="234.0" onAction="#UserSignup" />
-            <Button fx:id="backToLogin" layoutX="416.0" layoutY="492.0" mnemonicParsing="false" onAction="#BackToLogin" prefHeight="32.0" prefWidth="111.0" text="Back To Login" />
+            <TextField fx:id="emailField" layoutX="556.0" layoutY="298.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <PasswordField fx:id="passwordField" layoutX="687.0" layoutY="246.0" onAction="#UserSignup" />
+            <Button fx:id="backToLogin" layoutX="632.0" layoutY="504.0" mnemonicParsing="false" onAction="#BackToLogin" prefHeight="33.0" prefWidth="125.0" text="Back To Login" />
+            <Label layoutX="687.0" layoutY="341.0" prefHeight="25.0" prefWidth="172.0" text="Valid Format: 123456789">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

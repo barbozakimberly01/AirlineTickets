@@ -20,11 +20,16 @@ public class ForgotPasswordController {
 	@FXML
 	private TextField securityAnswerField;	
 	@FXML
+	private TextField securityQuestionField;	
+	@FXML
 	private Label wrongSecurityAnswer;
 	@FXML
 	private Label showPassword;
 	public static User user;
 	@FXML
+	
+	//Connect to the database, Ensure that the username field and security question field are not blank and null, and display password if
+	//the user inputs the correct security answer.
 	private void validateSecurityAnswer(Event event) {
 		try {
             DataAccess.GetConnecton();
@@ -38,7 +43,7 @@ public class ForgotPasswordController {
             alert.show();
             return;
         }
-		user = new User( 0, null, null, null, null, null, null, usernameField.getText(), null, null, null, null, securityAnswerField.getText(), false);
+		user = new User( 0, null, null, null, null, null, null, usernameField.getText(), null, null, null, securityQuestionField.getText(), securityAnswerField.getText(), false);
 		try {
 			if(DataAccess.validSecurityAnswer(user)) {
 				showPassword.setText("Your password is " + user.getPassword());
@@ -58,6 +63,7 @@ public class ForgotPasswordController {
 	}
 
 	@FXML
+	//Take the user back to the Login Scene
 	private void backToLogin(Event event) {
 		try {
 	    	SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
