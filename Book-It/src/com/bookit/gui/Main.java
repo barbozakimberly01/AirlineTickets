@@ -34,10 +34,18 @@ public class Main extends Application {
 	
 	public void start(Stage primaryStage) {
 		try {
-			 Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
+			 //Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
+			//--------
+			Parent root = FXMLLoader.load(getClass().getResource("ManageFlights.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("UserBookings.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("Search.fxml"));
+			 
+			// --------
+			 
 			Scene scene = new Scene(root, 1200, 650);
 			Main.primaryStage = primaryStage;
 			primaryStage.setTitle("Book-It Airline Reservation System");
+			scene.getRoot().setStyle("-fx-font-family: 'Helvetica'");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			

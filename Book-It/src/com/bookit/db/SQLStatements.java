@@ -11,14 +11,16 @@ public class SQLStatements {
 		public static final String INSERTUSER = "INSERT INTO cis3270bookit.USERS(SSN,FirstName,LastName,Address,City,State,Zip,Email,Username) VALUES (?,?,?,?,?,?,?,?,?);";
 		
 		
+		//************************ Ron Code **************************************
 		
-		
-	    //*************************sample************************************************
+		// Search Queries
 		public static final String ISADMIN = "SELECT IsAdmin FROM LOGINS WHERE Username = '?' AND IsAdmin = TRUE;";
 		
 		public static final String PASSWORD = "SELECT Password FROM LOGINS WHERE Username = '?' AND SecurityAnswer = '?';";
 		
-		public static final String FLIGHT = "SELECT * FROM FLIGHTS WHERE Origination = '?' AND Destination = '?' AND DepartureDate = '?';";
+		public static final String FLIGHT = "SELECT * FROM FLIGHTS WHERE Origination like '%?%' AND Destination like '%?%' AND DepartureDate = '?';";
+		
+		public static final String ALLFLIGHTS = "SELECT * FROM FLIGHTS;";
 		
 		public static final String USER = "SELECT REPLACE(SSN, ',', '') SSN,FirstName,LastName,Address,City,State,Zip,Email,Username FROM USERS WHERE SSN = ?;";
 		
@@ -34,10 +36,19 @@ public class SQLStatements {
 				+ " VALUES (?,\"?\",\"?\",'?','?','?',?,'?','?');";
 		
 		public static final String NEWFLIGHT = "INSERT INTO FLIGHTS (Airline,FlightNumber,Origination,Destination,DepartureDate,DepartureTime,ArrivalDate,ArrivalTime,Price,TotalSeats)"
-				+ " VALUES ('?',?,'?','?','?','?','?','?',?,?);";
+				+ " VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',%d,%d);";
 		
 		public static final String NEWBOOKING = "INSERT INTO BOOKINGS (SSN,FlightID,NameOnCard,CreditCardNumber,ExpirationDate,CVV)"
 				+ " VALUES (?,?,'?',?,'?',?);";
+		
+		// Update Statement
+		public static final String UPDATEFLIGHT = "UPDATE FLIGHTS \n"
+				+ "SET Airline='%s',FlightNumber='%s',Origination='%s',Destination='%s',DepartureDate='%s',DepartureTime='%s',ArrivalDate='%s',ArrivalTime='%s',Price=%d,TotalSeats=%d \n"
+				+ "WHERE FlightID=%d;";
+		
+		// Delete Statement
+		public static final String DELETE = "DELETE FROM FLIGHTS \n"
+				+ "WHERE FlightID=%d;";
 		
 
 }
