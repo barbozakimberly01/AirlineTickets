@@ -36,6 +36,12 @@ public class SearchFlight {
 		this.departureDate = departureDate;
 		
 	}
+	public SearchFlight(String origination) {
+		this.origination = origination;
+		this.destination = destination;
+		this.departureDate = departureDate;
+		
+	}
 	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination) {
 		this.flightID = flightID;
 		this.airline = airline;

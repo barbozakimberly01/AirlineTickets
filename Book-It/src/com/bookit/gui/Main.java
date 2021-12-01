@@ -4,7 +4,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+//***************Combobox
 import javafx.scene.layout.BorderPane;
+import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import java.sql.SQLException;
+
+//***********************
+
 
 
 public class Main extends Application {
@@ -30,17 +48,24 @@ public class Main extends Application {
         Main.primaryStage = stage;
     }
 	
+    
+  //*******COMBOBOX CODE***
+
+	 
+	//*********************
+    
 	@Override
 	
 	public void start(Stage primaryStage) {
 		try {
-			 //Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
 			//--------
-			Parent root = FXMLLoader.load(getClass().getResource("ManageFlights.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("ManageFlights.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("UserBookings.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("Search.fxml"));
 			 
 			// --------
+			
 			 
 			Scene scene = new Scene(root, 1200, 650);
 			Main.primaryStage = primaryStage;

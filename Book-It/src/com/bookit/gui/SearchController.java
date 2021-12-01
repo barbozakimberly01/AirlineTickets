@@ -7,9 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -23,9 +30,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.Stage.*;
 import javafx.util.Callback;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,6 +48,8 @@ import com.bookit.common.Bookings;
 import com.bookit.common.SearchFlight;
 import com.bookit.db.*;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
+
+//import application.Main.HideableItem;
 
 public class SearchController {
 	@FXML
@@ -78,6 +89,12 @@ public class SearchController {
 	@FXML
     private ObservableList<ObservableList> data;
 	@FXML
+	private ComboBox leavingFromComboBox;
+	@FXML
+	private ComboBox goingToComboBox;
+	@FXML
+	private HBox hBox;
+	@FXML
 	private TableView<SearchFlight> flightResultsView = new TableView();
 	
 	Preferences userInfo = Preferences.userRoot();
@@ -86,6 +103,40 @@ public class SearchController {
 	private String firstName = userInfo.get("FirstName", "");
 	private String lastName = userInfo.get("LastName", "");
 
+	//**********************************************
+	@FXML
+    public void initialize() throws SQLException {
+		List<String> leavingFromList = new ArrayList<>();
+		List<String> goingToList = new ArrayList<>();
+
+        Connection con = DataAccess.GetConnecton();  
+        PreparedStatement leavingFromStmt = con.prepareStatement(SQLStatements.SEARCHLEAVINGFROM);
+		ResultSet rs = leavingFromStmt.executeQuery();
+		while (rs.next()) {
+			leavingFromList.add(rs.getString("Origination"));
+		}
+		rs.close();
+		
+		PreparedStatement goingToStmt = con.prepareStatement(SQLStatements.SEARCHGOINGTO);
+		rs = goingToStmt.executeQuery();
+		while (rs.next()) {
+			goingToList.add(rs.getString("Destination"));
+		}
+		rs.close();
+		con.close();
+        
+        ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
+        //leavingFromComboBox.setMaxWidth(Double.MAX_VALUE);
+
+        ComboBox<HideableItem<String>> goingToComboBox = createComboBoxWithAutoCompletionSupport(goingToList);
+        hBox.getChildren().addAll(leavingFromComboBox, goingToComboBox);
+
+        leavingFromComboBox.setMinWidth(169);
+        leavingFromComboBox.setMinHeight(25);
+        
+    }
+	//**********************************************
+	
 	public void manageFlights(Event event) {
 		try {
 			SceneCreator.launchScene("/com/bookit/gui/ManageFlights.fxml");
@@ -108,8 +159,7 @@ public class SearchController {
 	        		catch(Exception err) {	
 	        			return;
 	        		}
-	        		SearchFlight search = new SearchFlight(leavingFrom.getText(), goingTo.getText(), departureDate.getValue());
-	        		
+	        		SearchFlight search = new SearchFlight(leavingFrom.getText(), goingTo.getText(), departureDate.getValue());	
 	        		try {
 	        			SearchFlight(search);
 	        			System.out.println("Test");
@@ -126,6 +176,7 @@ public class SearchController {
 	public void SearchFlight(SearchFlight Flight) throws SQLException{
 		Connection con = DataAccess.GetConnecton();
 		try {
+			
 			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.SEARCHFLIGHT);
 		    preparedStmt.setString(1, Flight.getOrigination());
 		    preparedStmt.setString(2, Flight.getDestination());
@@ -133,8 +184,6 @@ public class SearchController {
 		    Date date = Date.valueOf(departDate);
 		    preparedStmt.setDate(3, date);
 		    ResultSet rs = preparedStmt.executeQuery(); 
-		    //ResultSetMetaData rsm = (ResultSetMetaData) rs.getMetaData();
-		    //int count = rsm.getColumnCount();
 		    
 		    flightResultsView.getItems().clear();
 		    flightResultsView.getColumns().clear();
@@ -222,5 +271,120 @@ public class SearchController {
 				System.out.println(error.getMessage());
 			}
 	} 
+	//*********ComboBox********
+
+	public static class HideableItem<T>
+    {
+        private final ObjectProperty<T> object = new SimpleObjectProperty<>();
+        private final BooleanProperty hidden = new SimpleBooleanProperty();
+        
+        private HideableItem(T object)
+        {
+            setObject(object);
+        }
+        
+        private ObjectProperty<T> objectProperty(){return this.object;}
+        private T getObject(){return this.objectProperty().get();}
+        private void setObject(T object){this.objectProperty().set(object);}
+        
+        private BooleanProperty hiddenProperty(){return this.hidden;}
+        private boolean isHidden(){return this.hiddenProperty().get();}
+        private void setHidden(boolean hidden){this.hiddenProperty().set(hidden);}
+        
+        @Override
+        public String toString()
+        {
+            return getObject() == null ? null : getObject().toString();
+        }
+    }
+      
+    private static <T> ComboBox<HideableItem<T>> createComboBoxWithAutoCompletionSupport(List<T> items)
+    {
+        ObservableList<HideableItem<T>> hideableHideableItems = FXCollections.observableArrayList(hideableItem -> new Observable[]{hideableItem.hiddenProperty()});
+        
+        items.forEach(item ->
+        {
+            HideableItem<T> hideableItem = new HideableItem<>(item);
+            hideableHideableItems.add(hideableItem);
+        });
+        
+        FilteredList<HideableItem<T>> filteredHideableItems = new FilteredList<>(hideableHideableItems, t -> !t.isHidden());
+        
+        ComboBox<HideableItem<T>> comboBox = new ComboBox<>();
+        comboBox.setItems(filteredHideableItems);
+        
+        @SuppressWarnings("unchecked")
+        HideableItem<T>[] selectedItem = (HideableItem<T>[]) new HideableItem[1];
+        
+        comboBox.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+        {
+            if(!comboBox.isShowing()) return;
+            
+            comboBox.setEditable(true);
+            comboBox.getEditor().clear();
+        });
+        
+        comboBox.showingProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if(newValue)
+            {
+                //@SuppressWarnings("unchecked")
+                //ListView<HideableItem> lv = ((ComboBoxListViewSkin<HideableItem>) comboBox.getSkin()).getListView();
+                
+                Platform.runLater(() ->
+                {
+                    if(selectedItem[0] == null) // first use
+                    {
+                        //double cellHeight = ((Control) lv.lookup(".list-cell")).getHeight();
+                        //lv.setFixedCellSize(cellHeight);
+                    }
+                });      
+                //lv.scrollTo(comboBox.getValue());
+            }
+            else
+            {
+                HideableItem<T> value = comboBox.getValue();
+                if(value != null) selectedItem[0] = value;
+                
+                comboBox.setEditable(false);
+                
+                Platform.runLater(() ->
+                {
+                    comboBox.getSelectionModel().select(selectedItem[0]);
+                    comboBox.setValue(selectedItem[0]);
+                });
+            }
+        });
+        
+        comboBox.setOnHidden(event -> hideableHideableItems.forEach(item -> item.setHidden(false)));    
+        comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) ->
+        {
+            if(!comboBox.isShowing()) return;
+            
+            Platform.runLater(() ->
+            {
+                if(comboBox.getSelectionModel().getSelectedItem() == null)
+                {
+                    hideableHideableItems.forEach(item -> item.setHidden(!item.getObject().toString().toLowerCase().contains(newValue.toLowerCase())));
+                }
+                else
+                {
+                    boolean validText = false;
+                    
+                    for(HideableItem hideableItem : hideableHideableItems)
+                    {
+                        if(hideableItem.getObject().toString().equals(newValue))
+                        {
+                            validText = true;
+                            break;
+                        }
+                    }
+                    
+                    if(!validText) comboBox.getSelectionModel().select(null);
+                }
+            });
+        });     
+        return comboBox;
+    }	
 }
 

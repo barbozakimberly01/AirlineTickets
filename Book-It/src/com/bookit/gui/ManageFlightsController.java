@@ -64,14 +64,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class ManageFlightsController implements Initializable{
+	
+	// Load flights on scene load
     
     @Override
     // Populate the TableView on load
     public void initialize(URL url, ResourceBundle rb) {
     	lblStatusText.setText("");
     	showTblView();
+    	
     }
-    
     
     /************************************
      * 	Header Objects 
@@ -111,9 +113,6 @@ public class ManageFlightsController implements Initializable{
     private Label anchorLabel;
     
     @FXML
-    private Button btnSubmitUpdate;
-    
-    @FXML
     private Button btnSubmitFlight;
     
     @FXML
@@ -148,7 +147,10 @@ public class ManageFlightsController implements Initializable{
     
     private Flight currentFlight;
 
-    /****  Hidden on Create Flight ****/
+    /******  Hidden on Create Flight ******/
+    @FXML
+    private Button btnSubmitUpdate;
+    
     @FXML
     private Label lblFlightID;
     
@@ -159,6 +161,7 @@ public class ManageFlightsController implements Initializable{
     /************************************
      * 		Action Events
      ************************************/
+    
     public void refreshFlights(ActionEvent event) {
     	btnReloadFlights.setOnAction(new EventHandler<ActionEvent>() {
     		public void handle(ActionEvent e)
@@ -202,7 +205,7 @@ public class ManageFlightsController implements Initializable{
     @FXML
     void logoutAction(ActionEvent event) {
     	try {
-			SceneCreator.launchScene("/com/bookit/gui/Logout.fxml");
+			SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
 			}
 		catch (Exception e) {
 	        System.out.println(e);
@@ -259,7 +262,6 @@ public class ManageFlightsController implements Initializable{
     }
 	
     public void loadAllFlights() {
-		// Admin user: return all flights for management
 		
 		try {
 			
@@ -301,6 +303,9 @@ public class ManageFlightsController implements Initializable{
 				// Create table columns
 				TableColumn<Flight, Integer> colFlightID = new TableColumn<>("FlightID");
 				colFlightID.setCellValueFactory(new PropertyValueFactory<>("FlightID"));
+				colFlightID.setPrefWidth(70);
+				colFlightID.setMaxWidth(colFlightID.getPrefWidth());
+				colFlightID.setMinWidth(colFlightID.getPrefWidth());
 		    	
 	            TableColumn<Flight, String> colAirline = new TableColumn<>("Airline");
 	            colAirline.setCellValueFactory(new PropertyValueFactory<>("airlineName"));
@@ -310,9 +315,15 @@ public class ManageFlightsController implements Initializable{
 		    	
 	            TableColumn<Flight, String> colOrigination = new TableColumn<>("Origination");
 	            colOrigination.setCellValueFactory(new PropertyValueFactory<>("Origination"));
+	            colOrigination.setPrefWidth(150);
+	            colOrigination.setMaxWidth(colOrigination.getPrefWidth());
+	            colOrigination.setMinWidth(colOrigination.getPrefWidth());
 		    	
 		    	TableColumn<Flight, String> colDestination = new TableColumn<>("Destination");
 	            colDestination.setCellValueFactory(new PropertyValueFactory<>("Destination"));
+	            colDestination.setPrefWidth(150);
+	            colDestination.setMaxWidth(colDestination.getPrefWidth());
+	            colDestination.setMinWidth(colDestination.getPrefWidth());
 		    	
 	            TableColumn<Flight, String> colDepartureDate = new TableColumn<>("DepartureDate");
 	            colDepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
@@ -328,13 +339,20 @@ public class ManageFlightsController implements Initializable{
 		    	
 		    	TableColumn<Flight, Integer> colPrice = new TableColumn<>("Price");
 		    	colPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+		    	colPrice.setPrefWidth(70);
+		    	colPrice.setMaxWidth(colPrice.getPrefWidth());
+		    	colPrice.setMinWidth(colPrice.getPrefWidth());
 		    	
 		    	TableColumn<Flight, Integer> colSeatCount = new TableColumn<>("SeatCount");
-		    	colSeatCount.setCellValueFactory(new PropertyValueFactory<>("totalSeats"));        
+		    	colSeatCount.setCellValueFactory(new PropertyValueFactory<>("totalSeats"));
+		    	colSeatCount.setPrefWidth(80);
+		    	colSeatCount.setMaxWidth(colSeatCount.getPrefWidth());
+		    	colSeatCount.setMinWidth(colSeatCount.getPrefWidth());
 	            
 				tblView.setItems(flightResultsList);
 				tblView.getColumns().addAll(colFlightID, colAirline, colFlightNumber, colOrigination, colDestination, colDepartureDate, colDepartureTime, colArrivalDate, colArrivalTime, colPrice, colSeatCount);
 				addButtonToTable("","Delete");
+				
 				addButtonToTable("","Edit");
 				System.out.println("ResultList: " + flightResultsList.size());
 			}
@@ -357,6 +375,7 @@ public class ManageFlightsController implements Initializable{
                 final TableCell<Flight, Void> cell = new TableCell<Flight, Void>() {
 
                     private final Button btn = new Button(buttonName);
+                    
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -381,6 +400,9 @@ public class ManageFlightsController implements Initializable{
                             setGraphic(null);
                         } else {
                             setGraphic(btn);
+                            btn.setPrefWidth(60);
+                            btn.setMaxWidth(btn.getPrefWidth());
+                            btn.setMinWidth(btn.getPrefWidth());
                         }
                     }
                 };
@@ -389,6 +411,9 @@ public class ManageFlightsController implements Initializable{
         };
 
         colBtn.setCellFactory(cellFactory);
+        colBtn.setPrefWidth(70);
+        colBtn.setMaxWidth(colBtn.getPrefWidth());
+        colBtn.setMinWidth(colBtn.getPrefWidth());
 
         tblView.getColumns().add(colBtn);
 

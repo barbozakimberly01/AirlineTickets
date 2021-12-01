@@ -1,5 +1,7 @@
 package com.bookit.common;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -13,26 +15,17 @@ public class Flight {
 	private String flightNumber;
 	private String origination;
 	private String destination;
+	private LocalDate departureDateD;
 	private String departureDate;
 	private String departureTime;
+	private LocalDate arrivalDateD;
 	private String arrivalDate;
 	private String arrivalTime;
 	private int price;
 	private int totalSeats;
-//	private ImageIcon deleteIcon = (ImageIcon) FileSystemView.getFileSystemView().getSystemIcon("images/deleteIcon.png");
-//	private ImageIcon editIcon;
 		
 	public Flight() {
 	}
-	
-//	public Flight (int flightID, String origination, String destination, String departureDate, int price){
-//		this.flightID = flightID;
-//		this.origination = origination;
-//		this.destination = destination;
-//		this.departureDate = departureDate;
-//		this.price = price;
-////		this.deleteIcon = new ImageIcon("images/deleteIcon.png");
-//	}
 
 	public Flight (int flightID, String airlineName, String flightNumber, String origination, String destination, String departureDate,
 			String departureTime, String arrivalDate, String arrivalTime, int price, int totalSeats){
@@ -47,33 +40,23 @@ public class Flight {
 		this.arrivalTime = arrivalTime;
 		this.price = price;
 		this.totalSeats = totalSeats;
-//		this.deleteIcon = new ImageIcon("images/deleteIcon.png");
-//		this.editIcon = new ImageIcon("images/editIcon.png");
 	}
 	
-//	public Flight (String flightID, String airlineName, String flightNumber, String origination, String destination, String departureDate,
-//			String departureTime, String arrivalDate, String arrivalTime, String price, String totalSeats){
-//		this.flightID = Integer.valueOf(flightID);
-//		this.airlineName = airlineName;
-//		this.flightNumber = flightNumber;
-//		this.origination = origination;
-//		this.destination = destination;
-//		this.departureDate = departureDate;
-//		this.departureTime = departureTime;
-//		this.arrivalDate = arrivalDate;
-//		this.arrivalTime = arrivalTime;
-//		this.price = Integer.valueOf(price);
-//		this.totalSeats = Integer.valueOf(totalSeats);
-////		this.deleteIcon = new ImageIcon("images/deleteIcon.png");
-////		this.editIcon = new ImageIcon("images/editIcon.png");
-//	}
+	public Flight (int flightID, String airlineName, String flightNumber, String origination, String destination, LocalDate departureDateD,
+			String departureTime, LocalDate arrivalDateD, String arrivalTime, int price, int totalSeats){
+		this.flightID = flightID;
+		this.airlineName = airlineName;
+		this.flightNumber = flightNumber;
+		this.origination = origination;
+		this.destination = destination;
+		this.departureDateD = departureDateD;
+		this.departureTime = departureTime;
+		this.arrivalDateD = arrivalDateD;
+		this.arrivalTime = arrivalTime;
+		this.price = price;
+		this.totalSeats = totalSeats;
+	}
 	
-//	public Icon getDeleteIcon() {
-//		return deleteIcon;
-//	}
-//	public Icon getEditIcon() {
-//		return editIcon;
-//	}
 	public int getFlightID() {
 		return flightID;
 	}
@@ -107,8 +90,14 @@ public class Flight {
 	public String getDepartureDate() {
 		return departureDate;
 	}
-	public void setDepartureDate(String departureDate) {
+	public void setsDepartureDate(String departureDate) {
 		this.departureDate = departureDate;
+	}
+	public LocalDate getDepartureDateD() {
+		return departureDateD;
+	}
+	public void setDepartureDate(LocalDate departureDateD) {
+		this.departureDateD = departureDateD;
 	}
 	public String getDepartureTime() {
 		return departureTime;
@@ -121,6 +110,12 @@ public class Flight {
 	}
 	public void setArrivalDate(String arrivalDate) {
 		this.arrivalDate = arrivalDate;
+	}
+	public LocalDate getArrivalDateD() {
+		return arrivalDateD;
+	}
+	public void setArrivalDateD(LocalDate arrivalDateD) {
+		this.arrivalDateD = arrivalDateD;
 	}
 	public String getArrivalTime() {
 		return arrivalTime;
