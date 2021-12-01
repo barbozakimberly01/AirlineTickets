@@ -1,31 +1,19 @@
 package com.bookit.db;
 
 import java.sql.Connection;
-import java.sql.Date;
+//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
-//import com.bookit.db.PassEncTech1;
-import com.bookit.common.Customer;
 import com.bookit.common.Flight;
 import com.bookit.common.SearchFlight;
 import com.bookit.exceptions.LoginException;
 import com.bookit.gui.User;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.*;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.util.Callback;
 
 public class DataAccess {
 	
@@ -265,98 +253,6 @@ public class DataAccess {
 		}
 		return result;
 	}
-
-	public static void login(Customer co) throws Exception {
-		
-		try {
-			
-			// Encrypt the Password
-//			String pwd = co.getPassword();
-//			PassEncTech1 encrypt = new PassEncTech1();
-//			String ePass = encrypt.encryptPassword(pwd);
-//			String[] args = {co.getUserName(), ePass};
-			
-			// Build String array
-			String[] args = {co.getUserName(), co.getPassword()};
-			
-			// Execute SQL command
-			ResultSet resultSet = sqlCmd(SQLStatements.LOGIN, args);
-				    
-			int count = 0;
-
-			// Iterate through the result set
-			while (resultSet.next()) {
-				System.out.println("Number of Users:" + resultSet.getInt(1));
-				count = resultSet.getInt(1);
-			}
-			
-			if (count == 0)
-				throw new LoginException("Invalid UserName or Password!");
-				     
-		} catch (SQLException e) {
-			
-			System.out.println(e);
-			throw e;
-		}
-
-	}    
-	
-	public static void bookFlight(Customer co, Flight fl) throws Exception {
-		
-		// can I run a query on reservation table that select all the rows with customerID comes from co
-		
-		// Build String array
-		String[] args = {co.getUserName(), co.getPassword()};
-		
-		// Execute SQL command
-		ResultSet resultSet = sqlCmd(SQLStatements.LOGIN, args);
-		
-//		
-//		Flight f1 = new Flight();
-//		f1.setAirlineName("Delta 303");
-//		
-//		Flight f2 = new Flight();
-//		f2.setAirlineName("Delta 500");
-//		
-//		Flight f3 = new Flight();
-//		f3.setAirlineName("Delta 777");
-//		
-//		co.getFlights().add(f1);
-//		co.getFlights().add(f2);
-//		co.getFlights().add(f3);
-		
-		/* Error returned from DB when user tries to book the same flight twice:
-		 * 		SQL Error [1062] [23000]: Duplicate entry '123456789-1' for key 'SSN'
-		 */
-		
-	}
-
-	public static void getFlights(Customer co) throws Exception {
-		
-		// can I run a query on reservation table that select all the rows with customerID comes from co
-		
-		// Build String array
-		String[] args = {co.getUserName(), co.getPassword()};
-		
-		// Execute SQL command
-		ResultSet resultSet = sqlCmd(SQLStatements.LOGIN, args);
-		
-//		Flight f1 = new Flight();
-//		f1.setAirlineName("Delta 303");
-//		
-//		Flight f2 = new Flight();
-//		f2.setAirlineName("Delta 500");
-//		
-//		Flight f3 = new Flight();
-//		f3.setAirlineName("Delta 777");
-//		
-//		co.getFlights().add(f1);
-//		co.getFlights().add(f2);
-//		co.getFlights().add(f3);
-		
-	}
-	
-
 
 }
 

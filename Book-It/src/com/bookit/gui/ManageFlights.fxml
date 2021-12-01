@@ -19,12 +19,12 @@
             <Font name="Helvetica" size="39.0" />
          </font>
       </Label>
-      <TableView fx:id="tblView" editable="true" layoutX="15.0" layoutY="83.0" prefHeight="508.0" prefWidth="1180.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="82.0">
+      <TableView fx:id="tblView" editable="true" layoutX="15.0" layoutY="83.0" prefHeight="508.0" prefWidth="1180.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="82.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <AnchorPane fx:id="anchorFlight" layoutX="10.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="82.0">
+      <AnchorPane fx:id="anchorFlight" layoutX="10.0" layoutY="82.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="82.0">
          <children>
             <Button fx:id="btnSubmitUpdate" layoutX="577.0" layoutY="439.0" mnemonicParsing="false" onAction="#updateFlightAction" prefHeight="39.0" prefWidth="136.0" text="Submit" visible="false">
                <font>
@@ -51,12 +51,18 @@
                   <TextField fx:id="txtFlightNumber" prefHeight="30.0" prefWidth="217.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="txtTotalSeats" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="txtOrigination" prefHeight="30.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtDepartureDate" prefHeight="30.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtDepartureDate" prefHeight="30.0" promptText="Format: yyyy-mm-dd" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Helvetica" size="13.0" />
+                     </font></TextField>
                   <TextField fx:id="txtDepartureTime" prefHeight="30.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <TextField fx:id="txtPrice" prefHeight="30.0" GridPane.columnIndex="5" />
                   <TextField fx:id="txtDestination" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <TextField fx:id="txtArrivalTime" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtArrivalDate" prefHeight="30.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtArrivalDate" prefHeight="30.0" promptText="Format: yyyy-mm-dd" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Helvetica" size="13.0" />
+                     </font></TextField>
                   <Label fx:id="lblFlightID" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="30.0" prefWidth="165.0" text="Flight ID:" textAlignment="RIGHT" visible="false">
                      <font>
                         <Font name="Helvetica" size="18.0" />
@@ -169,12 +175,12 @@
       </AnchorPane>
       <ButtonBar layoutX="1290.0" layoutY="8.0" prefHeight="39.0" prefWidth="357.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0">
         <buttons>
-            <Button fx:id="btnMyFlights" mnemonicParsing="false" onAction="#myFlightsAction" prefHeight="30.0" prefWidth="88.0" text="My Flights">
+            <Button fx:id="btnSearchFlights" mnemonicParsing="false" onAction="#searchFlightsAction" prefHeight="30.0" prefWidth="113.0" text="Book Flights">
                <font>
                   <Font name="Helvetica" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnSearchFlights" mnemonicParsing="false" onAction="#searchFlightsAction" prefHeight="30.0" prefWidth="113.0" text="Book Flights">
+            <Button fx:id="btnMyFlights" mnemonicParsing="false" onAction="#myFlightsAction" prefHeight="30.0" prefWidth="88.0" text="My Flights">
                <font>
                   <Font name="Helvetica" size="13.0" />
                </font>
