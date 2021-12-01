@@ -31,9 +31,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import javax.swing.table.DefaultTableModel;
 
+import com.bookit.common.Bookings;
 import com.bookit.common.SearchFlight;
 import com.bookit.db.*;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
@@ -48,11 +50,41 @@ public class SearchController {
 	@FXML
 	private Button searchButton;
 	@FXML
+	private Button completeBookingButton;
+	@FXML
 	private Button manageFlights;
+	@FXML
+	private Label lblFlightAirline;
+	@FXML
+	private Label lblFlightOrigination;
+	@FXML
+	private Label lblFlightDestination;
+	@FXML
+	private Label lblFlightDepartureDate;
+	@FXML
+	private Label lblPassengerName;
+	@FXML
+	private Label lblDepartureTime;
+	@FXML
+	private Label lblFlightID;	
+	@FXML
+	private TextField nameOnCardField;
+	@FXML
+	private TextField creditCardNumberField;
+	@FXML
+	private TextField expirationDateField;
+	@FXML
+	private TextField cVVField;
 	@FXML
     private ObservableList<ObservableList> data;
 	@FXML
 	private TableView<SearchFlight> flightResultsView = new TableView();
+	
+	Preferences userInfo = Preferences.userRoot();
+	private String userName = userInfo.get("Username", "");
+	private String sSN = userInfo.get("SSN", "");
+	private String firstName = userInfo.get("FirstName", "");
+	private String lastName = userInfo.get("LastName", "");
 
 	public void manageFlights(Event event) {
 		try {
@@ -126,6 +158,30 @@ public class SearchController {
 	    	DestinationColumn.setCellValueFactory(new PropertyValueFactory<>("Destination"));
 	    	DestinationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
+	    	flightResultsView.setRowFactory( frv -> {
+	    		TableRow<SearchFlight> row = new TableRow<>();
+				row.setOnMouseClicked(event -> {
+					if(event.getClickCount() >= 1) {
+						SearchFlight flightdata = row.getItem();
+						System.out.println("Record clicked");
+						//System.out.println(flightdata.getAirline() + ", " + flightdata.getFlightNumber() + ", " + flightdata.getOrigination() + ", " + flightdata.getDestination()/* + ", " + flightdata.getDepartureDate()*/);
+						lblFlightID.setText(flightdata.getFlightID());
+						lblFlightAirline.setText(flightdata.getAirline());
+						lblFlightDepartureDate.setText(String.valueOf(flightdata.getFlightNumber()));
+						lblFlightOrigination.setText(flightdata.getOrigination()); 
+						lblFlightDestination.setText(flightdata.getDestination());
+						
+						/*Preferences userInfo = Preferences.userRoot();
+				    	String userName = userInfo.get("Username", "");
+				    	String sSN = userInfo.get("SSN", "");
+				    	String firstName = userInfo.get("FirstName", "");
+				    	String lastName = userInfo.get("LastName", "");*/
+						lblPassengerName.setText(firstName + " " + lastName);
+						
+					}					
+				});
+				return row;
+			});
 	    	
 			ObservableList<SearchFlight> flightResultsList = FXCollections.observableArrayList();
 			while(rs.next()){
@@ -141,6 +197,30 @@ public class SearchController {
 	    }
 			
 	}
+	
+	@FXML
+	private void CompleteBooking(Event event) {
+		try {
+			DataAccess.GetConnecton();
+			}
+			catch(Exception err) {	
+				return;
+			}
+			
+		//String nameOnCard = nameOnCardField.getText();
+		//String creditCardNumber = creditCardNumberField.getText();
+			Bookings booking = new Bookings(0, sSN, lblFlightID.getText(), nameOnCardField.getText(), creditCardNumberField.getText(), expirationDateField.getText(), cVVField.getText());
+	    	System.out.println(booking.getNameOnCard());
+	    	//TODO-Call a method to insert record into database
 
+			try {
+				DataAccess.BookPayFlight(booking);
+				System.out.println("Test");
+			}
+			catch (Exception error) {
+				System.out.println("Test2");
+				System.out.println(error.getMessage());
+			}
+	} 
 }
 

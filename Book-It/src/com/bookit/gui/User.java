@@ -3,6 +3,7 @@ import java.util.List;
 import com.bookit.db.*;
 import com.bookit.gui.*;
 
+//Encapsulation of the User Class
 public class User {
 	//TODO:Move to common.
 	private int id;

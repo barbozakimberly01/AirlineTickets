@@ -21,6 +21,7 @@ public class LoginController {
 	@FXML
 	private Button signUp;
 	public static User user;
+	
 	@FXML
 	private TextField usernameField;
 	@FXML

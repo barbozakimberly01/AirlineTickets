@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import javafx.scene.control.DatePicker;
 
+//Encapsulation of the SearchFlight Class
 public class SearchFlight {
 	private String origination;
 	private String destination;
@@ -22,6 +23,7 @@ public class SearchFlight {
 	private int price;
 	private int totalSeats;
 	//******
+	//private Flight flight; //Composition
 	
 	
 	public SearchFlight() {
@@ -37,9 +39,12 @@ public class SearchFlight {
 	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination) {
 		this.flightID = flightID;
 		this.airline = airline;
+		//this.airline = flight.airlineName; //Composition
 		this.flightNumber = flightNumber;
+		//this.flightNumber = flight.flightNo
 		this.origination = origination;
 		this.destination = destination;
+		
 		
 	}
 	

@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 //import com.bookit.db.PassEncTech1;
 import com.bookit.common.Customer;
 import com.bookit.common.Flight;
 import com.bookit.common.SearchFlight;
+import com.bookit.common.Bookings;
 import com.bookit.exceptions.LoginException;
 import com.bookit.gui.User;
 
@@ -26,7 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
-public class DataAccess {
+public class DataAccess implements UserInterface{
 	//Establish a connection to the database
 	public static Connection GetConnecton() throws SQLException {	
 		Connection conn = null;
@@ -45,6 +47,7 @@ public class DataAccess {
 		
 		return conn;
 	}
+	
 	// Check username and password from database and validate if true.
 	public static boolean validUser(User user) throws SQLException {
 		Connection con = GetConnecton();
@@ -58,6 +61,11 @@ public class DataAccess {
 			      ResultSet data = preparedStmt.executeQuery(); 
 			      
 			      if (data.next()) {
+			    	  Preferences userInfo = Preferences.userRoot();
+			    	  userInfo.put("Username", data.getString("Username"));
+			    	  userInfo.put("SSN", String.valueOf(data.getInt("SSN")));
+			    	  userInfo.put("FirstName", data.getString("FirstName"));
+			    	  userInfo.put("LastName", data.getString("LastName"));
 			    	  return true;
 			      }        
 	        }   
@@ -68,6 +76,7 @@ public class DataAccess {
 			con.close();	
 		return false;
 	}
+	
 	// check if security answer is true.
 	public static boolean validSecurityAnswer(User user) {
 		try {
@@ -91,6 +100,7 @@ public class DataAccess {
 	    }
 		return false;	
 	}
+	
 	//Insert new user and login information into USER and LOGIN table.
 	public static boolean UserSignup(User user) throws SQLException{
 		Connection con = GetConnecton();
@@ -124,6 +134,29 @@ public class DataAccess {
             return false;  
 	    }				
 	}
+	
+	public static boolean BookPayFlight(Bookings booking) throws SQLException{
+		Connection con = GetConnecton();
+		try {
+	            PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
+			    preparedStmt.setString(1, String.valueOf(booking.getBookingID()));
+			    preparedStmt.setString(2, booking.getSsn());
+			    preparedStmt.setString(3, booking.getFlightID());
+			    preparedStmt.setString(4, booking.getNameOnCard());
+			    preparedStmt.setString(5, booking.getCreditCardNumber());
+			    preparedStmt.setString(6, booking.getExpirationDate());
+			    preparedStmt.setString(7, booking.getcVV());
+			    preparedStmt.executeUpdate(); 
+			    return true;	
+			    //TODO:validate or convert date to yyyy-mm-dd 
+	    } 
+		catch (SQLException err) {
+	    	System.out.println(err.getMessage());
+	    	con.close();
+            return false;  
+	    }				
+	}
+	
 	
 	
 	
