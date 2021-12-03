@@ -42,7 +42,7 @@ public class SearchFlight {
 		this.departureDate = departureDate;
 		
 	}
-	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination) {
+	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination/*, LocalDate departureDate*/) {
 		this.flightID = flightID;
 		this.airline = airline;
 		//this.airline = flight.airlineName; //Composition
@@ -50,6 +50,7 @@ public class SearchFlight {
 		//this.flightNumber = flight.flightNo
 		this.origination = origination;
 		this.destination = destination;
+		this.departureDate = departureDate;
 		
 		
 	}

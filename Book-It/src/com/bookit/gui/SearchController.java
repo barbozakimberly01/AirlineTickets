@@ -65,7 +65,11 @@ public class SearchController {
 	@FXML
 	private Button manageFlights;
 	@FXML
+	private Label lblPassengerName;
+	@FXML
 	private Label lblFlightAirline;
+	@FXML
+	private Label lblFlightNumber;
 	@FXML
 	private Label lblFlightOrigination;
 	@FXML
@@ -73,11 +77,15 @@ public class SearchController {
 	@FXML
 	private Label lblFlightDepartureDate;
 	@FXML
-	private Label lblPassengerName;
-	@FXML
 	private Label lblDepartureTime;
 	@FXML
+	private Label lblArrivalDate;
+	@FXML
+	private Label lblArrivalTime;
+	@FXML
 	private Label lblFlightID;	
+	@FXML
+	private Label lblPrice;
 	@FXML
 	private TextField nameOnCardField;
 	@FXML
@@ -207,6 +215,26 @@ public class SearchController {
 	    	DestinationColumn.setCellValueFactory(new PropertyValueFactory<>("Destination"));
 	    	DestinationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
+	    	TableColumn DepartureDate = new TableColumn("DepartureDate");
+	    	DepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
+	    	DepartureDate.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	
+	    	TableColumn DepartureTime = new TableColumn("DepartureTime");
+	    	DepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
+	    	DepartureTime.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	
+	    	TableColumn ArrivalDate = new TableColumn("ArrivalDate");
+	    	ArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
+	    	ArrivalDate.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	
+	    	TableColumn ArrivalTime = new TableColumn("ArrivalTime");
+	    	ArrivalTime.setCellValueFactory(new PropertyValueFactory<>("ArrivalTime"));
+	    	ArrivalTime.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	
+	    	TableColumn Price = new TableColumn("Price");
+	    	Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
+	    	Price.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	
 	    	flightResultsView.setRowFactory( frv -> {
 	    		TableRow<SearchFlight> row = new TableRow<>();
 				row.setOnMouseClicked(event -> {
@@ -216,9 +244,15 @@ public class SearchController {
 						//System.out.println(flightdata.getAirline() + ", " + flightdata.getFlightNumber() + ", " + flightdata.getOrigination() + ", " + flightdata.getDestination()/* + ", " + flightdata.getDepartureDate()*/);
 						lblFlightID.setText(flightdata.getFlightID());
 						lblFlightAirline.setText(flightdata.getAirline());
-						lblFlightDepartureDate.setText(String.valueOf(flightdata.getFlightNumber()));
+						lblFlightDepartureDate.setText(String.valueOf(flightdata.getDepartureDate()));
 						lblFlightOrigination.setText(flightdata.getOrigination()); 
 						lblFlightDestination.setText(flightdata.getDestination());
+						lblFlightNumber.setText(flightdata.getFlightNumber());
+						lblDepartureTime.setText(String.valueOf(flightdata.getDepartureTime()));;
+						lblFlightNumber.setText(String.valueOf(flightdata.getFlightNumber()));
+						lblArrivalDate.setText(String.valueOf(flightdata.getArrivalDate()));;
+						lblArrivalTime.setText(String.valueOf(flightdata.getArrivalTime()));;
+						lblPrice.setText(String.valueOf(flightdata.getPrice()));
 						
 						/*Preferences userInfo = Preferences.userRoot();
 				    	String userName = userInfo.get("Username", "");
@@ -238,7 +272,7 @@ public class SearchController {
 			}
 			con.close();						
 			flightResultsView.setItems(flightResultsList);
-			flightResultsView.getColumns().addAll(flightIDColumn, airlineColumn, flightNumberColumn, OriginationColumn, DestinationColumn);
+			flightResultsView.getColumns().addAll(flightIDColumn, airlineColumn, flightNumberColumn, OriginationColumn, DestinationColumn, DepartureDate, DepartureTime, ArrivalDate, ArrivalTime, Price);
 		}
 		catch (SQLException err) {
 	    	System.out.println(err.getMessage());
