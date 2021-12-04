@@ -1,4 +1,5 @@
 package com.bookit.common;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -12,15 +13,15 @@ import javafx.scene.control.DatePicker;
 public class SearchFlight {
 	private String origination;
 	private String destination;
-	private LocalDate departureDate;
+	private String departureDate;
 	//******
 	private String flightID;
 	private String airline;
 	private String flightNumber;
-	private LocalTime departureTime;
-	private LocalDate arrivalDate;
-	private LocalTime arrivalTime;
-	private int price;
+	private String departureTime;
+	private String arrivalDate;
+	private String arrivalTime;
+	private String price;
 	private int totalSeats;
 	//******
 	//private Flight flight; //Composition
@@ -30,7 +31,7 @@ public class SearchFlight {
 		
 	}
 	
-	public SearchFlight(String origination, String destination, LocalDate departureDate) {
+	public SearchFlight(String origination, String destination, String departureDate) {
 		this.origination = origination;
 		this.destination = destination;
 		this.departureDate = departureDate;
@@ -42,7 +43,8 @@ public class SearchFlight {
 		this.departureDate = departureDate;
 		
 	}
-	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination/*, LocalDate departureDate*/) {
+	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination, String departureDate,
+			String departureTime, String arrivalDate, String arrivalTime, String price) {
 		this.flightID = flightID;
 		this.airline = airline;
 		//this.airline = flight.airlineName; //Composition
@@ -51,8 +53,10 @@ public class SearchFlight {
 		this.origination = origination;
 		this.destination = destination;
 		this.departureDate = departureDate;
-		
-		
+		this.departureTime = departureTime;
+		this.arrivalDate = arrivalDate;
+		this.arrivalTime = arrivalTime;
+		this.price = price;	
 	}
 	
 	public String getFlightID() {
@@ -78,36 +82,60 @@ public class SearchFlight {
 	public void setFlightNumber(String flightNumber) {
 		this.flightNumber = flightNumber;
 	}
+	
+	public String getOrigination() {
+		return origination;
+	}
+	
+	public void setOrigination(String origination) {
+		this.origination = origination;
+	}
+	
+	public String getDestination() {
+		return destination;
+	}
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	
+	public String getDepartureDate() {
+		return departureDate;
+	}
+	
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
+	}
 
-	public LocalTime getDepartureTime() {
+	public String getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(LocalTime departureTime) {
+	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
 
-	public LocalDate getArrivalDate() {
+	public String getArrivalDate() {
 		return arrivalDate;
 	}
 
-	public void setArrivalDate(LocalDate arrivalDate) {
+	public void setArrivalDate(String arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 
-	public LocalTime getArrivalTime() {
+	public String getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(LocalTime arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
@@ -118,24 +146,10 @@ public class SearchFlight {
 	public void setTotalSeats(int totalSeats) {
 		this.totalSeats = totalSeats;
 	}
-
-	public String getOrigination() {
-		return origination;
-	}
-	public void setOrigination(String origination) {
-		this.origination = origination;
-	}
-	public String getDestination() {
-		return destination;
-	}
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
-	public LocalDate getDepartureDate() {
-		return  departureDate;
-	}
-	public void setDepartureDate(LocalDate departureDate) {
-		this.departureDate = departureDate;
-	}
+	
+	/*public ComboBox getOnAction() {
+		
+	}*/
+	
 
 }

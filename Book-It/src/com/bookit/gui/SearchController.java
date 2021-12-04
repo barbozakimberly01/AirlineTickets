@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
@@ -28,17 +29,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Stage.*;
 import javafx.util.Callback;
-
+import java.time.ZoneId;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
@@ -51,7 +56,7 @@ import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 //import application.Main.HideableItem;
 
-public class SearchController {
+public class SearchController{
 	@FXML
 	private TextField leavingFrom;
 	@FXML
@@ -99,7 +104,13 @@ public class SearchController {
 	@FXML
 	private ComboBox leavingFromComboBox;
 	@FXML
+	private ComboBox leavingFromComboBox2;
+	@FXML
+	private ComboBox goingToComboBox2;
+	@FXML
 	private ComboBox goingToComboBox;
+	@FXML
+	private AnchorPane anchorPane;
 	@FXML
 	private HBox hBox;
 	@FXML
@@ -112,6 +123,7 @@ public class SearchController {
 	private String lastName = userInfo.get("LastName", "");
 
 	//**********************************************
+	DataAccess dataAccess = new DataAccess();
 	@FXML
     public void initialize() throws SQLException {
 		List<String> leavingFromList = new ArrayList<>();
@@ -133,14 +145,71 @@ public class SearchController {
 		rs.close();
 		con.close();
         
-        ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
+        //ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
+		ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
         //leavingFromComboBox.setMaxWidth(Double.MAX_VALUE);
 
+        //EventHandler<ActionEvent> handler = leavingFromComboBox.getOnAction();
+        //leavingFromComboBox.setOnAction(null);
         ComboBox<HideableItem<String>> goingToComboBox = createComboBoxWithAutoCompletionSupport(goingToList);
-        hBox.getChildren().addAll(leavingFromComboBox, goingToComboBox);
+        //hBox.getChildren().addAll(leavingFromComboBox, goingToComboBox);
+        anchorPane.getChildren().addAll(leavingFromComboBox, goingToComboBox);
+        leavingFromComboBox.setLayoutX(108);
+        leavingFromComboBox.setLayoutY(71);
+        goingToComboBox.setLayoutX(322);
+        goingToComboBox.setLayoutY(71);
+        
+        //leavingFromComboBox.setOnAction(e -> searchFlights(e));     
+        //leavingFromComboBox.setItems(FXCollections.observableArrayList("4", "5", "6"));
+        //leavingFromComboBox.setOnAction(handler);
+        
+        //cancelButton.setOnAction(e -> stage.close());
 
+        
         leavingFromComboBox.setMinWidth(169);
         leavingFromComboBox.setMinHeight(25);
+        //leavingFromComboBox2 = createComboBoxWithAutoCompletionSupport(leavingFromList);
+        //goingToComboBox2 = createComboBoxWithAutoCompletionSupport(goingToList);
+        
+        //ObservableList<String> list = FXCollections.observableArrayList(leavingFromList);
+        //leavingFromComboBox2.setItems(list);
+        //leavingFromComboBox2.
+        leavingFromComboBox2.getItems().addAll(leavingFromList);
+        goingToComboBox2.getItems().addAll(goingToList);
+		
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		searchButton.setOnAction(new EventHandler<ActionEvent>()
+	    {
+	        public void handle(ActionEvent e)
+	        {
+	        		try {
+	        			DataAccess.GetConnecton();
+	        		}
+	        		catch(Exception err) {	
+	        			return;
+	        		}
+	        	
+	        	//System.out.println(leavingFromComboBox.getValue());
+	        		//SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), goingTo.getText(), String.valueOf(departureDate.getValue()));	
+	        		SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox.getValue()), String.valueOf(goingToComboBox.getValue()), String.valueOf(departureDate.getValue()));
+	        		
+	        		System.out.println(String.valueOf(leavingFromComboBox.getValue()));
+	        		//System.out.println("2:" + String.valueOf(leavingFromComboBox2 .getValue()));
+	        		System.out.println(String.valueOf(goingToComboBox.getValue()));
+	        		
+	        		
+	        		
+	        		try {
+	        			getFlight(search);
+	        			System.out.println("Test");
+	        		}
+	        		catch (Exception error) {
+	        			System.out.println("Test2");
+	        			System.out.println(error.getMessage());
+	        		}
+	        }
+	    });
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
     }
 	//**********************************************
@@ -156,20 +225,28 @@ public class SearchController {
 	}
 	
 	// Read user input and search for flights
-	public void searchFlights(Event event){
+	/*public void searchFlights(Event event){
 		searchButton.setOnAction(new EventHandler<ActionEvent>()
 	    {
 	        public void handle(ActionEvent e)
 	        {
-	        	try {
-	        		DataAccess.GetConnecton();
+	        		try {
+	        			DataAccess.GetConnecton();
 	        		}
 	        		catch(Exception err) {	
 	        			return;
 	        		}
-	        		SearchFlight search = new SearchFlight(leavingFrom.getText(), goingTo.getText(), departureDate.getValue());	
+	        	
+	        	//System.out.println(leavingFromComboBox.getValue());
+	        		//SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), goingTo.getText(), String.valueOf(departureDate.getValue()));	
+	        		SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), String.valueOf(goingToComboBox2.getValue()), String.valueOf(departureDate.getValue()));
+	        		//System.out.println(String.valueOf(leavingFromComboBox.getValue()));
+	        		//System.out.println(String.valueOf(goingToComboBox.getValue()));
+	        		
+	        		
+	        		
 	        		try {
-	        			SearchFlight(search);
+	        			getFlight(search);
 	        			System.out.println("Test");
 	        		}
 	        		catch (Exception error) {
@@ -178,18 +255,18 @@ public class SearchController {
 	        		}
 	        }
 	    });
-	}
+	}*/
 	
 	//Get flight results from database and display
-	public void SearchFlight(SearchFlight Flight) throws SQLException{
+	public void getFlight(SearchFlight Flight) throws SQLException{
 		Connection con = DataAccess.GetConnecton();
 		try {
 			
 			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.SEARCHFLIGHT);
 		    preparedStmt.setString(1, Flight.getOrigination());
 		    preparedStmt.setString(2, Flight.getDestination());
-		    LocalDate departDate = LocalDate.of(Flight.getDepartureDate().getYear(),Flight.getDepartureDate().getMonth(), Flight.getDepartureDate().getDayOfMonth());
-		    Date date = Date.valueOf(departDate);
+		    //LocalDate departDate = LocalDate.of(Flight.getDepartureDate().getYear(),Flight.getDepartureDate().getMonth(), Flight.getDepartureDate().getDayOfMonth());
+		    Date date = Date.valueOf(Flight.getDepartureDate());
 		    preparedStmt.setDate(3, date);
 		    ResultSet rs = preparedStmt.executeQuery(); 
 		    
@@ -203,7 +280,7 @@ public class SearchController {
 	    	airlineColumn.setCellValueFactory(new PropertyValueFactory<>("Airline"));
 	    	airlineColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn flightNumberColumn = new TableColumn("FlightNumber");
+	    	TableColumn flightNumberColumn = new TableColumn("Flight#");
 	    	flightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("FlightNumber"));
 	    	flightNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
@@ -220,7 +297,7 @@ public class SearchController {
 	    	DepartureDate.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
 	    	TableColumn DepartureTime = new TableColumn("DepartureTime");
-	    	DepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
+	    	DepartureTime.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
 	    	DepartureTime.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
 	    	TableColumn ArrivalDate = new TableColumn("ArrivalDate");
@@ -248,8 +325,8 @@ public class SearchController {
 						lblFlightOrigination.setText(flightdata.getOrigination()); 
 						lblFlightDestination.setText(flightdata.getDestination());
 						lblFlightNumber.setText(flightdata.getFlightNumber());
-						lblDepartureTime.setText(String.valueOf(flightdata.getDepartureTime()));;
-						lblFlightNumber.setText(String.valueOf(flightdata.getFlightNumber()));
+						lblDepartureTime.setText(flightdata.getDepartureTime());;
+						//lblFlightNumber.setText(String.valueOf(flightdata.getFlightNumber()));
 						lblArrivalDate.setText(String.valueOf(flightdata.getArrivalDate()));;
 						lblArrivalTime.setText(String.valueOf(flightdata.getArrivalTime()));;
 						lblPrice.setText(String.valueOf(flightdata.getPrice()));
@@ -265,20 +342,30 @@ public class SearchController {
 				});
 				return row;
 			});
+	
+	    	//SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination, LocalDate departureDate,
+	    	//String departureTime, LocalDate arrivalDate, String arrivalTime, String price)
 	    	
+	    	String depDate;
+
 			ObservableList<SearchFlight> flightResultsList = FXCollections.observableArrayList();
 			while(rs.next()){
-				flightResultsList.addAll(new SearchFlight(String.valueOf(rs.getInt("FlightID")), rs.getString("Airline"), rs.getString("FlightNumber"), rs.getString("Origination"), rs.getString("Destination")));
+				flightResultsList.addAll(new SearchFlight(String.valueOf(rs.getInt("FlightID")), rs.getString("Airline"), rs.getString("FlightNumber"), rs.getString("Origination"), 
+						rs.getString("Destination"), String.valueOf(rs.getDate("DepartureDate")), rs.getString("DepartureTime"), String.valueOf(rs.getDate("ArrivalDate")), rs.getString("ArrivalTime"), rs.getString("Price")));
 			}
 			con.close();						
 			flightResultsView.setItems(flightResultsList);
-			flightResultsView.getColumns().addAll(flightIDColumn, airlineColumn, flightNumberColumn, OriginationColumn, DestinationColumn, DepartureDate, DepartureTime, ArrivalDate, ArrivalTime, Price);
+			flightResultsView.getColumns().addAll(flightIDColumn, airlineColumn, flightNumberColumn, OriginationColumn, DestinationColumn, DepartureDate, DepartureTime, ArrivalDate, ArrivalTime, Price); //, DepartureTime, ArrivalDate, ArrivalTime, Price
 		}
 		catch (SQLException err) {
 	    	System.out.println(err.getMessage());
 	    	con.close();
 	    }
 			
+	}
+	
+	public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+	    return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
 	}
 	
 	@FXML
@@ -295,9 +382,23 @@ public class SearchController {
 			Bookings booking = new Bookings(0, sSN, lblFlightID.getText(), nameOnCardField.getText(), creditCardNumberField.getText(), expirationDateField.getText(), cVVField.getText());
 	    	System.out.println(booking.getNameOnCard());
 	    	//TODO-Call a method to insert record into database
+	    	
 
 			try {
-				DataAccess.BookPayFlight(booking);
+				if(dataAccess.BookPayFlight(booking)) {
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("ConfirmationMessage");
+		            alert.setHeaderText("Booking Confirmation");
+		            alert.setContentText("You have booked your flight successfully.");
+		            alert.show();
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Booking Error");
+		            alert.setContentText("An error occurred while booking your fligh.");        
+		            alert.show();
+				}
 				System.out.println("Test");
 			}
 			catch (Exception error) {
@@ -307,7 +408,7 @@ public class SearchController {
 	} 
 	//*********ComboBox********
 
-	public static class HideableItem<T>
+	public class HideableItem<T>
     {
         private final ObjectProperty<T> object = new SimpleObjectProperty<>();
         private final BooleanProperty hidden = new SimpleBooleanProperty();
@@ -332,7 +433,7 @@ public class SearchController {
         }
     }
       
-    private static <T> ComboBox<HideableItem<T>> createComboBoxWithAutoCompletionSupport(List<T> items)
+    private <T> ComboBox<HideableItem<T>> createComboBoxWithAutoCompletionSupport(List<T> items)
     {
         ObservableList<HideableItem<T>> hideableHideableItems = FXCollections.observableArrayList(hideableItem -> new Observable[]{hideableItem.hiddenProperty()});
         
@@ -363,17 +464,18 @@ public class SearchController {
             if(newValue)
             {
                 //@SuppressWarnings("unchecked")
+            	ListView<HideableItem> lv = (ListView<HideableItem>) ((ComboBoxListViewSkin<?>) comboBox.getSkin()).getPopupContent();
                 //ListView<HideableItem> lv = ((ComboBoxListViewSkin<HideableItem>) comboBox.getSkin()).getListView();
                 
                 Platform.runLater(() ->
                 {
                     if(selectedItem[0] == null) // first use
                     {
-                        //double cellHeight = ((Control) lv.lookup(".list-cell")).getHeight();
-                        //lv.setFixedCellSize(cellHeight);
+                        double cellHeight = ((Control) lv.lookup(".list-cell")).getHeight();
+                        lv.setFixedCellSize(cellHeight);
                     }
                 });      
-                //lv.scrollTo(comboBox.getValue());
+                lv.scrollTo(comboBox.getValue());
             }
             else
             {

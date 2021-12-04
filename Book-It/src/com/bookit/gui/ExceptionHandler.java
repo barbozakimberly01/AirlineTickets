@@ -1,15 +1,15 @@
 package com.bookit.gui;
 
 
-import com.bookit.bizlogic.BizLogicProcess;
-import com.bookit.common.Customer;
+//import com.bookit.bizlogic.BizLogicProcess;
+//import com.bookit.common.Customer;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class ExceptionHandler {
 
-	public static boolean process(Customer co) {
+	/*public static boolean process(Customer co) {
 		
 		try {
 			
@@ -34,6 +34,6 @@ public class ExceptionHandler {
 		
 		
 		
-	}
+	}*/
 
 }

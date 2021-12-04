@@ -54,12 +54,13 @@ public class SignupController {
 		user = new User( 0, firstNameField.getText(), lastNameField.getText(), addressField.getText(), 
 				cityField.getText(), stateField.getText(), zipcodeField.getText(), usernameField.getText(), passwordField.getText(),
 				emailField.getText(), ssnField.getText(), null, securityAnswerField.getText(), false);
+		DataAccess dataAccess = new DataAccess();
 		try {
 			if(user.getFirstname() != null && !user.getFirstname().isBlank() && user.getLastname() != null && !user.getLastname().isBlank() && user.getStreetAddress() != null && !user.getStreetAddress().isBlank() && user.getCity() != null
 					&& !user.getCity().isBlank() && user.getState() != null && !user.getState().isBlank() && user.getZipcode() != null && !user.getZipcode().isBlank() && user.getUsername() != null && !user.getUsername().isBlank() && user.getPassword() != null
 					&& !user.getPassword().isBlank() && user.getEmailAddress() != null && !user.getEmailAddress().isBlank() && user.getSsn() != null && !user.getSsn().isBlank() && user.getSecurityAnswer() != null && !user.getSecurityAnswer().isBlank())  {
 				 //TODO: 1- validate SSN input.
-				if(DataAccess.UserSignup(user)){
+				if(dataAccess.UserSignup(user)){
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("ConfirmationMessage");
 		            alert.setHeaderText("Signup Confirmation");

@@ -7,6 +7,7 @@ public class SQLStatements {
 		public static final String SEARCHFLIGHT = "SELECT * FROM cis3270bookit.FLIGHTS where Origination = ? and Destination = ? and DepartureDate = ?;";
 		public static final String SEARCHGOINGTO = "SELECT DISTINCT(Destination) FROM `cis3270bookit`.`FLIGHTS`;";
 		public static final String SEARCHLEAVINGFROM = "SELECT DISTINCT(Origination) FROM `cis3270bookit`.`FLIGHTS`;";
+		public static final String CHECKBOOKINGS = "SELECT * FROM `cis3270bookit`.`FLIGHTS` where SSN = ? and FlightID = ?;";
 		
 		// Insert Statements
 		public static final String INSERTLOGIN = "INSERT INTO cis3270bookit.LOGINS(Username,Password,SecurityQuestion,SecurityAnswer,IsAdmin) VALUES (?,?,?,?,?);";

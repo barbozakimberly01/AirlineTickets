@@ -23,7 +23,7 @@ public class DataAccess implements UserInterface{
 	
 	
 	// Check username and password from database and validate if true.
-	public static boolean validUser(User user) throws SQLException {
+	public boolean validUser(User user) throws SQLException {
 		Connection con = GetConnecton();
 		try {
 			
@@ -52,7 +52,7 @@ public class DataAccess implements UserInterface{
 	}
 	
 	// check if security answer is true.
-	public static boolean validSecurityAnswer(User user) {
+	public boolean validSecurityAnswer(User user) {
 		try {
 	        if (user.getUsername() != null && !user.getUsername().isBlank() && !user.getSecurityQuestion().isBlank() && user.getSecurityQuestion() != null) {
 	        	Connection con = GetConnecton();      	
@@ -76,7 +76,7 @@ public class DataAccess implements UserInterface{
 	}
 	
 	//Insert new user and login information into USER and LOGIN table.
-	public static boolean UserSignup(User user) throws SQLException{
+	public boolean UserSignup(User user) throws SQLException{
 		Connection con = GetConnecton();
 		
 		try {
@@ -109,9 +109,30 @@ public class DataAccess implements UserInterface{
 	    }				
 	}
 	
-	public static boolean BookPayFlight(Bookings booking) throws SQLException{
+	public boolean BookPayFlight(Bookings booking) throws SQLException{
 		Connection con = GetConnecton();
-		try {
+		try {		
+			 /* PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.CHECKBOOKINGS);	
+			  preparedStmt.setString(1, booking.getSsn());
+			   preparedStmt.setString(2, booking.getFlightID());
+			   ResultSet rs = preparedStmt.executeQuery(); 
+			      
+			    if (!rs.next()) {
+		    		PreparedStatement bookStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
+		    		bookStmt.setString(1, String.valueOf(booking.getBookingID()));
+		    		bookStmt.setString(2, booking.getSsn());
+		    		bookStmt.setString(3, booking.getFlightID());
+		    		bookStmt.setString(4, booking.getNameOnCard());
+		    		bookStmt.setString(5, booking.getCreditCardNumber());
+		    		bookStmt.setString(6, booking.getExpirationDate());
+		    		bookStmt.setString(7, booking.getcVV());
+		    		bookStmt.executeUpdate(); 
+				    return true;	
+			    } 
+			    else{
+			    	 
+			    }*/
+			 
 	            PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
 			    preparedStmt.setString(1, String.valueOf(booking.getBookingID()));
 			    preparedStmt.setString(2, booking.getSsn());
@@ -127,8 +148,8 @@ public class DataAccess implements UserInterface{
 		catch (SQLException err) {
 	    	System.out.println(err.getMessage());
 	    	con.close();
-            return false;  
-	    }				
+	    }
+		return false;				
 	}
 	
 	
@@ -143,7 +164,7 @@ public class DataAccess implements UserInterface{
 		try {
 		
 			// Connect to Google Cloud MySQL DB
-			conn = DriverManager.getConnection("jdbc:mysql://35.237.105.213/cis3270bookit","cisuser","B00kit!");
+			conn = DriverManager.getConnection("jdbc:mysql://35.237.105.213/cis3270bookit?serverTimezone=EST","cisuser","B00kit!");
 			System.out.println("Database connected");
 		}
 		catch (SQLException e) {

@@ -26,24 +26,24 @@ import java.sql.SQLException;
 
 
 public class Main extends Application {
-	 static Parent root;
-	 static Stage primaryStage;
-	static Parent getRoot() {
+	  static Parent root;
+	  static Stage primaryStage;
+	 static Parent getRoot() {
 
         return root;
     }
 
-    static void setRoot(Parent root) {
+     static void setRoot(Parent root) {
 
         Main.root = root;
     }
 
-    static Stage getStage() {
+     static Stage getStage() {
 
         return primaryStage;
     }
 
-    static void setStage(Stage stage) {
+     void setStage(Stage stage) {
 
         Main.primaryStage = stage;
     }

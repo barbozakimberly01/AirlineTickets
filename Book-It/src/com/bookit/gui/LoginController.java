@@ -78,8 +78,9 @@ public class LoginController {
             return;
         }
 		user = new User( 0, null, null, null, null, null, null, usernameField.getText(), passwordField.getText(), null, null, null, null, false);
+		DataAccess dataAccess = new DataAccess();
 		try {
-			if(DataAccess.validUser(user)) {
+			if(dataAccess.validUser(user)) {
 	    	SceneCreator.launchScene("/com/bookit/gui/Search.fxml");  	
 			}
 			else {

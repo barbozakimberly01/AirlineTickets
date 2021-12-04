@@ -45,7 +45,8 @@ public class ForgotPasswordController {
         }
 		user = new User( 0, null, null, null, null, null, null, usernameField.getText(), null, null, null, securityQuestionField.getText(), securityAnswerField.getText(), false);
 		try {
-			if(DataAccess.validSecurityAnswer(user)) {
+			DataAccess dataAccess = new DataAccess();
+			if(dataAccess.validSecurityAnswer(user)) {
 				showPassword.setText("Your password is " + user.getPassword());
 				showPassword.setVisible(true);
 				wrongSecurityAnswer.setVisible(false);
