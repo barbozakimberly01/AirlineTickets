@@ -43,6 +43,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.prefs.Preferences;
@@ -114,6 +115,10 @@ public class SearchController{
 	@FXML
 	private HBox hBox;
 	@FXML
+	private Pane bookPayPane;
+	@FXML
+	private Button Logout;
+	@FXML
 	private TableView<SearchFlight> flightResultsView = new TableView();
 	
 	Preferences userInfo = Preferences.userRoot();
@@ -121,11 +126,17 @@ public class SearchController{
 	private String sSN = userInfo.get("SSN", "");
 	private String firstName = userInfo.get("FirstName", "");
 	private String lastName = userInfo.get("LastName", "");
+	private int isAdmin = userInfo.getInt("IsAdmin", 0);
 
 	//**********************************************
 	DataAccess dataAccess = new DataAccess();
 	@FXML
     public void initialize() throws SQLException {
+		manageFlights.setVisible(false);
+		if(isAdmin == 1) {
+			manageFlights.setVisible(true);
+		}
+		
 		List<String> leavingFromList = new ArrayList<>();
 		List<String> goingToList = new ArrayList<>();
 
@@ -153,11 +164,13 @@ public class SearchController{
         //leavingFromComboBox.setOnAction(null);
         ComboBox<HideableItem<String>> goingToComboBox = createComboBoxWithAutoCompletionSupport(goingToList);
         //hBox.getChildren().addAll(leavingFromComboBox, goingToComboBox);
+        
+        
         anchorPane.getChildren().addAll(leavingFromComboBox, goingToComboBox);
         leavingFromComboBox.setLayoutX(108);
-        leavingFromComboBox.setLayoutY(71);
+        leavingFromComboBox.setLayoutY(96);
         goingToComboBox.setLayoutX(322);
-        goingToComboBox.setLayoutY(71);
+        goingToComboBox.setLayoutY(96);
         
         //leavingFromComboBox.setOnAction(e -> searchFlights(e));     
         //leavingFromComboBox.setItems(FXCollections.observableArrayList("4", "5", "6"));
@@ -210,7 +223,7 @@ public class SearchController{
 	        }
 	    });
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+        System.out.println(isAdmin + " is the admin value for " + userName);
     }
 	//**********************************************
 	
@@ -259,6 +272,8 @@ public class SearchController{
 	
 	//Get flight results from database and display
 	public void getFlight(SearchFlight Flight) throws SQLException{
+		flightResultsView.setVisible(true);
+		
 		Connection con = DataAccess.GetConnecton();
 		try {
 			
@@ -317,6 +332,7 @@ public class SearchController{
 				row.setOnMouseClicked(event -> {
 					if(event.getClickCount() >= 1) {
 						SearchFlight flightdata = row.getItem();
+						bookPayPane.setVisible(true);
 						System.out.println("Record clicked");
 						//System.out.println(flightdata.getAirline() + ", " + flightdata.getFlightNumber() + ", " + flightdata.getOrigination() + ", " + flightdata.getDestination()/* + ", " + flightdata.getDepartureDate()*/);
 						lblFlightID.setText(flightdata.getFlightID());
@@ -330,13 +346,8 @@ public class SearchController{
 						lblArrivalDate.setText(String.valueOf(flightdata.getArrivalDate()));;
 						lblArrivalTime.setText(String.valueOf(flightdata.getArrivalTime()));;
 						lblPrice.setText(String.valueOf(flightdata.getPrice()));
-						
-						/*Preferences userInfo = Preferences.userRoot();
-				    	String userName = userInfo.get("Username", "");
-				    	String sSN = userInfo.get("SSN", "");
-				    	String firstName = userInfo.get("FirstName", "");
-				    	String lastName = userInfo.get("LastName", "");*/
 						lblPassengerName.setText(firstName + " " + lastName);
+						
 						
 					}					
 				});
@@ -385,7 +396,77 @@ public class SearchController{
 	    	
 
 			try {
-				if(dataAccess.BookPayFlight(booking)) {
+				String message = dataAccess.BookPayFlight(booking);
+				
+				if(message == null) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Data Error");
+		            alert.setContentText("Data Issue");        
+		            alert.show();
+				}
+				
+				else if (message == "flightfull") {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("Error");
+		            alert.setHeaderText("FLIGHT FULL!");
+		            alert.setContentText("The flight you are trying to book is full!");   
+		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
+		            //alert.show();
+		            
+		            Optional<ButtonType> option = alert.showAndWait();
+
+		            if (option.get() == null) {
+		               //this.label.setText("No selection!");
+		            } else if (option.get() == ButtonType.OK) {
+		               //this.label.setText("OK!");
+		            } else if (option.get() == ButtonType.CANCEL) {
+		               //this.label.setText("Cancelled!");
+		            } else {
+		               //this.label.setText("-");
+		            }
+		            bookPayPane.setVisible(false);
+				}
+				else if (message == "bookedalready"){
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("Error");
+		            alert.setHeaderText("");
+		            alert.setContentText("You have booked this flight already!");  
+		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
+		            //alert.show();
+		            Optional<ButtonType> option = alert.showAndWait();
+		            if (option.get() == null) {
+		               //this.label.setText("No selection!");
+		            } else if (option.get() == ButtonType.OK) {
+		               //this.label.setText("OK!");
+		            } else if (option.get() == ButtonType.CANCEL) {
+		               //this.label.setText("Cancelled!");
+		            } else {
+		               //this.label.setText("-");
+		            }
+		            bookPayPane.setVisible(false);
+				}
+				else if (message == "success"){
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("Success");
+		            alert.setHeaderText("");
+		            alert.setContentText("You have booked your flight successfully!!");
+		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
+		            //alert.show(); //getResource("img/success.png")
+		            
+		            Optional<ButtonType> option = alert.showAndWait();
+		            if (option.get() == null) {
+		               //this.label.setText("No selection!");
+		            } else if (option.get() == ButtonType.OK) {
+		               //this.label.setText("OK!");
+		            } else if (option.get() == ButtonType.CANCEL) {
+		               //this.label.setText("Cancelled!");
+		            } else {
+		               //this.label.setText("-");
+		            }
+		            bookPayPane.setVisible(false);
+				}
+				/*if(dataAccess.BookPayFlight(booking)) {
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("ConfirmationMessage");
 		            alert.setHeaderText("Booking Confirmation");
@@ -398,7 +479,7 @@ public class SearchController{
 		            alert.setHeaderText("Booking Error");
 		            alert.setContentText("An error occurred while booking your fligh.");        
 		            alert.show();
-				}
+				}*/
 				System.out.println("Test");
 			}
 			catch (Exception error) {
@@ -406,6 +487,17 @@ public class SearchController{
 				System.out.println(error.getMessage());
 			}
 	} 
+	@FXML
+	private void Logout(ActionEvent event) {
+		try {
+            SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
+		} 
+		catch (Exception e){
+			 System.out.println(e);
+		        e.printStackTrace();
+		}
+		
+	}
 	//*********ComboBox********
 
 	public class HideableItem<T>

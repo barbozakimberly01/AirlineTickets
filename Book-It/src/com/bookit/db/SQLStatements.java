@@ -2,12 +2,14 @@ package com.bookit.db;
 
 public class SQLStatements {
 		// Select Statements
-		public static final String LOGIN = "SELECT l.Username, u.SSN, u.FirstName, u.LastName FROM cis3270bookit.LOGINS l inner join cis3270bookit.USERS u on l.Username = u.Username where l.Username = ? and l.Password = ?;";
+		public static final String LOGIN = "SELECT l.Username, u.SSN, u.FirstName, u.LastName, l.IsAdmin FROM cis3270bookit.LOGINS l inner join cis3270bookit.USERS u on l.Username = u.Username where l.Username = ? and l.Password = ?;";
 		public static final String GETPASSWORD = "SELECT Password FROM cis3270bookit.LOGINS where Username = ? and SecurityAnswer = ?;";
 		public static final String SEARCHFLIGHT = "SELECT * FROM cis3270bookit.FLIGHTS where Origination = ? and Destination = ? and DepartureDate = ?;";
 		public static final String SEARCHGOINGTO = "SELECT DISTINCT(Destination) FROM `cis3270bookit`.`FLIGHTS`;";
 		public static final String SEARCHLEAVINGFROM = "SELECT DISTINCT(Origination) FROM `cis3270bookit`.`FLIGHTS`;";
-		public static final String CHECKBOOKINGS = "SELECT * FROM `cis3270bookit`.`FLIGHTS` where SSN = ? and FlightID = ?;";
+		public static final String CHECKBOOKINGS = "SELECT * FROM `cis3270bookit`.`BOOKINGS` where SSN = ? and FlightID = ?;";
+		public static final String COUNTBOOKINGS = "SELECT count(*) bookedflights FROM `cis3270bookit`.`BOOKINGS` where FlightID = ?;";
+		public static final String TOTALSEATS = "SELECT TotalSeats FROM `cis3270bookit`.`FLIGHTS` where FlightID = ?;";
 		
 		// Insert Statements
 		public static final String INSERTLOGIN = "INSERT INTO cis3270bookit.LOGINS(Username,Password,SecurityQuestion,SecurityAnswer,IsAdmin) VALUES (?,?,?,?,?);";

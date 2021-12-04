@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.LoginController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600" prefWidth="1200.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600" prefWidth="1200.0" stylesheets="@application.css">
          <children>
             <Label alignment="CENTER" prefHeight="61.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="BOOK-IT!">
                <font>
@@ -17,7 +17,7 @@
                </font>
             </Label>
             <TextField fx:id="usernameField" layoutX="634.0" layoutY="183.0" onAction="#validateUser" promptText="Enter your username" text="customer1" />
-            <Label layoutX="500.0" layoutY="177.0" prefHeight="38.0" prefWidth="92.0" text="Username">
+            <Label layoutX="493.0" layoutY="177.0" prefHeight="38.0" prefWidth="99.0" text="Username">
                <font>
                   <Font size="20.0" />
                </font>

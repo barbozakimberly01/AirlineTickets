@@ -27,7 +27,6 @@ public class LoginController {
 	@FXML
 	private TextField passwordField;
 	
-	
 	@FXML
 	//Take the user to the SignUp Scene
 	private void goToSignUp(Event event) {
@@ -81,6 +80,7 @@ public class LoginController {
 		DataAccess dataAccess = new DataAccess();
 		try {
 			if(dataAccess.validUser(user)) {
+				
 	    	SceneCreator.launchScene("/com/bookit/gui/Search.fxml");  	
 			}
 			else {
@@ -90,6 +90,7 @@ public class LoginController {
 	            alert.setContentText("Invalid Username or Password..");        
 	            alert.show();
 	            SceneCreator.launchScene("/com/bookit/gui/Login.fxml"); 
+	            
 			}
 	    } catch (IOException ex) {
 	        System.out.println("Error loading Login FXML !");

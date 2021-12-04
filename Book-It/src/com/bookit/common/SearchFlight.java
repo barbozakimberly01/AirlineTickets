@@ -150,6 +150,8 @@ public class SearchFlight {
 	/*public ComboBox getOnAction() {
 		
 	}*/
-	
+	public void initialize() {
+		
+	}
 
 }

@@ -70,7 +70,10 @@ public class Main extends Application {
 			Scene scene = new Scene(root, 1200, 650);
 			Main.primaryStage = primaryStage;
 			primaryStage.setTitle("Book-It Airline Reservation System");
-			scene.getRoot().setStyle("-fx-font-family: 'Helvetica'");
+			scene.getRoot().setStyle("-fx-font-family: 'Helvetica'; -fx-text-fill: '#FFFF00'");
+			//scene.getRoot();
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			

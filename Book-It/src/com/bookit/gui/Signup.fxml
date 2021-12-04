@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.SignupController">
    <children>
-      <AnchorPane layoutY="-2.0" prefHeight="600" prefWidth="1200.0">
+      <AnchorPane layoutY="-2.0" prefHeight="600" prefWidth="1200.0" stylesheets="@application.css">
          <children>
             <Label alignment="CENTER" layoutY="1.0" prefHeight="60.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="Sign Up">
                <font>

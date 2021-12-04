@@ -13,14 +13,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookit.gui.SearchController">
    <children>
-      <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1200.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1200.0" stylesheets="@application.css">
          <children>
             <Label alignment="CENTER" layoutY="-2.0" prefHeight="33.0" prefWidth="1200.0" style="-fx-background-color: #add8e6;" text="Search Flights">
                <font>
                   <Font name="System Bold" size="39.0" />
                </font>
             </Label>
-            <TableView fx:id="flightResultsView" layoutX="10.0" layoutY="222.0" prefHeight="332.0" prefWidth="872.0">
+            <TableView fx:id="flightResultsView" layoutX="10.0" layoutY="222.0" prefHeight="332.0" prefWidth="872.0" visible="false">
                <columns>
                   <TableColumn prefWidth="75.0" text="Flight ID" visible="false" />
                   <TableColumn prefWidth="57.0" text="Airline" />
@@ -36,22 +36,22 @@
                </columns>
             </TableView>
             <Button fx:id="searchButton" layoutX="383.0" layoutY="155.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="125.0" text="Search" />
-            <DatePicker fx:id="departureDate" layoutX="522.0" layoutY="71.0" prefHeight="25.0" prefWidth="186.0" promptText="DepartureDate" />
+            <DatePicker fx:id="departureDate" layoutX="522.0" layoutY="96.0" prefHeight="25.0" prefWidth="186.0" promptText="DepartureDate" />
             <Button fx:id="manageFlights" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#manageFlights" prefHeight="39.0" prefWidth="103.0" text="Manage Flights" />
-            <Button layoutX="1098.0" layoutY="7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Logout" />
+            <Button fx:id="Logout" layoutX="1098.0" layoutY="7.0" mnemonicParsing="false" onAction="#Logout" prefHeight="39.0" prefWidth="103.0" text="Logout" />
             <Button layoutX="983.0" layoutY="7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Book Flights" />
             <Button layoutX="873.0" layoutY="7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="My Flights" />
-            <Pane layoutX="925.0" layoutY="71.0" prefHeight="525.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4;">
+            <Pane fx:id="bookPayPane" layoutX="925.0" layoutY="71.0" prefHeight="525.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4;" visible="false">
                <children>
                   <Label fx:id="lblFlightAirline" layoutX="120.0" layoutY="55.0" prefHeight="25.0" prefWidth="103.0" text="r" textFill="#ff5151" />
                   <Button fx:id="completeBookingButton" layoutX="70.0" layoutY="486.0" mnemonicParsing="false" onAction="#CompleteBooking" text="Complete Booking" />
                   <Label fx:id="lblFlightOrigination" layoutX="118.0" layoutY="111.0" prefHeight="17.0" prefWidth="107.0" text="r" textFill="#ff5151" />
                   <Label fx:id="lblFlightDestination" layoutX="119.0" layoutY="138.0" prefHeight="17.0" prefWidth="114.0" text="r" textFill="#ff5151" />
                   <Label fx:id="lblFlightDepartureDate" layoutX="119.0" layoutY="162.0" prefHeight="17.0" prefWidth="87.0" text="r" textFill="#ff5151" />
-                  <TextField fx:id="nameOnCardField" layoutX="26.0" layoutY="296.0" onAction="#CompleteBooking" promptText="Enter Name on Card" />
-                  <TextField fx:id="creditCardNumberField" layoutX="26.0" layoutY="347.0" onAction="#CompleteBooking" promptText="Enter Card Number" />
-                  <TextField fx:id="expirationDateField" layoutX="26.0" layoutY="399.0" onAction="#CompleteBooking" prefHeight="25.0" prefWidth="149.0" promptText="yyyy-mm-dd" />
-                  <TextField fx:id="cVVField" layoutX="26.0" layoutY="448.0" onAction="#CompleteBooking" promptText="Enter your CVV" />
+                  <TextField fx:id="nameOnCardField" layoutX="26.0" layoutY="296.0" onAction="#CompleteBooking" promptText="Enter Name on Card" text="John Doe" />
+                  <TextField fx:id="creditCardNumberField" layoutX="26.0" layoutY="347.0" onAction="#CompleteBooking" promptText="Enter Card Number" text="123456789012345" />
+                  <TextField fx:id="expirationDateField" layoutX="26.0" layoutY="399.0" onAction="#CompleteBooking" prefHeight="25.0" prefWidth="149.0" promptText="yyyy-mm-dd" text="2026-12-26" />
+                  <TextField fx:id="cVVField" layoutX="26.0" layoutY="448.0" onAction="#CompleteBooking" promptText="Enter your CVV" text="917" />
                   <Label layoutX="32.0" layoutY="7.0" prefHeight="33.0" prefWidth="197.0" text="Book and Pay for Flight">
                      <font>
                         <Font name="System Bold" size="17.0" />
@@ -82,6 +82,9 @@
             </Pane>
             <ComboBox fx:id="leavingFromComboBox2" editable="true" layoutX="108.0" layoutY="104.0" prefHeight="25.0" prefWidth="169.0" promptText="Leaving From" visible="false" />
             <ComboBox fx:id="goingToComboBox2" editable="true" layoutX="326.0" layoutY="104.0" prefHeight="25.0" prefWidth="160.0" promptText="Going To" visible="false" />
+            <Label layoutX="522.0" layoutY="71.0" prefHeight="17.0" prefWidth="95.0" text="Departure Date" />
+            <Label layoutX="322.0" layoutY="71.0" prefHeight="17.0" prefWidth="95.0" text="Departure Date" />
+            <Label layoutX="108.0" layoutY="71.0" prefHeight="17.0" prefWidth="95.0" text="Leaving From" />
          </children>
       </AnchorPane>
    </children>

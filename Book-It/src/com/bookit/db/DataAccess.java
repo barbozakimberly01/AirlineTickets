@@ -40,6 +40,7 @@ public class DataAccess implements UserInterface{
 			    	  userInfo.put("SSN", String.valueOf(data.getInt("SSN")));
 			    	  userInfo.put("FirstName", data.getString("FirstName"));
 			    	  userInfo.put("LastName", data.getString("LastName"));
+			    	  userInfo.put("IsAdmin", String.valueOf(data.getInt("IsAdmin")));
 			    	  return true;
 			      }        
 	        }   
@@ -109,47 +110,60 @@ public class DataAccess implements UserInterface{
 	    }				
 	}
 	
-	public boolean BookPayFlight(Bookings booking) throws SQLException{
+	public String BookPayFlight(Bookings booking) throws SQLException{
 		Connection con = GetConnecton();
 		try {		
-			 /* PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.CHECKBOOKINGS);	
-			  preparedStmt.setString(1, booking.getSsn());
-			   preparedStmt.setString(2, booking.getFlightID());
-			   ResultSet rs = preparedStmt.executeQuery(); 
-			      
-			    if (!rs.next()) {
-		    		PreparedStatement bookStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
-		    		bookStmt.setString(1, String.valueOf(booking.getBookingID()));
-		    		bookStmt.setString(2, booking.getSsn());
-		    		bookStmt.setString(3, booking.getFlightID());
-		    		bookStmt.setString(4, booking.getNameOnCard());
-		    		bookStmt.setString(5, booking.getCreditCardNumber());
-		    		bookStmt.setString(6, booking.getExpirationDate());
-		    		bookStmt.setString(7, booking.getcVV());
-		    		bookStmt.executeUpdate(); 
-				    return true;	
-			    } 
-			    else{
-			    	 
-			    }*/
-			 
-	            PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
-			    preparedStmt.setString(1, String.valueOf(booking.getBookingID()));
-			    preparedStmt.setString(2, booking.getSsn());
-			    preparedStmt.setString(3, booking.getFlightID());
-			    preparedStmt.setString(4, booking.getNameOnCard());
-			    preparedStmt.setString(5, booking.getCreditCardNumber());
-			    preparedStmt.setString(6, booking.getExpirationDate());
-			    preparedStmt.setString(7, booking.getcVV());
-			    preparedStmt.executeUpdate(); 
-			    return true;	
+			
+			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.TOTALSEATS);	
+			preparedStmt.setString(1, booking.getFlightID());
+			
+			ResultSet rs = preparedStmt.executeQuery(); 
+			int totalSeats = 0;
+			if(rs.next()) {
+				totalSeats = rs.getInt("TotalSeats");
+			    System.out.println(totalSeats);
+			}
+			rs.close();
+			
+		    preparedStmt = con.prepareStatement(SQLStatements.COUNTBOOKINGS);
+		    preparedStmt.setString(1, booking.getFlightID());
+		    rs = preparedStmt.executeQuery(); 
+		    int countBookings = 0;
+		    if (rs.next()){
+		    	countBookings = rs.getInt("bookedflights");
+		    }
+		    System.out.println(countBookings);
+		    
+		    if(countBookings >= totalSeats) {
+		    	return "flightfull";
+		    }
+		    rs.close();
+			 preparedStmt = con.prepareStatement(SQLStatements.CHECKBOOKINGS);	
+			 preparedStmt.setString(1, booking.getSsn());
+			 preparedStmt.setString(2, booking.getFlightID());
+			 rs = preparedStmt.executeQuery(); 
+		      
+		    if (!rs.next()) {
+	    		PreparedStatement bookStmt = con.prepareStatement(SQLStatements.BOOKPAYFLIGHT);			    		     
+	    		bookStmt.setString(1, String.valueOf(booking.getBookingID()));
+	    		bookStmt.setString(2, booking.getSsn());
+	    		bookStmt.setString(3, booking.getFlightID());
+	    		bookStmt.setString(4, booking.getNameOnCard());
+	    		bookStmt.setString(5, booking.getCreditCardNumber());
+	    		bookStmt.setString(6, booking.getExpirationDate());
+	    		bookStmt.setString(7, booking.getcVV());
+	    		bookStmt.executeUpdate(); 
+			    return "success";	
+		    } else {
+		    	return "bookedalready";
+		    }		 	
 			    //TODO:validate or convert date to yyyy-mm-dd 
 	    } 
 		catch (SQLException err) {
 	    	System.out.println(err.getMessage());
 	    	con.close();
 	    }
-		return false;				
+		return null;				
 	}
 	
 	
