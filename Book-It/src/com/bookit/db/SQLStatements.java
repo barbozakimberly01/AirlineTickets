@@ -10,6 +10,8 @@ public class SQLStatements {
 		public static final String CHECKBOOKINGS = "SELECT * FROM `cis3270bookit`.`BOOKINGS` where SSN = ? and FlightID = ?;";
 		public static final String COUNTBOOKINGS = "SELECT count(*) bookedflights FROM `cis3270bookit`.`BOOKINGS` where FlightID = ?;";
 		public static final String TOTALSEATS = "SELECT TotalSeats FROM `cis3270bookit`.`FLIGHTS` where FlightID = ?;";
+		public static final String CHECKSSN = "SELECT * FROM `cis3270bookit`.`USERS` where SSN = ?;";
+		public static final String GETUSERNAME = "SELECT * FROM `cis3270bookit`.`USERS` where Username = ?;";
 		
 		// Insert Statements
 		public static final String INSERTLOGIN = "INSERT INTO cis3270bookit.LOGINS(Username,Password,SecurityQuestion,SecurityAnswer,IsAdmin) VALUES (?,?,?,?,?);";
@@ -33,7 +35,7 @@ public class SQLStatements {
 		
 		public static final String USER = "SELECT REPLACE(SSN, ',', '') SSN,FirstName,LastName,Address,City,State,Zip,Email,Username FROM USERS WHERE SSN = ?;";
 		
-		public static final String BOOKINGS = "SELECT Airline,FlightNumber,Origination,Destination,DepartureDate,DepartureTime,ArrivalDate,ArrivalTime "
+		public static final String BOOKINGS = "SELECT BookingID, Airline,FlightNumber,Origination,Destination,DepartureDate,DepartureTime,ArrivalDate,ArrivalTime "
 				+ "FROM FLIGHTS f JOIN BOOKINGS b ON f.FlightID = b.FlightID WHERE b.SSN = ?;";
 		
 		
@@ -58,6 +60,9 @@ public class SQLStatements {
 		// Delete Statement
 		public static final String DELETE = "DELETE FROM FLIGHTS \n"
 				+ "WHERE FlightID=%d;";
+		
+		public static final String DELETEBOOKING = "DELETE FROM BOOKINGS \n"
+				+ "WHERE BookingID=%d;";
 		
 
 }

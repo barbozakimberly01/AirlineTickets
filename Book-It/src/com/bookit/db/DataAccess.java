@@ -1,12 +1,10 @@
 package com.bookit.db;
 
 import java.sql.Connection;
-//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -74,6 +72,21 @@ public class DataAccess implements UserInterface{
 	    	System.out.println(err.getMessage());
 	    }
 		return false;	
+	}
+	public boolean validUserName(User user) throws SQLException {
+		Connection con = GetConnecton();  
+		try {
+			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.GETUSERNAME);		
+		    preparedStmt.setString(1, user.getUsername());
+		    ResultSet rs = preparedStmt.executeQuery(); 
+		      
+		    if (rs.next()) {
+		    	  return true;
+		    } 		
+		}catch (SQLException err) {
+	    	System.out.println(err.getMessage());
+	    }
+		return false;
 	}
 	
 	//Insert new user and login information into USER and LOGIN table.
@@ -166,7 +179,24 @@ public class DataAccess implements UserInterface{
 		return null;				
 	}
 	
-	
+	public boolean validateSSN(User user) throws SQLException{
+		Connection con = GetConnecton();
+		try {
+			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.CHECKSSN);	
+			preparedStmt.setString(1, user.getSsn());
+			ResultSet rs = preparedStmt.executeQuery(); 
+			    if (rs.next()) {
+			    	  return false;
+			   }     
+		}
+		catch (SQLException err) {
+	    	System.out.println(err.getMessage());
+	    	con.close();
+	    }
+        return true;  
+
+	}
+		
 	
 	//************************ Ron Code **************************************
 	
