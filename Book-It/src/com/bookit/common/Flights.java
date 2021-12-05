@@ -20,9 +20,9 @@ public abstract class Flights {
 	protected int price;
 	protected int totalSeats;
 	
-	public int getFlightID() {
-		return flightID;
-	}
+//	public int getFlightID() {
+//		return flightID;
+//	}
 	public void setFlightID(int flightID) {
 		this.flightID = flightID;
 	}
@@ -50,45 +50,33 @@ public abstract class Flights {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-public LocalDate getDepartureDate() {
-		return departureDate;
-	}
+//	public LocalDate getDepartureDate() {
+//		return departureDate;
+//	}
 	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
-	//	public String getDepartureDate() {
-//		return departureDate;
-//	}
-//	public void setDepartureDate(String departureDate) {
-//		this.departureDate = departureDate;
-//	}
 	public String getDepartureTime() {
 		return departureTime;
 	}
 	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
+//	public LocalDate getArrivalDate() {
+//		return arrivalDate;
+//	}
 	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-//	public String getArrivalDate() {
-//		return arrivalDate;
-//	}
-//	public void setArrivalDate(String arrivalDate) {
-//		this.arrivalDate = arrivalDate;
-//	}
 	public String getArrivalTime() {
 		return arrivalTime;
 	}
 	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-	public int getPrice() {
-		return price;
-	}
+//	public int getPrice() {
+//		return price;
+//	}
 	public void setPrice(int price) {
 		this.price = price;
 	}
