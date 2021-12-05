@@ -33,7 +33,7 @@ public class SQLStatements {
 		
 		public static final String USER = "SELECT REPLACE(SSN, ',', '') SSN,FirstName,LastName,Address,City,State,Zip,Email,Username FROM USERS WHERE SSN = ?;";
 		
-		public static final String BOOKINGS = "SELECT Airline,FlightNumber,Origination,Destination,DepartureDate,DepartureTime,ArrivalDate,ArrivalTime "
+		public static final String BOOKINGS = "SELECT BookingID, Airline,FlightNumber,Origination,Destination,DepartureDate,DepartureTime,ArrivalDate,ArrivalTime "
 				+ "FROM FLIGHTS f JOIN BOOKINGS b ON f.FlightID = b.FlightID WHERE b.SSN = ?;";
 		
 		
@@ -58,6 +58,9 @@ public class SQLStatements {
 		// Delete Statement
 		public static final String DELETE = "DELETE FROM FLIGHTS \n"
 				+ "WHERE FlightID=%d;";
+		
+		public static final String DELETEBOOKING = "DELETE FROM BOOKINGS \n"
+				+ "WHERE BookingID=%d;";
 		
 
 }
