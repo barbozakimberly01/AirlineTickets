@@ -5,7 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 abstract class ControllerMenu {
-	
+
+    @FXML
+    Button btnManageFlights;
+    
     @FXML
     Button btnSearchFlights;
     
@@ -15,7 +18,18 @@ abstract class ControllerMenu {
     @FXML
     Button btnLogout;
     
-	
+	// Manage Flights
+    @FXML
+    void manageFlightsAction(ActionEvent event) {
+    	try {
+			SceneCreator.launchScene("/com/bookit/gui/MaangeFlights.fxml");
+			} 
+    	catch (Exception e) {
+	        System.out.println(e);
+	        e.printStackTrace();
+	    }
+    } 
+    
 	// Book Flights
     @FXML
     void searchFlightsAction(ActionEvent event) {
