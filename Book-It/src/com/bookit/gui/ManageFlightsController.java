@@ -1,78 +1,59 @@
 package com.bookit.gui;
 
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-
 import com.bookit.db.DataAccess;
 import com.bookit.db.SQLStatements;
+import com.bookit.exceptions.ErrorAlerts;
+import com.mysql.cj.util.StringUtils;
 
-import java.util.ArrayList;
+import javafx.scene.control.Alert;
 import java.util.ResourceBundle;
-import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import java.net.URL;
 import com.bookit.common.Flight;
-import com.bookit.common.SearchFlight;
-
-import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import javafx.util.Duration;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.util.Callback;
+import static javax.swing.JOptionPane.showMessageDialog;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
-public class ManageFlightsController implements Initializable{
+public class ManageFlightsController extends ControllerMenu implements ErrorAlerts, Initializable{
 	
 	// Load flights on scene load
     
     @Override
     // Populate the TableView on load
-    public void initialize(URL url, ResourceBundle rb) {
-    	lblStatusText.setText("");
-    	showTblView();
-    	
+    public void initialize(URL url, ResourceBundle rb) {	
+    	try {
+    		lblStatusText.setText("");
+        	showTblView();
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+	    		lblStatusText.setText("Error loading table!");
+		        showMessageDialog(null, "Error loading table");
+		    }
     }
     
     /************************************
@@ -83,15 +64,6 @@ public class ManageFlightsController implements Initializable{
     
     @FXML
     private Button btnReloadFlights;
-
-    @FXML
-    private Button btnLogout;
-    
-    @FXML
-    private Button btnSearchFlights;
-
-    @FXML
-    private Button btnMyFlights;
     
     @FXML
     private Label lblStatusText;
@@ -100,7 +72,7 @@ public class ManageFlightsController implements Initializable{
      * 	Table View Objects 
      ************************************/
     @FXML
-    private TableView<Flight> tblView = new TableView();
+    private TableView<Flight> tblView = new TableView<Flight>();
 	
     
     /************************************
@@ -131,7 +103,10 @@ public class ManageFlightsController implements Initializable{
     private TextField txtOrigination;
 
     @FXML
-    private TextField txtDepartureDate;
+    private TextField txtDepartureDates;
+    
+    @FXML
+    private DatePicker txtDepartureDate;
 
     @FXML
     private TextField txtDepartureTime;
@@ -140,7 +115,10 @@ public class ManageFlightsController implements Initializable{
     private TextField txtDestination;
 
     @FXML
-    private TextField txtArrivalDate;
+    private TextField txtArrivalDates;
+    
+    @FXML
+    private DatePicker txtArrivalDate;
 
     @FXML
     private TextField txtArrivalTime;
@@ -162,77 +140,79 @@ public class ManageFlightsController implements Initializable{
      * 		Action Events
      ************************************/
     
-    public void refreshFlights(ActionEvent event) {
-    	btnReloadFlights.setOnAction(new EventHandler<ActionEvent>() {
-    		public void handle(ActionEvent e)
-    		{
-    			showTblView();
-    			lblStatusText.setText("Flights have been reloaded");
-    		}
-    	});
+    public void refreshFlightsAction(ActionEvent event) {
+//    	btnReloadFlights.setOnAction(new EventHandler<ActionEvent>() {
+//    		public void handle(ActionEvent e)
+//    		{
+//    			showTblView();
+//    			lblStatusText.setText("Flights have been reloaded");
+//    		}
+//    	});
+    	
+    	try {
+    		showTblView();
+    		lblStatusText.setText("Flights have been reloaded");
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     }
 
     @FXML
-    void createFlightAction(ActionEvent event) {
-    	btnCreateFlight.setOnAction(new EventHandler<ActionEvent>() {
-    		public void handle(ActionEvent e)
-    		{
-    			createFlight();
-    		}
-    	});
+    public void createFlightAction(ActionEvent event) {
+//    	btnCreateFlight.setOnAction(new EventHandler<ActionEvent>() {
+//    		public void handle(ActionEvent e)
+//    		{
+//    			createFlight();
+//    		}
+//    	});
+    	
+    	try {
+    		createFlight();
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
+    }
+    
+    
+    @FXML
+    public void createFlightSubmitAction(ActionEvent event) {
+//    	btnSubmitFlight.setOnAction(new EventHandler<ActionEvent>() {
+//    		public void handle(ActionEvent e)
+//    		{
+//    			submitCreatedFlight();
+//    		}
+//    	});
+    	try {
+    		submitCreatedFlight();
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     }
     
     @FXML
-    void createFlightSubmitAction(ActionEvent event) {
-    	btnSubmitFlight.setOnAction(new EventHandler<ActionEvent>() {
-    		public void handle(ActionEvent e)
-    		{
-    			submitCreatedFlight();
-    		}
-    	});
-    }
-    
-    @FXML
-    void updateFlightAction(ActionEvent event) {
-    	btnSubmitUpdate.setOnAction(new EventHandler<ActionEvent>() {
-    		public void handle(ActionEvent e)
-    		{
-    			updateFlight(currentFlight);
-    		}
-    	});
-    }
-
-    @FXML
-    void logoutAction(ActionEvent event) {
+    public void updateFlightAction(ActionEvent event) {
+//    	btnSubmitUpdate.setOnAction(new EventHandler<ActionEvent>() {
+//    		public void handle(ActionEvent e)
+//    		{
+//    			updateFlight(currentFlight);
+//    		}
+//    	});
+    	
     	try {
-			SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
+    		updateFlight(currentFlight);
 			}
 		catch (Exception e) {
-	        System.out.println(e);
-	        e.printStackTrace();
-	    }
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     }
-
-    @FXML
-    void myFlightsAction(ActionEvent event) {
-    	try {
-			SceneCreator.launchScene("/com/bookit/gui/MyFlights.fxml");
-			}
-		catch (Exception e) {
-	        System.out.println(e);
-	        e.printStackTrace();
-	    }
-    }
-
-    @FXML
-    void searchFlightsAction(ActionEvent event) {
-    	try {
-			SceneCreator.launchScene("/com/bookit/gui/Search.fxml");
-			} catch (Exception e) {
-	        System.out.println(e);
-	        e.printStackTrace();
-	    }
-    }    
+ 
     
 	/************************************
 	 * 	Controller Logic
@@ -242,26 +222,44 @@ public class ManageFlightsController implements Initializable{
     }
     
     private void showTblView() {
-    	anchorFlight.setVisible(false);
-    	tblView.setVisible(true);
-    	btnCreateFlight.setVisible(true);
-    	loadAllFlights();
+    	try {
+        	anchorFlight.setVisible(false);
+        	tblView.setVisible(true);
+        	btnCreateFlight.setVisible(true);
+        	loadAllFlights();
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     }
     
     private void showAnchor() {
-    	lblStatusText.setText("");
-    	tblView.setVisible(false);
-    	btnCreateFlight.setVisible(false);
-    	showFlightID(false);
-		anchorFlight.setVisible(true);	
+    	try {
+        	lblStatusText.setText("");
+        	tblView.setVisible(false);
+        	btnCreateFlight.setVisible(false);
+        	showFlightID(false);
+    		anchorFlight.setVisible(true);	
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     } 
     
     private void showFlightID(boolean choice) {
-    	lblFlightID.setVisible(choice);
-    	lblFlightIDValue.setVisible(choice);
+    	try {
+    		lblFlightID.setVisible(choice);
+        	lblFlightIDValue.setVisible(choice);
+			}
+		catch (Exception e) {
+		        System.out.println(e);
+		        e.printStackTrace();
+		    }
     }
 	
-    public void loadAllFlights() {
+    private void loadAllFlights() {
 		
 		try {
 			
@@ -281,18 +279,24 @@ public class ManageFlightsController implements Initializable{
 				tblView.getItems().clear();
 				tblView.getColumns().clear();
 				ObservableList<Flight> flightResultsList = FXCollections.observableArrayList();
+				
 	            
 	            while(rs.next()){
 					
+	            	LocalDate localDDate = LocalDate.parse(rs.getString("DepartureDate"));
+	            	LocalDate localADate = LocalDate.parse(rs.getString("ArrivalDate"));
+	            	
 					flightResultsList.addAll(new Flight(
 							rs.getInt("FlightID"),
 							rs.getString("Airline"),
 							rs.getString("FlightNumber"),
 							rs.getString("Origination"),
 							rs.getString("Destination"),
-							rs.getString("DepartureDate"),
+							localDDate,
+//							rs.getString("DepartureDate"),
 							rs.getString("DepartureTime"),
-							rs.getString("ArrivalDate"),
+//							rs.getString("ArrivalDate"),
+							localADate,
 							rs.getString("ArrivalTime"),
 							rs.getInt("Price"),
 							rs.getInt("TotalSeats")
@@ -325,18 +329,24 @@ public class ManageFlightsController implements Initializable{
 	            colDestination.setMaxWidth(colDestination.getPrefWidth());
 	            colDestination.setMinWidth(colDestination.getPrefWidth());
 		    	
-	            TableColumn<Flight, String> colDepartureDate = new TableColumn<>("DepartureDate");
+//	            TableColumn<Flight, String> colDepartureDate = new TableColumn<>("DepartureDate");
+//	            colDepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
+//	            
+	            TableColumn<Flight, LocalDate> colDepartureDate = new TableColumn<>("DepartureDate");
 	            colDepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
 		    	
 		    	TableColumn<Flight, String> colDepartureTime = new TableColumn<>("DepartureTime");
 		    	colDepartureTime.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
 		    	
-	            TableColumn<Flight, String> colArrivalDate = new TableColumn<>("ArrivalDate");
+//	            TableColumn<Flight, String> colArrivalDate = new TableColumn<>("ArrivalDate");
+//	            colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
+	            
+	            TableColumn<Flight, LocalDate> colArrivalDate = new TableColumn<>("ArrivalDate");
 	            colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
 		    	
 		    	TableColumn<Flight, String> colArrivalTime = new TableColumn<>("ArrivalTime");
 		    	colArrivalTime.setCellValueFactory(new PropertyValueFactory<>("ArrivalTime"));
-		    	
+
 		    	TableColumn<Flight, Integer> colPrice = new TableColumn<>("Price");
 		    	colPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
 		    	colPrice.setPrefWidth(70);
@@ -351,8 +361,8 @@ public class ManageFlightsController implements Initializable{
 	            
 				tblView.setItems(flightResultsList);
 				tblView.getColumns().addAll(colFlightID, colAirline, colFlightNumber, colOrigination, colDestination, colDepartureDate, colDepartureTime, colArrivalDate, colArrivalTime, colPrice, colSeatCount);
+				tblView.applyCss();
 				addButtonToTable("","Delete");
-				
 				addButtonToTable("","Edit");
 				System.out.println("ResultList: " + flightResultsList.size());
 			}
@@ -369,53 +379,58 @@ public class ManageFlightsController implements Initializable{
     private void addButtonToTable(String columnName, String buttonName) {
         TableColumn<Flight, Void> colBtn = new TableColumn(columnName);
 
-        Callback<TableColumn<Flight, Void>, TableCell<Flight, Void>> cellFactory = new Callback<TableColumn<Flight, Void>, TableCell<Flight, Void>>() {
-            @Override
-            public TableCell<Flight, Void> call(final TableColumn<Flight, Void> param) {
-                final TableCell<Flight, Void> cell = new TableCell<Flight, Void>() {
-
-                    private final Button btn = new Button(buttonName);
-                    
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                        	
-                        	Flight flight = getTableView().getItems().get(getIndex());
-                            System.out.println(buttonName + " selectedData: " + flight);
-                        	
-                        	if(buttonName == "Delete") {
-                        		deleteFlight(flight);
-                        	}
-                        	if(buttonName == "Edit") {
-                        		editFlight(flight);
-                        	}
-                            
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                            btn.setPrefWidth(60);
-                            btn.setMaxWidth(btn.getPrefWidth());
-                            btn.setMinWidth(btn.getPrefWidth());
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-        colBtn.setPrefWidth(70);
-        colBtn.setMaxWidth(colBtn.getPrefWidth());
-        colBtn.setMinWidth(colBtn.getPrefWidth());
-
-        tblView.getColumns().add(colBtn);
+        try {
+	        Callback<TableColumn<Flight, Void>, TableCell<Flight, Void>> cellFactory = new Callback<TableColumn<Flight, Void>, TableCell<Flight, Void>>() {
+	            @Override
+	            public TableCell<Flight, Void> call(final TableColumn<Flight, Void> param) {
+	                final TableCell<Flight, Void> cell = new TableCell<Flight, Void>() {
+	
+	                    private final Button btn = new Button(buttonName);
+	                    
+	
+	                    {
+	                        btn.setOnAction((ActionEvent event) -> {
+	                        	
+	                        	Flight flight = getTableView().getItems().get(getIndex());
+	                            System.out.println(buttonName + " selectedData: " + flight);
+	                        	
+	                        	if(buttonName == "Delete") {
+	                        		deleteFlight(flight);
+	                        	}
+	                        	if(buttonName == "Edit") {
+	                        		editFlight(flight);
+	                        	}
+	                            
+	                        });
+	                    }
+	
+	                    @Override
+	                    public void updateItem(Void item, boolean empty) {
+	                        super.updateItem(item, empty);
+	                        if (empty) {
+	                            setGraphic(null);
+	                        } else {
+	                            setGraphic(btn);
+	                            btn.setPrefWidth(60);
+	                            btn.setMaxWidth(btn.getPrefWidth());
+	                            btn.setMinWidth(btn.getPrefWidth());
+	                        }
+	                    }
+	                };
+	                return cell;
+	            }
+	        };
+	
+	        colBtn.setCellFactory(cellFactory);
+	        colBtn.setPrefWidth(70);
+	        colBtn.setMaxWidth(colBtn.getPrefWidth());
+	        colBtn.setMinWidth(colBtn.getPrefWidth());
+	
+	        tblView.getColumns().add(colBtn);
+        } catch (Exception e) {
+ 	        System.out.println(e);
+ 	        e.printStackTrace();
+ 	    }
 
     }
 
@@ -437,8 +452,11 @@ public class ManageFlightsController implements Initializable{
 	    	}
         	
     	} catch (Exception e) {
- 	        System.out.println(e);
- 	        e.printStackTrace();
+	        System.out.println(e);
+	        e.printStackTrace();
+	        lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not deleted");
+	        showMessageDialog(null, "Error Occured! Flight " + flight.getFlightID() + " was not deleted"); 
+ 	        
  	    }
     }
     
@@ -464,9 +482,12 @@ public class ManageFlightsController implements Initializable{
 	    	txtFlightNumber.setText(flight.getFlightNumber());
 	    	txtOrigination.setText(flight.getOrigination());
 	    	txtDestination.setText(flight.getDestination());
-	    	txtDepartureDate.setText(flight.getDepartureDate());
+//	    	txtDepartureDate.setText(flight.getDepartureDate());
+	    	
+	    	txtDepartureDate.setValue(flight.getDepartureDate());
 	    	txtDepartureTime.setText(flight.getDepartureTime());
-	    	txtArrivalDate.setText(flight.getArrivalDate());
+//	    	txtArrivalDate.setText(flight.getArrivalDate());
+	    	txtArrivalDate.setValue(flight.getArrivalDate());
 	    	txtArrivalTime.setText(flight.getArrivalTime());
 	    	txtPrice.setText(flight.toString(flight.getPrice()));
 	    	txtTotalSeats.setText(flight.toString(flight.getTotalSeats()));
@@ -493,9 +514,9 @@ public class ManageFlightsController implements Initializable{
 	    	txtFlightNumber.setText("");
 	    	txtOrigination.setText("");
 	    	txtDestination.setText("");
-	    	txtDepartureDate.setText("");
+	    	//txtDepartureDate.setValue(null);
 	    	txtDepartureTime.setText("");
-	    	txtArrivalDate.setText("");
+	    	//txtArrivalDate.setValue(null);
 	    	txtArrivalTime.setText("");
 	    	txtPrice.setText("");
 	    	txtTotalSeats.setText("");
@@ -507,38 +528,128 @@ public class ManageFlightsController implements Initializable{
     	} catch (Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        return;
  	    }
     }
-       
-    public void updateFlight(Flight flight) {
+    
+    private boolean passFieldValidation() {
+    	boolean status = false; 
     	
-    	int result = dbUpdate(updateType.update);
-    	System.out.println("Update result:" + result);
-    	if (result == 1) {
-    		showTblView();
+    	try {
+        	String dDate = txtDepartureDate.getValue().toString();
+    		String dTime = txtDepartureTime.getText();
+    		String aDate = txtArrivalDate.getValue().toString(); 
+    		String aTime = txtArrivalTime.getText();
     		
-        	lblStatusText.setText("Flight " + flight.getFlightID() + " has been updated");
+    		// Check fields are not empty/blank
+    		if (txtAirline.getText().isBlank() || txtFlightNumber.getText().isBlank() || txtOrigination.getText().isBlank() ||
+				txtDestination.getText().isBlank() & dDate.isBlank() || txtDepartureTime.getText().isBlank() ||
+				aDate.isBlank() || txtArrivalTime.getText().isBlank() || txtPrice.getText().isBlank() || 
+				txtTotalSeats.getText().isBlank()) {
+    			showErrorAlert("Error", "Required Fields!", "All fields are required!");
+	    	}
+    		// Check format of date fields
+//    		else if (dDate.charAt(4) != '-' || dDate.charAt(7) != '-' || aDate.charAt(4) != '-' || aDate.charAt(7) != '-' ) {
+//    				showErrorAlert("Error", "Invalid Format", "Dates must be formatted as: yyyy-mm-dd");
+//			}
+			// Check format of time fields
+			else if (dTime.charAt(2) != ':' || dTime.charAt(5) != ':' || aDate.charAt(2) != ':' || aDate.charAt(5) != ':' ) {
+				showErrorAlert("Error", "Invalid Format", "Times must be formatted as: hh:mm:ss AM/PM");
+			}
+			// Check numeric only fields
+    		else if (Integer.parseInt(txtPrice.getText()) < 1 || 
+    				Integer.parseInt(txtTotalSeats.getText()) < 1 || StringUtils.isStrictlyNumeric(txtPrice.getText()) == false || 
+    						StringUtils.isStrictlyNumeric(txtTotalSeats.getText()) == false) {
+    			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
+    		}
+			// Check values of date
+			else if (Integer.parseInt(dDate.substring(5, 7)) > 12 || Integer.parseInt(dDate.substring(5, 7)) < 1 || // months
+					Integer.parseInt(dDate.substring(8)) > 32 || Integer.parseInt(dDate.substring(8)) < 1 || // days
+					Integer.parseInt(aDate.substring(5, 7)) > 12 || Integer.parseInt(aDate.substring(5, 7)) < 1 || // months
+					Integer.parseInt(aDate.substring(8)) > 32 || Integer.parseInt(aDate.substring(8)) < 1) { // days
+				showErrorAlert("Error", "Invalid value!", "Date value out of bounds");
+    		}
+			
+			// Check values of time
+			else if (Integer.parseInt(dTime.substring(0,2)) > 12 || Integer.parseInt(dTime.substring(0,2)) < 1 || // hours
+					Integer.parseInt(dTime.substring(3,5)) > 59 || Integer.parseInt(dTime.substring(3,5)) < 0 || // minutes
+					Integer.parseInt(dTime.substring(6, 8)) > 59 || Integer.parseInt(dTime.substring(6, 8)) < 0 || // seconds
+					dTime.substring(9).strip() != "AM" || dTime.substring(9).strip() != "PM" || // meridiem
+					Integer.parseInt(aTime.substring(0,2)) > 12 || Integer.parseInt(aTime.substring(0,2)) < 1 || // hours
+					Integer.parseInt(aTime.substring(3,5)) > 59 || Integer.parseInt(aTime.substring(3,5)) < 0|| // minutes
+					Integer.parseInt(aTime.substring(6, 8)) > 59 || Integer.parseInt(aTime.substring(6, 8)) < 0|| // seconds
+					aTime.substring(9).strip() != "AM"|| aTime.substring(9).strip() != "PM"){ // meridiem
+				showErrorAlert("Error", "Invalid value!", "Time value out of bounds");
+    		}
+			else {
+				status = true;
+			}
+    			
+		}
+    	catch (NumberFormatException n) {
+			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
+		}
+    	catch (NullPointerException p) {
+			showErrorAlert("Error", "NULL value encountered!", "All fields are required!");
+		}
+    	catch(Exception e) {
+ 	        System.out.println(e);
+ 	        e.printStackTrace();
     	}
-    	else {
-    		lblStatusText.setText("Error: Record was not updated");
-    	}
+
+    	return status;
     }
-    
-    public void submitCreatedFlight() {
+       
+    private void updateFlight(Flight flight) {
     	
-    	int result = dbUpdate(updateType.insert);
-    	System.out.println("Create result:" + result);
-    	if (result == 1) {
-    		showTblView();
-        	lblStatusText.setText("Flight has been created");
+    	try {
+    		if (passFieldValidation()){
+		    	int result = dbUpdate(updateType.update);
+		    	System.out.println("Update result:" + result);
+		    	if (result == 1) {
+		    		showTblView();
+		        	lblStatusText.setText("Flight " + flight.getFlightID() + " has been updated");
+		    	}
+		    	else {
+		    		lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not updated");
+		    	}
+    		}
+    	} 
+    	catch(Exception e) {
+ 	        System.out.println(e);
+ 	        e.printStackTrace();
+    		lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not updated");
+	        showMessageDialog(null, "Error Occured! Flight " + flight.getFlightID() + " was not updated");
     	}
-    	else {
+	    
+    }
+    
+    private void submitCreatedFlight() {
+    	
+    	try {
+    		
+    		if (passFieldValidation()){
+    			int result = dbUpdate(updateType.insert);
+		    	System.out.println("Create result:" + result);
+		    	if (result == 1) {
+		    		showTblView();
+		        	lblStatusText.setText("Flight has been created");
+		    	}
+		    	else {
+		    		lblStatusText.setText("Error: Flight was not created");
+		    	}
+    		}
+    	}
+    	catch(Exception e) {
+ 	        System.out.println(e);
+ 	        e.printStackTrace();
     		lblStatusText.setText("Error: Flight was not created");
-    	}    	
+	        showMessageDialog(null, "Error Occured! Flight was not created");
+    	}
     }
     
     
-    public int dbUpdate (updateType type) {
+    private int dbUpdate (updateType type) {
     	int result=0;
     	String sqlCmd="";
     
@@ -556,9 +667,9 @@ public class ManageFlightsController implements Initializable{
         				txtFlightNumber.getText(),
         				txtOrigination.getText(),
         				txtDestination.getText(),
-        				txtDepartureDate.getText(),
+        				txtDepartureDate.getValue(),
         				txtDepartureTime.getText(),
-        				txtArrivalDate.getText(),
+        				txtArrivalDate.getValue(),
         				txtArrivalTime.getText(),
         				Integer.parseInt(txtPrice.getText()),
     					Integer.parseInt(txtTotalSeats.getText()),
@@ -571,9 +682,9 @@ public class ManageFlightsController implements Initializable{
         				txtFlightNumber.getText(),
         				txtOrigination.getText(),
         				txtDestination.getText(),
-        				txtDepartureDate.getText(),
+        				txtDepartureDate.getValue(),
         				txtDepartureTime.getText(),
-        				txtArrivalDate.getText(),
+        				txtArrivalDate.getValue(),
         				txtArrivalTime.getText(),
         				Integer.parseInt(txtPrice.getText()),
     					Integer.parseInt(txtTotalSeats.getText())
@@ -584,12 +695,28 @@ public class ManageFlightsController implements Initializable{
     		PreparedStatement pstmt = conn.prepareStatement(sqlCmd);
         	result = pstmt.executeUpdate();
         	
-    	}catch (SQLException e) {
-			
+    	}
+    	
+    	catch (SQLException e) {
 			System.out.println(e);
+			showErrorAlert("Error", "Database Connection Error", "Transaction not completed.");
+			return 0;
 		}
     	return result;
     }
+
+	@Override
+	public void showErrorAlert(String title, String header, String message) {
+ 
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.show();
+
+        lblStatusText.setText("Error: Flight was not created");
+		
+	}
 }
 
 
