@@ -189,18 +189,18 @@ public class DataAccess implements UserInterface{
 		return conn;
 	}
 	
-	public static ResultSet sqlCmd(String query) throws SQLException {
+	public ResultSet sqlCmd(String query) throws SQLException {
 		String[] args = new String[0];
 		return sqlCmd(query, args);
 	}
 	
-	public static ResultSet sqlCmd(String query, String arg) throws SQLException {
+	public ResultSet sqlCmd(String query, String arg) throws SQLException {
 		String[] args = new String[1];
 		args[0] = arg;
 		return sqlCmd(query, args);
 	}
 		
-	public static ResultSet sqlCmd(String query, String[] args) throws SQLException {
+	public ResultSet sqlCmd(String query, String[] args) throws SQLException {
 		
 		Connection connection = GetConnecton();
 		ResultSet resultSet;
@@ -236,7 +236,7 @@ public class DataAccess implements UserInterface{
 		return resultSet;
 	}
 	
-	public static ResultSet sqlCmd(String query, ArrayList<Object> args) throws SQLException {
+	public ResultSet sqlCmd(String query, ArrayList<Object> args) throws SQLException {
 		
 		Connection connection = GetConnecton();
 		ResultSet resultSet;
@@ -280,13 +280,13 @@ public class DataAccess implements UserInterface{
 		return resultSet;
 	}
 	
-	public static int sqlCmdUpdate(String query) throws SQLException {
+	public int sqlCmdUpdate(String query) throws SQLException {
 		
 		ArrayList<Object> args = new ArrayList<Object>();
 		return sqlCmdUpdate(query, args);
 	}
 
-	public static int sqlCmdUpdate(String query, ArrayList<Object> args) throws SQLException {
+	public int sqlCmdUpdate(String query, ArrayList<Object> args) throws SQLException {
 		
 		Connection connection = GetConnecton();
 		int result;
