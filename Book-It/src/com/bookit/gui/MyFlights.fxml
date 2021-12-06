@@ -47,7 +47,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutY="124.0" prefHeight="30.0" prefWidth="1296.0" text="Below are your upcoming booked flights:" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutY="124.0" prefHeight="30.0" prefWidth="1296.0" text="Below are all of your booked flights:" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
