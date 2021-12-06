@@ -213,9 +213,13 @@ public class DataAccess implements UserInterface{
 			System.out.println("Args length: " + len);
 			// Add the string variables values
 			if (len > 0) {
-				for (int i=0;i<=len;i++) {
-					System.out.println("Args values: " + i+1 + args[i]);
-					statement.setString(i+1,args[i]);
+				for (int i=1;i<=len;i++) {
+					System.out.println("Args values: " +(i)+ ", " + args[i-1]);
+					System.out.println("passed to setString" + (i) + ", " + args[i-1] );
+					String arg = args[i-1];
+					statement.setString((i),arg);
+					
+					System.out.println("");
 				}
 			}
 			
@@ -226,7 +230,7 @@ public class DataAccess implements UserInterface{
 		catch (SQLException e) {
 			
 			System.out.println(e);
-			throw e;
+			resultSet = null;
 		}
 		finally {
 			
@@ -246,7 +250,6 @@ public class DataAccess implements UserInterface{
 			// Create the statement
 			PreparedStatement statement = connection.prepareStatement(query);
 			int len = args.size();
-			System.out.println("Args length: " + len);
 			
 			// Add the object variables values
 			if (len > 0) {
@@ -270,7 +273,7 @@ public class DataAccess implements UserInterface{
 		catch (SQLException e) {
 			
 			System.out.println(e);
-			throw e;
+			resultSet = null;
 		}
 		finally {
 			
@@ -318,7 +321,7 @@ public class DataAccess implements UserInterface{
 		catch (SQLException e) {
 			
 			System.out.println(e);
-			throw e;
+			result = -1;
 		}
 		finally {
 			
