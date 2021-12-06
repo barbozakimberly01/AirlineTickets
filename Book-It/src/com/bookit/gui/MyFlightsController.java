@@ -1,6 +1,5 @@
 package com.bookit.gui;
 
-import static javax.swing.JOptionPane.showMessageDialog;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
-
 import com.bookit.common.Booking;
-import com.bookit.common.Bookings;
-import com.bookit.common.Flight;
 import com.bookit.db.DataAccess;
 import com.bookit.db.SQLStatements;
 import com.bookit.exceptions.ErrorAlerts;
@@ -27,15 +23,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
 
 public class MyFlightsController extends ControllerMenu implements ErrorAlerts, Initializable {
-	
-	
 	
 	
 	@FXML
@@ -60,9 +52,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 				btnManageFlights.setVisible(true);
 			}
 			lblUserNameWelcome.setText("Welcome back, " + firstName);
-			loadMyFlights();
-			
-			
+			loadMyFlights();		
 			
 		} catch (Exception e) {
 	        System.out.println(e);
@@ -78,7 +68,6 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 			System.out.println("Query: " + query);
 			ResultSet rs = DataAccess.sqlCmd(query);
 			
-			
 			if (!rs.isBeforeFirst()) {
 				// Check if flights available
 				showErrorAlert("Information", "No Bookings Found");
@@ -89,8 +78,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 				tblView.getItems().clear();
 				tblView.getColumns().clear();
 				ObservableList<Booking> bookingResultsList = FXCollections.observableArrayList();
-				
-	            
+				            
 	            while(rs.next()){
 					
 	            	LocalDate localDDate = LocalDate.parse(rs.getString("DepartureDate"));
@@ -98,7 +86,6 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 	            	
 	            	bookingResultsList.addAll(new Booking(
 							rs.getInt("BookingID"),
-//							rs.getInt("FlightID"),
 							rs.getString("Airline"),
 							rs.getString("FlightNumber"),
 							rs.getString("Origination"),
