@@ -1,5 +1,4 @@
 package com.bookit.db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,13 +10,11 @@ import java.util.prefs.Preferences;
 import com.bookit.common.Flight;
 import com.bookit.common.SearchFlight;
 import com.bookit.common.Bookings;
-import com.bookit.gui.User;
-
+import com.bookit.common.User;
 
 public class DataAccess implements UserInterface{
 	
-	//************************ Charles Code **************************************
-	
+	//************************ Charles Code **************************************	
 	
 	// Check username and password from database and validate if true.
 	public boolean validUser(User user) throws SQLException {
@@ -72,6 +69,7 @@ public class DataAccess implements UserInterface{
 	    }
 		return false;	
 	}
+	
 	public boolean validUserName(User user) throws SQLException {
 		Connection con = GetConnecton();  
 		try {

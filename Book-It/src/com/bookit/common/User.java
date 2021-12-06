@@ -1,4 +1,4 @@
-package com.bookit.gui;
+package com.bookit.common;
 import java.util.List;
 import com.bookit.db.*;
 import com.bookit.gui.*;

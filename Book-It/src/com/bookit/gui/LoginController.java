@@ -11,6 +11,8 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 import javafx.stage.Stage.*;
+
+import com.bookit.common.User;
 import com.bookit.db.*;
 
 public class LoginController {

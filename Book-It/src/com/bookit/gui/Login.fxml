@@ -35,7 +35,7 @@
             <PasswordField fx:id="passwordField" layoutX="634.0" layoutY="238.0" onAction="#validateUser" promptText="Enter your password" text="testpassword1" />
             <ImageView fitHeight="38.0" fitWidth="282.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/book-logo1.png" />
+                  <Image url="@images/book-logo.png" />
                </image>
             </ImageView>
          </children>

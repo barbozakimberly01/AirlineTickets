@@ -67,6 +67,8 @@ public class SearchController{
 	@FXML
 	private Button manageFlights;
 	@FXML
+	private Button myFlights;
+	@FXML
 	private Label lblPassengerName;
 	@FXML
 	private Label lblFlightAirline;
@@ -224,6 +226,7 @@ public class SearchController{
 		    
 		    flightResultsView.getItems().clear();
 		    flightResultsView.getColumns().clear();
+		   
 		    TableColumn flightIDColumn = new TableColumn("FlightID");
 	    	flightIDColumn.setCellValueFactory(new PropertyValueFactory<>("FlightID"));
 	    	flightIDColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -447,6 +450,18 @@ public class SearchController{
 		}
 		
 	}
+	@FXML
+	private void MyFlights(ActionEvent event) {
+		try {
+            SceneCreator.launchScene("/com/bookit/gui/MyFlights2.fxml");
+		} 
+		catch (Exception e){
+			 System.out.println(e);
+		        e.printStackTrace();
+		}
+		
+	}
+	
 	//*********ComboBox********
 
 	public class HideableItem<T>

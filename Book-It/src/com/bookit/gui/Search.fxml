@@ -42,19 +42,19 @@
             <Button fx:id="manageFlights" layoutX="239.0" layoutY="10.0" mnemonicParsing="false" onAction="#manageFlights" prefHeight="39.0" prefWidth="115.0" text="Manage Flights" />
             <Button fx:id="Logout" layoutX="1185.0" layoutY="9.0" mnemonicParsing="false" onAction="#Logout" prefHeight="39.0" prefWidth="103.0" text="Logout" />
             <Button layoutX="960.0" layoutY="9.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Book Flights" />
-            <Button layoutX="1070.0" layoutY="9.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="My Flights" />
-            <Pane fx:id="bookPayPane" layoutX="989.0" layoutY="71.0" prefHeight="556.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4;" styleClass="bookpaypaneLabel">
+            <Button fx:id="myFlights" layoutX="1070.0" layoutY="9.0" mnemonicParsing="false" onAction="#MyFlights" prefHeight="39.0" prefWidth="103.0" text="My Flights" />
+            <Pane fx:id="bookPayPane" layoutX="989.0" layoutY="71.0" prefHeight="556.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4;" styleClass="bookpaypaneLabel" visible="false">
                <children>
                   <Label layoutX="27.0" layoutY="7.0" prefHeight="33.0" prefWidth="197.0" text="Book and Pay for Flight">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblFlightAirline" layoutX="119.0" layoutY="66.0" prefHeight="25.0" prefWidth="103.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
+                  <Label fx:id="lblFlightAirline" layoutX="119.0" layoutY="66.0" prefHeight="25.0" prefWidth="103.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <Button fx:id="completeBookingButton" layoutX="69.0" layoutY="497.0" mnemonicParsing="false" onAction="#CompleteBooking" text="Complete Booking" />
-                  <Label fx:id="lblFlightOrigination" layoutX="117.0" layoutY="122.0" prefHeight="17.0" prefWidth="107.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblFlightDestination" layoutX="118.0" layoutY="149.0" prefHeight="17.0" prefWidth="114.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblFlightDepartureDate" layoutX="118.0" layoutY="173.0" prefHeight="17.0" prefWidth="94.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
+                  <Label fx:id="lblFlightOrigination" layoutX="117.0" layoutY="122.0" prefHeight="17.0" prefWidth="107.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblFlightDestination" layoutX="118.0" layoutY="149.0" prefHeight="17.0" prefWidth="114.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblFlightDepartureDate" layoutX="118.0" layoutY="173.0" prefHeight="17.0" prefWidth="94.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <TextField fx:id="nameOnCardField" layoutX="25.0" layoutY="307.0" onAction="#CompleteBooking" promptText="Enter Name on Card" text="John Doe" />
                   <TextField fx:id="creditCardNumberField" layoutX="25.0" layoutY="358.0" onAction="#CompleteBooking" promptText="Enter 13 to 16 digits" text="123456789012345" />
                   <TextField fx:id="expirationDateField" layoutX="25.0" layoutY="410.0" onAction="#CompleteBooking" prefHeight="25.0" prefWidth="149.0" promptText="yyyy-mm-dd" text="2026-12-26" />
@@ -72,13 +72,13 @@
                   <Label layoutX="26.0" layoutY="96.0" prefHeight="17.0" prefWidth="79.0" styleClass="bookpaypaneLabel" text="FlightNumber" />
                   <Label layoutX="27.0" layoutY="122.0" styleClass="bookpaypaneLabel" text="Origination" />
                   <Label layoutX="25.0" layoutY="149.0" styleClass="bookpaypaneLabel" text="Destination" />
-                  <Label fx:id="lblFlightNumber" layoutX="118.0" layoutY="96.0" prefHeight="17.0" prefWidth="87.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblPrice" layoutX="119.0" layoutY="269.0" prefHeight="17.0" prefWidth="77.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblDepartureTime" layoutX="118.0" layoutY="198.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblArrivalDate" layoutX="118.0" layoutY="223.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
-                  <Label fx:id="lblArrivalTime" layoutX="118.0" layoutY="247.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
+                  <Label fx:id="lblFlightNumber" layoutX="118.0" layoutY="96.0" prefHeight="17.0" prefWidth="87.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblPrice" layoutX="119.0" layoutY="269.0" prefHeight="17.0" prefWidth="77.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblDepartureTime" layoutX="118.0" layoutY="198.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblArrivalDate" layoutX="118.0" layoutY="223.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
+                  <Label fx:id="lblArrivalTime" layoutX="118.0" layoutY="247.0" prefHeight="17.0" prefWidth="103.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <Label layoutX="26.0" layoutY="49.0" styleClass="bookpaypaneLabel" text="Passenger" />
-                  <Label fx:id="lblPassengerName" layoutX="118.0" layoutY="49.0" prefHeight="17.0" prefWidth="87.0" styleClass="bookpaypaneLabel" text="r" textFill="#ff5151" />
+                  <Label fx:id="lblPassengerName" layoutX="118.0" layoutY="49.0" prefHeight="17.0" prefWidth="87.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <Label fx:id="lblFlightID" layoutX="22.0" layoutY="501.0" styleClass="bookpaypaneLabel" text="Label" />
                   <ImageView fitHeight="17.0" fitWidth="114.0" layoutX="118.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -94,7 +94,7 @@
             <Label layoutX="108.0" layoutY="71.0" prefHeight="27.0" prefWidth="125.0" text="Leaving From" />
             <ImageView fitHeight="38.0" fitWidth="282.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/book-logo1.png" />
+                  <Image url="@images/book-logo.png" />
                </image>
             </ImageView>
          </children>

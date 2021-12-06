@@ -2,7 +2,7 @@ package com.bookit.db;
 
 import java.sql.Connection;
 
-import com.bookit.gui.User;
+import com.bookit.common.User;
 
 public interface UserInterface {
 	static Connection GetConnecton() {

@@ -63,21 +63,15 @@ public class Main extends Application {
 			//--------
 			//Parent root = FXMLLoader.load(getClass().getResource("ManageFlights.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("UserBookings.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("Search.fxml"));
-			 
+			//Parent root = FXMLLoader.load(getClass().getResource("Search.fxml"));		 
 			// --------
-			
 			 
 			Scene scene = new Scene(root, 1300, 650);
 			Main.primaryStage = primaryStage;
 			primaryStage.setTitle("Book-It: Airline Reservation System");
-			//scene.getRoot().setStyle("-fx-font-family: 'Helvetica'; -fx-text-fill: '#FFFF00'");
-			//scene.getRoot();
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
 			primaryStage.setScene(scene);
-			//primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("@Images/arLogo.png")));
-			//primaryStage.setIconified(false);
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/bookit/gui/images/logo-icon.png")));
 			primaryStage.show();
 			
 			

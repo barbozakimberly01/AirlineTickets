@@ -1,7 +1,7 @@
 package com.bookit.gui;
 import java.io.IOException;
 import java.util.prefs.Preferences;
-
+import com.bookit.common.User;
 import com.bookit.db.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -91,6 +91,15 @@ public class SignupController {
 		            alert.setContentText("The Social Securtiy number you have entered has already been registered. Enter your SSN.");        
 		            alert.show();
 				}
+				else if (user.getSsn().length() != 9){
+					 
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Invalid SSN Length Error");
+		            alert.setContentText("Invalid SSN length, please enter 9 digits with no dashes and spaces.");        
+		            alert.show();
+				
+				}
 				else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 		            alert.setTitle("ErrorMessage");
@@ -99,15 +108,7 @@ public class SignupController {
 		            alert.show();
 				}
 			}
-			else if (user.getSsn().length() != 9){
-				 
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Invalid SSN Length Error");
-		            alert.setContentText("Invalid SSN length, please enter 9 digits with no dashes and spaces.");        
-		            alert.show();
-				
-			}	
+			
 			else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 	            alert.setTitle("ErrorMessage");
