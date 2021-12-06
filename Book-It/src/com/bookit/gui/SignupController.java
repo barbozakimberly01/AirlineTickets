@@ -1,5 +1,7 @@
 package com.bookit.gui;
 import java.io.IOException;
+import java.util.prefs.Preferences;
+
 import com.bookit.db.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -34,6 +36,8 @@ public class SignupController {
 	private TextField ssnField;
 	@FXML
 	private TextField securityAnswerField;
+	Preferences userInfo = Preferences.userRoot();
+	private String sSN = userInfo.get("SSN", "");
 	public static User user;
 	
 	@FXML
@@ -58,8 +62,19 @@ public class SignupController {
 		try {
 			if(user.getFirstname() != null && !user.getFirstname().isBlank() && user.getLastname() != null && !user.getLastname().isBlank() && user.getStreetAddress() != null && !user.getStreetAddress().isBlank() && user.getCity() != null
 					&& !user.getCity().isBlank() && user.getState() != null && !user.getState().isBlank() && user.getZipcode() != null && !user.getZipcode().isBlank() && user.getUsername() != null && !user.getUsername().isBlank() && user.getPassword() != null
-					&& !user.getPassword().isBlank() && user.getEmailAddress() != null && !user.getEmailAddress().isBlank() && user.getSsn() != null && !user.getSsn().isBlank() && user.getSecurityAnswer() != null && !user.getSecurityAnswer().isBlank())  {
+					&& !user.getPassword().isBlank() && user.getEmailAddress() != null && !user.getEmailAddress().isBlank() && user.getSsn() != null && !user.getSsn().isBlank() && user.getSsn().length() == 9 && user.getSecurityAnswer() != null && !user.getSecurityAnswer().isBlank())  {
 				 //TODO: 1- validate SSN input.
+				try {
+					long validateSSN = Long.parseLong(user.getSsn());
+				} catch(Exception e){
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Invalid SSN Input Error");
+		            alert.setContentText("Please enter digits only.");        
+		            alert.show();
+		            return;
+				}
+				
 				if(dataAccess.UserSignup(user)){
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("ConfirmationMessage");
@@ -67,6 +82,14 @@ public class SignupController {
 		            alert.setContentText("You have signed up successfully.");
 		            alert.show();
 		            SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
+				}
+				else if (dataAccess.validateSSN(user) == false){
+					 
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Invalid SSN Error");
+		            alert.setContentText("The Social Securtiy number you have entered has already been registered. Enter your SSN.");        
+		            alert.show();
 				}
 				else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -76,13 +99,22 @@ public class SignupController {
 		            alert.show();
 				}
 			}
+			else if (user.getSsn().length() != 9){
+				 
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Invalid SSN Length Error");
+		            alert.setContentText("Invalid SSN length, please enter 9 digits with no dashes and spaces.");        
+		            alert.show();
+				
+			}	
 			else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 	            alert.setTitle("ErrorMessage");
 	            alert.setHeaderText("Required Fields");
 	            alert.setContentText("All fields are required.");        
 	            alert.show();
-			}		
+			}
 	    }
 		catch (Exception e) {
 	        System.out.println(e);

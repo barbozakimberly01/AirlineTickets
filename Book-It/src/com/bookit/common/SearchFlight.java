@@ -10,24 +10,24 @@ import java.time.LocalDate;
 import javafx.scene.control.DatePicker;
 
 //Encapsulation of the SearchFlight Class
-public class SearchFlight {
-	private String origination;
-	private String destination;
+public class SearchFlight extends Flights{
+//	private String origination;
+//	private String destination;
 	private String departureDate;
-	//******
+//	//******
 	private String flightID;
 	private String airline;
-	private String flightNumber;
-	private String departureTime;
+//	private String flightNumber;
+//	private String departureTime;
 	private String arrivalDate;
-	private String arrivalTime;
+//	private String arrivalTime;
 	private String price;
-	private int totalSeats;
+//	private int totalSeats;
 	//******
 	//private Flight flight; //Composition
 	
 	
-	public SearchFlight() {
+	public SearchFlight(){
 		
 	}
 	
@@ -58,7 +58,6 @@ public class SearchFlight {
 		this.arrivalTime = arrivalTime;
 		this.price = price;	
 	}
-	
 	public String getFlightID() {
 		return flightID;
 	}
@@ -147,9 +146,6 @@ public class SearchFlight {
 		this.totalSeats = totalSeats;
 	}
 	
-	/*public ComboBox getOnAction() {
-		
-	}*/
 	public void initialize() {
 		
 	}

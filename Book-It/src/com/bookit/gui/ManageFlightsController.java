@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -42,7 +43,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	// Load flights on scene load
     
     @Override
-    // Populate the TableView on load
+    // Populate the TableView on load 
     public void initialize(URL url, ResourceBundle rb) {	
     	try {
     		lblStatusText.setText("");
@@ -293,9 +294,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 							rs.getString("Origination"),
 							rs.getString("Destination"),
 							localDDate,
-//							rs.getString("DepartureDate"),
 							rs.getString("DepartureTime"),
-//							rs.getString("ArrivalDate"),
 							localADate,
 							rs.getString("ArrivalTime"),
 							rs.getInt("Price"),
@@ -329,18 +328,12 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	            colDestination.setMaxWidth(colDestination.getPrefWidth());
 	            colDestination.setMinWidth(colDestination.getPrefWidth());
 		    	
-//	            TableColumn<Flight, String> colDepartureDate = new TableColumn<>("DepartureDate");
-//	            colDepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
-//	            
 	            TableColumn<Flight, LocalDate> colDepartureDate = new TableColumn<>("DepartureDate");
 	            colDepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
 		    	
 		    	TableColumn<Flight, String> colDepartureTime = new TableColumn<>("DepartureTime");
 		    	colDepartureTime.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
 		    	
-//	            TableColumn<Flight, String> colArrivalDate = new TableColumn<>("ArrivalDate");
-//	            colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
-	            
 	            TableColumn<Flight, LocalDate> colArrivalDate = new TableColumn<>("ArrivalDate");
 	            colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
 		    	
@@ -433,7 +426,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
  	    }
 
     }
-
     
     private void deleteFlight(Flight flight) {
     	System.out.println("Flight:" + flight);
@@ -459,7 +451,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
  	        
  	    }
     }
-    
     
     private void editFlight(Flight flight) {
     	
@@ -498,7 +489,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
  	    }
     }
     
-    
     private void createFlight() {
     	
     	try {
@@ -514,9 +504,9 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	    	txtFlightNumber.setText("");
 	    	txtOrigination.setText("");
 	    	txtDestination.setText("");
-	    	//txtDepartureDate.setValue(null);
+	    	txtDepartureDate.setValue(null);
 	    	txtDepartureTime.setText("");
-	    	//txtArrivalDate.setValue(null);
+	    	txtArrivalDate.setValue(null);
 	    	txtArrivalTime.setText("");
 	    	txtPrice.setText("");
 	    	txtTotalSeats.setText("");
@@ -533,63 +523,107 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     }
     
     private boolean passFieldValidation() {
-    	boolean status = false; 
+    	boolean status = true; 
     	
     	try {
-        	String dDate = txtDepartureDate.getValue().toString();
-    		String dTime = txtDepartureTime.getText();
-    		String aDate = txtArrivalDate.getValue().toString(); 
-    		String aTime = txtArrivalTime.getText();
+    		 
+    		String dDate = "";
+    		String dTime = "";
+    		String aDate = "";
+    		String aTime = "";
+    		
+    		// Check date fields are not null
+    		if (txtDepartureDate.getValue() == null || txtArrivalDate.getValue() == null) {
+    			System.out.println("Check date fields are not null");
+    			status = false; 
+    			showErrorAlert("Error", "Required Fields!", "All fields are required!");
+    		}
+    		else {
+    			dDate = txtDepartureDate.getValue().toString();
+        		dTime = txtDepartureTime.getText();
+        		aDate = txtArrivalDate.getValue().toString(); 
+        		aTime = txtArrivalTime.getText();
+    		}
     		
     		// Check fields are not empty/blank
     		if (txtAirline.getText().isBlank() || txtFlightNumber.getText().isBlank() || txtOrigination.getText().isBlank() ||
 				txtDestination.getText().isBlank() & dDate.isBlank() || txtDepartureTime.getText().isBlank() ||
 				aDate.isBlank() || txtArrivalTime.getText().isBlank() || txtPrice.getText().isBlank() || 
 				txtTotalSeats.getText().isBlank()) {
+    			System.out.println("Check fields are not empty/blank");
+    			status = false; 
     			showErrorAlert("Error", "Required Fields!", "All fields are required!");
 	    	}
-    		// Check format of date fields
-//    		else if (dDate.charAt(4) != '-' || dDate.charAt(7) != '-' || aDate.charAt(4) != '-' || aDate.charAt(7) != '-' ) {
-//    				showErrorAlert("Error", "Invalid Format", "Dates must be formatted as: yyyy-mm-dd");
-//			}
-			// Check format of time fields
-			else if (dTime.charAt(2) != ':' || dTime.charAt(5) != ':' || aDate.charAt(2) != ':' || aDate.charAt(5) != ':' ) {
-				showErrorAlert("Error", "Invalid Format", "Times must be formatted as: hh:mm:ss AM/PM");
+    		// Check format of time fields
+			if (dTime.charAt(2) != ':' || dTime.charAt(5) != ':' || aTime.charAt(2) != ':' || aTime.charAt(5)!= ':') {
+				System.out.println("Check format of time fields:" + dTime.charAt(2) + "," + dTime.charAt(5) + "," + aTime.charAt(2) +"," + aTime.charAt(5) );
+				
+				// Add missing leading zero
+				if (dTime.substring(0,2).contains(":")) { 
+					dTime = "0" + dTime;
+					System.out.println("new time: " + dTime);
+//					txtDepartureTime.setText(dTime);
+				}
+				if (aTime.substring(0,2).contains(":")) {
+					aTime = "0" + aTime;
+					System.out.println("new time: " + aTime);
+//					txtArrivalTime.setText(aTime);
+				}
+				else {
+					status = false; 
+					showErrorAlert("Error", "Invalid Format", "Invalid Time format!");
+				}
 			}
 			// Check numeric only fields
-    		else if (Integer.parseInt(txtPrice.getText()) < 1 || 
+    		if (Integer.parseInt(txtPrice.getText()) < 1 || 
     				Integer.parseInt(txtTotalSeats.getText()) < 1 || StringUtils.isStrictlyNumeric(txtPrice.getText()) == false || 
     						StringUtils.isStrictlyNumeric(txtTotalSeats.getText()) == false) {
+    			System.out.println("Check numeric only fields");
+    			status = false; 
     			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
     		}
 			// Check values of date
-			else if (Integer.parseInt(dDate.substring(5, 7)) > 12 || Integer.parseInt(dDate.substring(5, 7)) < 1 || // months
+			if (Integer.parseInt(dDate.substring(5, 7)) > 12 || Integer.parseInt(dDate.substring(5, 7)) < 1 || // months
 					Integer.parseInt(dDate.substring(8)) > 32 || Integer.parseInt(dDate.substring(8)) < 1 || // days
 					Integer.parseInt(aDate.substring(5, 7)) > 12 || Integer.parseInt(aDate.substring(5, 7)) < 1 || // months
 					Integer.parseInt(aDate.substring(8)) > 32 || Integer.parseInt(aDate.substring(8)) < 1) { // days
-				showErrorAlert("Error", "Invalid value!", "Date value out of bounds");
+				System.out.println("Check values of date");
+				status = false; 
+				showErrorAlert("Error", "Invalid value!", "Invalid Date value!");
     		}
-			
+    		// Check that ArrivalDate is greater than/equal DepartureDate
+			if (txtArrivalDate.getValue().compareTo(txtDepartureDate.getValue()) < 0) {
+				System.out.println("Check that ArrivalDate is greater than/equal DepartureDate");
+				status = false; 
+				showErrorAlert("Error", "Invalid Dates!", "Arrival Date can not be eariler than Departure Date");
+			}
 			// Check values of time
-			else if (Integer.parseInt(dTime.substring(0,2)) > 12 || Integer.parseInt(dTime.substring(0,2)) < 1 || // hours
+			if (Integer.parseInt(dTime.substring(0,2)) > 12 || Integer.parseInt(dTime.substring(0,2)) < 1 || // Departure hours
 					Integer.parseInt(dTime.substring(3,5)) > 59 || Integer.parseInt(dTime.substring(3,5)) < 0 || // minutes
 					Integer.parseInt(dTime.substring(6, 8)) > 59 || Integer.parseInt(dTime.substring(6, 8)) < 0 || // seconds
-					dTime.substring(9).strip() != "AM" || dTime.substring(9).strip() != "PM" || // meridiem
-					Integer.parseInt(aTime.substring(0,2)) > 12 || Integer.parseInt(aTime.substring(0,2)) < 1 || // hours
+					Integer.parseInt(aTime.substring(0,2)) > 12 || Integer.parseInt(aTime.substring(0,2)) < 1 || // Arrival hours
 					Integer.parseInt(aTime.substring(3,5)) > 59 || Integer.parseInt(aTime.substring(3,5)) < 0|| // minutes
-					Integer.parseInt(aTime.substring(6, 8)) > 59 || Integer.parseInt(aTime.substring(6, 8)) < 0|| // seconds
-					aTime.substring(9).strip() != "AM"|| aTime.substring(9).strip() != "PM"){ // meridiem
-				showErrorAlert("Error", "Invalid value!", "Time value out of bounds");
+					Integer.parseInt(aTime.substring(6, 8)) > 59 || Integer.parseInt(aTime.substring(6, 8)) < 0) { // seconds
+				System.out.println("Check values of time");
+				status = false; 
+				showErrorAlert("Error", "Invalid value!", "Invalid Time value!");
     		}
-			else {
-				status = true;
+    		// Check values of time meridiem
+			if ((dTime.substring(9).strip().compareTo("AM") != 0 && dTime.substring(9).strip().compareTo("PM") != 0) || 
+					(aTime.substring(9).strip().compareTo("AM") != 0 && aTime.substring(9).strip().compareTo("PM") != 0)) {
+				System.out.println("Check values of time meridiem");
+				status = false; 
+				showErrorAlert("Error", "Invalid value!", "Invalid Time meridiem value!");
 			}
     			
 		}
-    	catch (NumberFormatException n) {
+    	catch (NumberFormatException e) {
 			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
 		}
-    	catch (NullPointerException p) {
+    	catch (StringIndexOutOfBoundsException e) {
+			showErrorAlert("Error", "Invalid value!", "Time value is missing meridiem!");
+		}
+    	catch (NullPointerException e) {
 			showErrorAlert("Error", "NULL value encountered!", "All fields are required!");
 		}
     	catch(Exception e) {
@@ -624,6 +658,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	    
     }
     
+    
     private void submitCreatedFlight() {
     	
     	try {
@@ -636,6 +671,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		        	lblStatusText.setText("Flight has been created");
 		    	}
 		    	else {
+		    		lblStatusText.applyCss();
 		    		lblStatusText.setText("Error: Flight was not created");
 		    	}
     		}
@@ -647,7 +683,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	        showMessageDialog(null, "Error Occured! Flight was not created");
     	}
     }
-    
     
     private int dbUpdate (updateType type) {
     	int result=0;
@@ -705,9 +740,9 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	return result;
     }
 
-	@Override
+	
+    @Override
 	public void showErrorAlert(String title, String header, String message) {
- 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);

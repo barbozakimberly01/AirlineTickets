@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>1370</w>
+      <h>790</h>
+    </coordinates>
+    <panel_attributes>com.bookit.common::Flight
+--
+-flightID: int
+-airlineName: String
+-flightNumber: String
+-origination: String
+-destination: String
+-departureDateD: LocalDate
+-departureDate: String
+-departureTime: String
+-arrivalDateD: LocalDate
+-arrivalDate: String
+-arrivalTime: String
+-price: int
+-totalSeats: int
+--
++Flight(): ctor
++Flight(int flightID, String airlineName, String flightNumber, String origination, String destination, String departureDate, String departureTime, String arrivalDate, String arrivalTime, int price, int totalSeats): ctor
++Flight(int flightID, String airlineName, String flightNumber, String origination, String destination, LocalDate departureDateD, String departureTime, LocalDate arrivalDateD, String arrivalTime, int price, int totalSeats): ctor
++getFlightID(): int
++setFlightID(int flightID): void
++getAirlineName(): String
++setAirlineName(String airlineName): void
++getFlightNumber(): String
++setFlightNumber(String flightNumber): void
++getOrigination(): String
++setOrigination(String origination): void
++getDestination(): String
++setDestination(String destination): void
++getDepartureDate(): String
++setsDepartureDate(String departureDate): void
++getDepartureDateD(): LocalDate
++setDepartureDate(LocalDate departureDateD): void
++getDepartureTime(): String
++setDepartureTime(String departureTime): void
++getArrivalDate(): String
++setArrivalDate(String arrivalDate): void
++getArrivalDateD(): LocalDate
++setArrivalDateD(LocalDate arrivalDateD): void
++getArrivalTime(): String
++setArrivalTime(String arrivalTime): void
++getPrice(): int
++setPrice(int price): void
++getTotalSeats(): int
++setTotalSeats(int totalSeats): void
++toString(Object obj): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

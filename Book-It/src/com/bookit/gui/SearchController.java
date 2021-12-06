@@ -37,7 +37,6 @@ import javafx.stage.Stage;
 import javafx.stage.Stage.*;
 import javafx.util.Callback;
 import java.time.ZoneId;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -47,15 +46,12 @@ import java.util.Optional;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.prefs.Preferences;
-
 import javax.swing.table.DefaultTableModel;
-
 import com.bookit.common.Bookings;
 import com.bookit.common.SearchFlight;
 import com.bookit.db.*;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
-//import application.Main.HideableItem;
 
 public class SearchController{
 	@FXML
@@ -155,38 +151,17 @@ public class SearchController{
 		}
 		rs.close();
 		con.close();
-        
-        //ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
 		ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
-        //leavingFromComboBox.setMaxWidth(Double.MAX_VALUE);
-
-        //EventHandler<ActionEvent> handler = leavingFromComboBox.getOnAction();
-        //leavingFromComboBox.setOnAction(null);
         ComboBox<HideableItem<String>> goingToComboBox = createComboBoxWithAutoCompletionSupport(goingToList);
-        //hBox.getChildren().addAll(leavingFromComboBox, goingToComboBox);
         
         
         anchorPane.getChildren().addAll(leavingFromComboBox, goingToComboBox);
         leavingFromComboBox.setLayoutX(108);
         leavingFromComboBox.setLayoutY(96);
         goingToComboBox.setLayoutX(322);
-        goingToComboBox.setLayoutY(96);
-        
-        //leavingFromComboBox.setOnAction(e -> searchFlights(e));     
-        //leavingFromComboBox.setItems(FXCollections.observableArrayList("4", "5", "6"));
-        //leavingFromComboBox.setOnAction(handler);
-        
-        //cancelButton.setOnAction(e -> stage.close());
-
-        
+        goingToComboBox.setLayoutY(96);      
         leavingFromComboBox.setMinWidth(169);
         leavingFromComboBox.setMinHeight(25);
-        //leavingFromComboBox2 = createComboBoxWithAutoCompletionSupport(leavingFromList);
-        //goingToComboBox2 = createComboBoxWithAutoCompletionSupport(goingToList);
-        
-        //ObservableList<String> list = FXCollections.observableArrayList(leavingFromList);
-        //leavingFromComboBox2.setItems(list);
-        //leavingFromComboBox2.
         leavingFromComboBox2.getItems().addAll(leavingFromList);
         goingToComboBox2.getItems().addAll(goingToList);
 		
@@ -202,12 +177,9 @@ public class SearchController{
 	        			return;
 	        		}
 	        	
-	        	//System.out.println(leavingFromComboBox.getValue());
-	        		//SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), goingTo.getText(), String.valueOf(departureDate.getValue()));	
-	        		SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox.getValue()), String.valueOf(goingToComboBox.getValue()), String.valueOf(departureDate.getValue()));
+	        	SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox.getValue()), String.valueOf(goingToComboBox.getValue()), String.valueOf(departureDate.getValue()));
 	        		
 	        		System.out.println(String.valueOf(leavingFromComboBox.getValue()));
-	        		//System.out.println("2:" + String.valueOf(leavingFromComboBox2 .getValue()));
 	        		System.out.println(String.valueOf(goingToComboBox.getValue()));
 	        		
 	        		
@@ -236,40 +208,6 @@ public class SearchController{
 		        e.printStackTrace();
 		    }
 	}
-	
-	// Read user input and search for flights
-	/*public void searchFlights(Event event){
-		searchButton.setOnAction(new EventHandler<ActionEvent>()
-	    {
-	        public void handle(ActionEvent e)
-	        {
-	        		try {
-	        			DataAccess.GetConnecton();
-	        		}
-	        		catch(Exception err) {	
-	        			return;
-	        		}
-	        	
-	        	//System.out.println(leavingFromComboBox.getValue());
-	        		//SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), goingTo.getText(), String.valueOf(departureDate.getValue()));	
-	        		SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox2.getValue()), String.valueOf(goingToComboBox2.getValue()), String.valueOf(departureDate.getValue()));
-	        		//System.out.println(String.valueOf(leavingFromComboBox.getValue()));
-	        		//System.out.println(String.valueOf(goingToComboBox.getValue()));
-	        		
-	        		
-	        		
-	        		try {
-	        			getFlight(search);
-	        			System.out.println("Test");
-	        		}
-	        		catch (Exception error) {
-	        			System.out.println("Test2");
-	        			System.out.println(error.getMessage());
-	        		}
-	        }
-	    });
-	}*/
-	
 	//Get flight results from database and display
 	public void getFlight(SearchFlight Flight) throws SQLException{
 		flightResultsView.setVisible(true);
@@ -280,7 +218,6 @@ public class SearchController{
 			PreparedStatement preparedStmt = con.prepareStatement(SQLStatements.SEARCHFLIGHT);
 		    preparedStmt.setString(1, Flight.getOrigination());
 		    preparedStmt.setString(2, Flight.getDestination());
-		    //LocalDate departDate = LocalDate.of(Flight.getDepartureDate().getYear(),Flight.getDepartureDate().getMonth(), Flight.getDepartureDate().getDayOfMonth());
 		    Date date = Date.valueOf(Flight.getDepartureDate());
 		    preparedStmt.setDate(3, date);
 		    ResultSet rs = preparedStmt.executeQuery(); 
@@ -295,7 +232,7 @@ public class SearchController{
 	    	airlineColumn.setCellValueFactory(new PropertyValueFactory<>("Airline"));
 	    	airlineColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn flightNumberColumn = new TableColumn("Flight#");
+	    	TableColumn flightNumberColumn = new TableColumn("Flight No.");
 	    	flightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("FlightNumber"));
 	    	flightNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
@@ -307,19 +244,19 @@ public class SearchController{
 	    	DestinationColumn.setCellValueFactory(new PropertyValueFactory<>("Destination"));
 	    	DestinationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn DepartureDate = new TableColumn("DepartureDate");
+	    	TableColumn DepartureDate = new TableColumn("Departure Date");
 	    	DepartureDate.setCellValueFactory(new PropertyValueFactory<>("DepartureDate"));
 	    	DepartureDate.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn DepartureTime = new TableColumn("DepartureTime");
+	    	TableColumn DepartureTime = new TableColumn("Departure Time");
 	    	DepartureTime.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
 	    	DepartureTime.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn ArrivalDate = new TableColumn("ArrivalDate");
+	    	TableColumn ArrivalDate = new TableColumn("Arrival Date");
 	    	ArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
 	    	ArrivalDate.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
-	    	TableColumn ArrivalTime = new TableColumn("ArrivalTime");
+	    	TableColumn ArrivalTime = new TableColumn("Arrival Time");
 	    	ArrivalTime.setCellValueFactory(new PropertyValueFactory<>("ArrivalTime"));
 	    	ArrivalTime.setCellFactory(TextFieldTableCell.forTableColumn());
 	    	
@@ -334,7 +271,6 @@ public class SearchController{
 						SearchFlight flightdata = row.getItem();
 						bookPayPane.setVisible(true);
 						System.out.println("Record clicked");
-						//System.out.println(flightdata.getAirline() + ", " + flightdata.getFlightNumber() + ", " + flightdata.getOrigination() + ", " + flightdata.getDestination()/* + ", " + flightdata.getDepartureDate()*/);
 						lblFlightID.setText(flightdata.getFlightID());
 						lblFlightAirline.setText(flightdata.getAirline());
 						lblFlightDepartureDate.setText(String.valueOf(flightdata.getDepartureDate()));
@@ -342,7 +278,6 @@ public class SearchController{
 						lblFlightDestination.setText(flightdata.getDestination());
 						lblFlightNumber.setText(flightdata.getFlightNumber());
 						lblDepartureTime.setText(flightdata.getDepartureTime());;
-						//lblFlightNumber.setText(String.valueOf(flightdata.getFlightNumber()));
 						lblArrivalDate.setText(String.valueOf(flightdata.getArrivalDate()));;
 						lblArrivalTime.setText(String.valueOf(flightdata.getArrivalTime()));;
 						lblPrice.setText(String.valueOf(flightdata.getPrice()));
@@ -353,10 +288,7 @@ public class SearchController{
 				});
 				return row;
 			});
-	
-	    	//SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination, LocalDate departureDate,
-	    	//String departureTime, LocalDate arrivalDate, String arrivalTime, String price)
-	    	
+		    	
 	    	String depDate;
 
 			ObservableList<SearchFlight> flightResultsList = FXCollections.observableArrayList();
@@ -387,18 +319,48 @@ public class SearchController{
 			catch(Exception err) {	
 				return;
 			}
-			
-		//String nameOnCard = nameOnCardField.getText();
-		//String creditCardNumber = creditCardNumberField.getText();
 			Bookings booking = new Bookings(0, sSN, lblFlightID.getText(), nameOnCardField.getText(), creditCardNumberField.getText(), expirationDateField.getText(), cVVField.getText());
 	    	System.out.println(booking.getNameOnCard());
 	    	//TODO-Call a method to insert record into database
 	    	
-
+	    	
 			try {
-				String message = dataAccess.BookPayFlight(booking);
+				String message = "";
+				
+				if(creditCardNumberField.getText().length() >= 15 && creditCardNumberField.getText().length() <= 16) {
+					if(cVVField.getText().length() == 3 || cVVField.getText().length() == 4) {
+						 message = dataAccess.BookPayFlight(booking);
+					}
+					else {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+			            alert.setTitle("ErrorMessage");
+			            alert.setHeaderText("Invalid CVV Length");
+			            alert.setContentText("Please enter 3 or 4 digits for your CVV.");        
+			            alert.show();
+			            return;
+					}
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+		            alert.setTitle("ErrorMessage");
+		            alert.setHeaderText("Invalid Credit Card Number Length");
+		            alert.setContentText("Please enter 15 or 16 digits for your credit card number.");        
+		            alert.show();
+		            return;
+				}
+					
 				
 				if(message == null) {
+					try {
+						long validateCCN = Long.parseLong(creditCardNumberField.getText());
+					} catch(Exception e){
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+			            alert.setTitle("ErrorMessage");
+			            alert.setHeaderText("Invalid Credit Card Number Input Error");
+			            alert.setContentText("Please enter digits only.");        
+			            alert.show();
+			            return;
+					}
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 		            alert.setTitle("ErrorMessage");
 		            alert.setHeaderText("Data Error");
@@ -466,20 +428,7 @@ public class SearchController{
 		            }
 		            bookPayPane.setVisible(false);
 				}
-				/*if(dataAccess.BookPayFlight(booking)) {
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setTitle("ConfirmationMessage");
-		            alert.setHeaderText("Booking Confirmation");
-		            alert.setContentText("You have booked your flight successfully.");
-		            alert.show();
-				}
-				else {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Booking Error");
-		            alert.setContentText("An error occurred while booking your fligh.");        
-		            alert.show();
-				}*/
+				
 				System.out.println("Test");
 			}
 			catch (Exception error) {

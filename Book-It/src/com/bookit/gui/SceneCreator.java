@@ -7,8 +7,8 @@ public class SceneCreator {
     public static void launchScene (String sceneName) throws IOException { 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(sceneName));
         Main.setRoot(loader.load());
-        Scene scene = new Scene(Main.getRoot(), 1200, 650);
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        Scene scene = new Scene(Main.getRoot(), 1300, 650);
+        scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
         Main.getStage().setScene(scene);
         Main.getStage().show();
     }

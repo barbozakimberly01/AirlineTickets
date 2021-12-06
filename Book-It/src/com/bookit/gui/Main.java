@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.control.skin.ComboBoxListViewSkin;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -67,14 +68,16 @@ public class Main extends Application {
 			// --------
 			
 			 
-			Scene scene = new Scene(root, 1200, 650);
+			Scene scene = new Scene(root, 1300, 650);
 			Main.primaryStage = primaryStage;
-			primaryStage.setTitle("Book-It Airline Reservation System");
-			scene.getRoot().setStyle("-fx-font-family: 'Helvetica'; -fx-text-fill: '#FFFF00'");
+			primaryStage.setTitle("Book-It: Airline Reservation System");
+			//scene.getRoot().setStyle("-fx-font-family: 'Helvetica'; -fx-text-fill: '#FFFF00'");
 			//scene.getRoot();
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setScene(scene);
+			//primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("@Images/arLogo.png")));
+			//primaryStage.setIconified(false);
 			primaryStage.show();
 			
 			
