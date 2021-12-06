@@ -13,7 +13,6 @@ import java.util.prefs.Preferences;
 import com.bookit.common.Flight;
 import com.bookit.common.SearchFlight;
 import com.bookit.common.Bookings;
-import com.bookit.exceptions.LoginException;
 import com.bookit.gui.User;
 
 
@@ -192,6 +191,12 @@ public class DataAccess implements UserInterface{
 	
 	public static ResultSet sqlCmd(String query) throws SQLException {
 		String[] args = new String[0];
+		return sqlCmd(query, args);
+	}
+	
+	public static ResultSet sqlCmd(String query, String arg) throws SQLException {
+		String[] args = new String[1];
+		args[0] = arg;
 		return sqlCmd(query, args);
 	}
 		
