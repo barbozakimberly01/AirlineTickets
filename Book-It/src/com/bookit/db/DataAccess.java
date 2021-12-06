@@ -189,18 +189,18 @@ public class DataAccess implements UserInterface{
 		return conn;
 	}
 	
-	public ResultSet sqlCmd(String query) throws SQLException {
+	public static ResultSet sqlCmd(String query) throws SQLException {
 		String[] args = new String[0];
 		return sqlCmd(query, args);
 	}
 	
-	public ResultSet sqlCmd(String query, String arg) throws SQLException {
+	public static ResultSet sqlCmd(String query, String arg) throws SQLException {
 		String[] args = new String[1];
 		args[0] = arg;
 		return sqlCmd(query, args);
 	}
 		
-	public ResultSet sqlCmd(String query, String[] args) throws SQLException {
+	public static ResultSet sqlCmd(String query, String[] args) throws SQLException {
 		
 		Connection connection = GetConnecton();
 		ResultSet resultSet;
@@ -236,7 +236,7 @@ public class DataAccess implements UserInterface{
 		return resultSet;
 	}
 	
-	public ResultSet sqlCmd(String query, ArrayList<Object> args) throws SQLException {
+	public static ResultSet sqlCmd(String query, ArrayList<Object> args) throws SQLException {
 		
 		Connection connection = GetConnecton();
 		ResultSet resultSet;
