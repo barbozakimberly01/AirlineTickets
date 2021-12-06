@@ -14,13 +14,10 @@ public class SQLStatements {
 		// Insert Statements
 		public static final String INSERTLOGIN = "INSERT INTO cis3270bookit.LOGINS(Username,Password,SecurityQuestion,SecurityAnswer,IsAdmin) VALUES (?,?,?,?,?);";
 		public static final String INSERTUSER = "INSERT INTO cis3270bookit.USERS(SSN,FirstName,LastName,Address,City,State,Zip,Email,Username) VALUES (?,?,?,?,?,?,?,?,?);";
-//<<<<<<< HEAD
 		public static final String BOOKPAYFLIGHT= "INSERT INTO cis3270bookit.BOOKINGS(BookingID,SSN,FlightID,NameOnCard,CreditCardNumber,ExpirationDate,CVV) VALUES (?,?,?,?,?,?,?);	";	
-//=======
 		
 		
 		//************************ Ron Code **************************************
-//>>>>>>> branch 'dev' of git@github.com:rramsey26/CIS3270_TermProject.git
 		
 		// Search Queries
 		public static final String ISADMIN = "SELECT IsAdmin FROM LOGINS WHERE Username = '?' AND IsAdmin = TRUE;";
