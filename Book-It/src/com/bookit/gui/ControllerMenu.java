@@ -17,7 +17,7 @@ abstract class ControllerMenu {
     
     @FXML
     Button btnLogout;
-    
+
 	// Manage Flights
     @FXML
     void manageFlightsAction(ActionEvent event) {
@@ -29,7 +29,7 @@ abstract class ControllerMenu {
 	        e.printStackTrace();
 	    }
     } 
-    
+
 	// Book Flights
     @FXML
     void searchFlightsAction(ActionEvent event) {
