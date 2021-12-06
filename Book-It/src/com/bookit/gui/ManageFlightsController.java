@@ -4,12 +4,9 @@ import com.bookit.db.DataAccess;
 import com.bookit.db.SQLStatements;
 import com.bookit.exceptions.ErrorAlerts;
 import com.mysql.cj.util.StringUtils;
-
 import javafx.scene.control.Alert;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
+//import javax.swing.JOptionPane;
 import java.net.URL;
 import com.bookit.common.Flight;
 import javafx.collections.ObservableList;
@@ -17,9 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+//import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
+//import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -30,17 +27,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import javafx.collections.FXCollections;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ManageFlightsController extends ControllerMenu implements ErrorAlerts, Initializable{
-	
-	// Load flights on scene load
     
     @Override
     // Populate the TableView on load 
@@ -53,7 +46,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		        System.out.println(e);
 		        e.printStackTrace();
 	    		lblStatusText.setText("Error loading table!");
-		        showMessageDialog(null, "Error loading table");
+		        showErrorAlert("Error",  "Error loading flight data.");
 		    }
     }
     
@@ -142,13 +135,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
      ************************************/
     
     public void refreshFlightsAction(ActionEvent event) {
-//    	btnReloadFlights.setOnAction(new EventHandler<ActionEvent>() {
-//    		public void handle(ActionEvent e)
-//    		{
-//    			showTblView();
-//    			lblStatusText.setText("Flights have been reloaded");
-//    		}
-//    	});
     	
     	try {
     		showTblView();
@@ -157,17 +143,12 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error reloading flight data.");
 		    }
     }
 
     @FXML
     public void createFlightAction(ActionEvent event) {
-//    	btnCreateFlight.setOnAction(new EventHandler<ActionEvent>() {
-//    		public void handle(ActionEvent e)
-//    		{
-//    			createFlight();
-//    		}
-//    	});
     	
     	try {
     		createFlight();
@@ -175,35 +156,26 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error creating flight.");
 		    }
     }
     
     
     @FXML
     public void createFlightSubmitAction(ActionEvent event) {
-//    	btnSubmitFlight.setOnAction(new EventHandler<ActionEvent>() {
-//    		public void handle(ActionEvent e)
-//    		{
-//    			submitCreatedFlight();
-//    		}
-//    	});
+
     	try {
     		submitCreatedFlight();
 			}
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error creating flight.");
 		    }
     }
     
     @FXML
     public void updateFlightAction(ActionEvent event) {
-//    	btnSubmitUpdate.setOnAction(new EventHandler<ActionEvent>() {
-//    		public void handle(ActionEvent e)
-//    		{
-//    			updateFlight(currentFlight);
-//    		}
-//    	});
     	
     	try {
     		updateFlight(currentFlight);
@@ -211,6 +183,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error updating flight.");
 		    }
     }
  
@@ -232,6 +205,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error displaying table view.");
 		    }
     }
     
@@ -246,6 +220,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error displaying anchor view.");
 		    }
     } 
     
@@ -257,6 +232,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		catch (Exception e) {
 		        System.out.println(e);
 		        e.printStackTrace();
+		        showErrorAlert("Error",  "Error displaying FlightID.");
 		    }
     }
 	
@@ -268,6 +244,10 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 			
 			// Execute SQL command
 			ResultSet rs = DataAccess.sqlCmd(SQLStatements.ALLFLIGHTS);
+			
+			if (rs == null) {
+				showErrorAlert("Database Connection Error",  "Error occured retrieving flight data.");
+			}
 			
 			if (!rs.isBeforeFirst()) {
 				// Check if flights available
@@ -364,7 +344,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		} catch (SQLException e) {
 			
 			System.out.println(e);
-			
+			showErrorAlert("Database Connection Error", "Error retrieving flight data.");
 		}
 
 	} 
@@ -423,6 +403,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
         } catch (Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        showErrorAlert("TableView Error", "Error adding buttons.");
  	    }
 
     }
@@ -447,8 +428,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	        System.out.println(e);
 	        e.printStackTrace();
 	        lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not deleted");
-	        showMessageDialog(null, "Error Occured! Flight " + flight.getFlightID() + " was not deleted"); 
- 	        
+	        showErrorAlert("Error", "Error Occured! Flight " + flight.getFlightID() + " was not deleted"); 
  	    }
     }
     
@@ -473,11 +453,8 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 	    	txtFlightNumber.setText(flight.getFlightNumber());
 	    	txtOrigination.setText(flight.getOrigination());
 	    	txtDestination.setText(flight.getDestination());
-//	    	txtDepartureDate.setText(flight.getDepartureDate());
-	    	
 	    	txtDepartureDate.setValue(flight.getDepartureDate());
 	    	txtDepartureTime.setText(flight.getDepartureTime());
-//	    	txtArrivalDate.setText(flight.getArrivalDate());
 	    	txtArrivalDate.setValue(flight.getArrivalDate());
 	    	txtArrivalTime.setText(flight.getArrivalTime());
 	    	txtPrice.setText(flight.toString(flight.getPrice()));
@@ -486,6 +463,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	} catch (Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        showErrorAlert("Edit Error", "Flight " + flight.getFlightID() + " was not edited");
  	    }
     }
     
@@ -518,7 +496,8 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	} catch (Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
- 	        return;
+ 	        showErrorAlert("Create Error", "Flight was not creted");
+ 	       // return;
  	    }
     }
     
@@ -536,7 +515,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     		if (txtDepartureDate.getValue() == null || txtArrivalDate.getValue() == null) {
     			System.out.println("Check date fields are not null");
     			status = false; 
-    			showErrorAlert("Error", "Required Fields!", "All fields are required!");
+    			showErrorAlert("Required Fields!", "All fields are required!");
     		}
     		else {
     			dDate = txtDepartureDate.getValue().toString();
@@ -552,26 +531,25 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 				txtTotalSeats.getText().isBlank()) {
     			System.out.println("Check fields are not empty/blank");
     			status = false; 
-    			showErrorAlert("Error", "Required Fields!", "All fields are required!");
+    			showErrorAlert("Required Fields!", "All fields are required!");
 	    	}
     		// Check format of time fields
 			if (dTime.charAt(2) != ':' || dTime.charAt(5) != ':' || aTime.charAt(2) != ':' || aTime.charAt(5)!= ':') {
-				System.out.println("Check format of time fields:" + dTime.charAt(2) + "," + dTime.charAt(5) + "," + aTime.charAt(2) +"," + aTime.charAt(5) );
+				System.out.println("Check format of time fields. dTime: " + dTime + "," + " | aTime: " + aTime );
 				
 				// Add missing leading zero
-				if (dTime.substring(0,2).contains(":")) { 
+				if (dTime.charAt(1) == ':') { 
 					dTime = "0" + dTime;
-					System.out.println("new time: " + dTime);
-//					txtDepartureTime.setText(dTime);
+					System.out.println("new dTime: " + dTime);
 				}
-				if (aTime.substring(0,2).contains(":")) {
+				if ( aTime.charAt(1) == ':') {
 					aTime = "0" + aTime;
-					System.out.println("new time: " + aTime);
-//					txtArrivalTime.setText(aTime);
+					System.out.println("new aTime: " + aTime);
 				}
-				else {
+				
+				if (dTime.charAt(2) != ':' || dTime.charAt(5) != ':' || aTime.charAt(2) != ':' || aTime.charAt(5)!= ':')  {
 					status = false; 
-					showErrorAlert("Error", "Invalid Format", "Invalid Time format!");
+					showErrorAlert("Invalid Format", "Invalid Time format!");
 				}
 			}
 			// Check numeric only fields
@@ -580,7 +558,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     						StringUtils.isStrictlyNumeric(txtTotalSeats.getText()) == false) {
     			System.out.println("Check numeric only fields");
     			status = false; 
-    			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
+    			showErrorAlert("Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
     		}
 			// Check values of date
 			if (Integer.parseInt(dDate.substring(5, 7)) > 12 || Integer.parseInt(dDate.substring(5, 7)) < 1 || // months
@@ -589,13 +567,13 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 					Integer.parseInt(aDate.substring(8)) > 32 || Integer.parseInt(aDate.substring(8)) < 1) { // days
 				System.out.println("Check values of date");
 				status = false; 
-				showErrorAlert("Error", "Invalid value!", "Invalid Date value!");
+				showErrorAlert("Invalid value!", "Invalid Date value!");
     		}
     		// Check that ArrivalDate is greater than/equal DepartureDate
 			if (txtArrivalDate.getValue().compareTo(txtDepartureDate.getValue()) < 0) {
 				System.out.println("Check that ArrivalDate is greater than/equal DepartureDate");
 				status = false; 
-				showErrorAlert("Error", "Invalid Dates!", "Arrival Date can not be eariler than Departure Date");
+				showErrorAlert("Invalid Dates!", "Arrival Date can not be eariler than Departure Date");
 			}
 			// Check values of time
 			if (Integer.parseInt(dTime.substring(0,2)) > 12 || Integer.parseInt(dTime.substring(0,2)) < 1 || // Departure hours
@@ -606,29 +584,30 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 					Integer.parseInt(aTime.substring(6, 8)) > 59 || Integer.parseInt(aTime.substring(6, 8)) < 0) { // seconds
 				System.out.println("Check values of time");
 				status = false; 
-				showErrorAlert("Error", "Invalid value!", "Invalid Time value!");
+				showErrorAlert("Invalid value!", "Invalid Time value!");
     		}
     		// Check values of time meridiem
 			if ((dTime.substring(9).strip().compareTo("AM") != 0 && dTime.substring(9).strip().compareTo("PM") != 0) || 
 					(aTime.substring(9).strip().compareTo("AM") != 0 && aTime.substring(9).strip().compareTo("PM") != 0)) {
 				System.out.println("Check values of time meridiem");
 				status = false; 
-				showErrorAlert("Error", "Invalid value!", "Invalid Time meridiem value!");
+				showErrorAlert("Invalid value!", "Invalid Time meridiem value!");
 			}
     			
 		}
     	catch (NumberFormatException e) {
-			showErrorAlert("Error", "Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
+			showErrorAlert("Invalid value!", "Price or Seat Capacity: Enter numeric values only!");
 		}
     	catch (StringIndexOutOfBoundsException e) {
-			showErrorAlert("Error", "Invalid value!", "Time value is missing meridiem!");
+			showErrorAlert("Invalid value!", "Time value is missing meridiem!");
 		}
     	catch (NullPointerException e) {
-			showErrorAlert("Error", "NULL value encountered!", "All fields are required!");
+			showErrorAlert("NULL value encountered!", "All fields are required!");
 		}
     	catch(Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        showErrorAlert("NULL value encountered!", "All fields are required!");
     	}
 
     	return status;
@@ -640,7 +619,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     		if (passFieldValidation()){
 		    	int result = dbUpdate(updateType.update);
 		    	System.out.println("Update result:" + result);
-		    	if (result == 1) {
+		    	if (result > 0) {
 		    		showTblView();
 		        	lblStatusText.setText("Flight " + flight.getFlightID() + " has been updated");
 		    	}
@@ -653,7 +632,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
  	        System.out.println(e);
  	        e.printStackTrace();
     		lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not updated");
-	        showMessageDialog(null, "Error Occured! Flight " + flight.getFlightID() + " was not updated");
+	        showErrorAlert("Error", "Flight " + flight.getFlightID() + " was not updated");
     	}
 	    
     }
@@ -666,7 +645,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     		if (passFieldValidation()){
     			int result = dbUpdate(updateType.insert);
 		    	System.out.println("Create result:" + result);
-		    	if (result == 1) {
+		    	if (result > 0) {
 		    		showTblView();
 		        	lblStatusText.setText("Flight has been created");
 		    	}
@@ -680,7 +659,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
  	        System.out.println(e);
  	        e.printStackTrace();
     		lblStatusText.setText("Error: Flight was not created");
-	        showMessageDialog(null, "Error Occured! Flight was not created");
+	        showErrorAlert("Error", "Flight was not created.");
     	}
     }
     
@@ -734,7 +713,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	
     	catch (SQLException e) {
 			System.out.println(e);
-			showErrorAlert("Error", "Database Connection Error", "Transaction not completed.");
+			showErrorAlert("Database Connection Error", "Transaction not completed.");
 			return 0;
 		}
     	return result;
@@ -742,10 +721,10 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 
 	
     @Override
-	public void showErrorAlert(String title, String header, String message) {
+	public void showErrorAlert(String title, String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
-        alert.setHeaderText(header);
+        alert.setHeaderText("");
         alert.setContentText(message);
         alert.show();
 
