@@ -22,7 +22,7 @@ abstract class ControllerMenu {
     @FXML
     void manageFlightsAction(ActionEvent event) {
     	try {
-			SceneCreator.launchScene("/com/bookit/gui/MaangeFlights.fxml");
+			SceneCreator.launchScene("/com/bookit/gui/ManageFlights.fxml");
 			} 
     	catch (Exception e) {
 	        System.out.println(e);
