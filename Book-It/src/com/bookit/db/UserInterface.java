@@ -1,7 +1,7 @@
 package com.bookit.db;
 
 import java.sql.Connection;
-
+import java.sql.SQLException;
 import com.bookit.common.User;
 
 public interface UserInterface {
@@ -10,9 +10,5 @@ public interface UserInterface {
 		return conn;
 	};	
 	
-	static boolean validUser(User user) {
-		return false;
-	}
-
-
+	boolean validUser(User user) throws SQLException;
 }

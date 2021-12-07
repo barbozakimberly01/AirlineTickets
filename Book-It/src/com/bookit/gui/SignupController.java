@@ -63,18 +63,46 @@ public class SignupController {
 			if(user.getFirstname() != null && !user.getFirstname().isBlank() && user.getLastname() != null && !user.getLastname().isBlank() && user.getStreetAddress() != null && !user.getStreetAddress().isBlank() && user.getCity() != null
 					&& !user.getCity().isBlank() && user.getState() != null && !user.getState().isBlank() && user.getZipcode() != null && !user.getZipcode().isBlank() && user.getUsername() != null && !user.getUsername().isBlank() && user.getPassword() != null
 					&& !user.getPassword().isBlank() && user.getEmailAddress() != null && !user.getEmailAddress().isBlank() && user.getSsn() != null && !user.getSsn().isBlank() && user.getSsn().length() == 9 && user.getSecurityAnswer() != null && !user.getSecurityAnswer().isBlank())  {
-				 //TODO: 1- validate SSN input.
+				
 				try {
-					long validateSSN = Long.parseLong(user.getSsn());
+					try{
+						//Validate if SSN is a number
+						long validateSSN = Long.parseLong(user.getSsn());
+					}
+					catch (Exception error){
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+			            alert.setTitle("ErrorMessage");
+			            alert.setHeaderText("Invalid SSN Error");
+			            alert.setContentText("Enter a valid SSN, e.g 123456789");        
+			            alert.show();
+			            return;
+					}
+					if(dataAccess.validUserName(user)){
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+			            alert.setTitle("ErrorMessage");
+			            alert.setHeaderText("Invalid Username Error");
+			            alert.setContentText("The Username you have entered already exists. Enter a different username.");        
+			            alert.show();
+			            return;
+					}
+					else if (dataAccess.validateSSN(user) == false){ 
+						 
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+			            alert.setTitle("ErrorMessage");
+			            alert.setHeaderText("Invalid SSN Error");
+			            alert.setContentText("The Social Securtiy number you have entered has already been registered. Enter your SSN.");        
+			            alert.show();
+			            return;
+					}
 				} catch(Exception e){
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Invalid SSN Input Error");
-		            alert.setContentText("Please enter digits only.");        
+		            alert.setHeaderText("Error");
+		            alert.setContentText("Error");        
 		            alert.show();
 		            return;
 				}
-				
+				//User signup successful
 				if(dataAccess.UserSignup(user)){
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("ConfirmationMessage");
@@ -83,38 +111,25 @@ public class SignupController {
 		            alert.show();
 		            SceneCreator.launchScene("/com/bookit/gui/Login.fxml");
 				}
-				else if (dataAccess.validateSSN(user) == false){
-					 
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Invalid SSN Error");
-		            alert.setContentText("The Social Securtiy number you have entered has already been registered. Enter your SSN.");        
-		            alert.show();
-				}
-				else if (user.getSsn().length() != 9){
-					 
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Invalid SSN Length Error");
-		            alert.setContentText("Invalid SSN length, please enter 9 digits with no dashes and spaces.");        
-		            alert.show();
-				
-				}
-				else {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setTitle("ErrorMessage");
-		            alert.setHeaderText("Invalid Username Error");
-		            alert.setContentText("The Username you have entered already exists. Enter a different username.");        
-		            alert.show();
-				}
+	
 			}
-			
+			else if (user.getSsn().length() != 9){
+				 
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+	            alert.setTitle("ErrorMessage");
+	            alert.setHeaderText("Invalid SSN Length Error");
+	            alert.setContentText("Invalid SSN length, please enter 9 digits with no dashes and spaces.");        
+	            alert.show();
+	            return;
+			}
 			else {
+				//All fields are required
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 	            alert.setTitle("ErrorMessage");
 	            alert.setHeaderText("Required Fields");
 	            alert.setContentText("All fields are required.");        
 	            alert.show();
+	            return;
 			}
 	    }
 		catch (Exception e) {

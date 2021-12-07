@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import javafx.scene.control.DatePicker;
 
 //Encapsulation of the SearchFlight Class
+//SearchFlight displaying Polymorphism through extending Flights abstract class. 
+//SearchFlight displays Inheritance through extending Flights abstract class and receiving its methods and variables.
 public class SearchFlight extends Flights{
 	private String departureDate;
 	private String flightID;

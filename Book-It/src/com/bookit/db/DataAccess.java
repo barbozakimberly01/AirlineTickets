@@ -13,10 +13,10 @@ import com.bookit.common.SearchFlight;
 import com.bookit.common.Bookings;
 import com.bookit.common.User;
 
+//DataAccess shows Inheritance through implementation of the UserInterface
 public class DataAccess implements UserInterface{
 	
 	//************************ Charles Code **************************************	
-	
 	// Check username and password from database and validate if true.
 	public boolean validUser(User user) throws SQLException {
 		Connection con = GetConnecton();

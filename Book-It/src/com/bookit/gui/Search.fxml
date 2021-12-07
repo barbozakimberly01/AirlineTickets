@@ -48,7 +48,7 @@
             <Button fx:id="Logout" layoutX="1185.0" layoutY="9.0" mnemonicParsing="false" onAction="#Logout" prefHeight="39.0" prefWidth="103.0" text="Logout" />
             <Button layoutX="960.0" layoutY="9.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Book Flights" />
             <Button fx:id="myFlights" layoutX="1070.0" layoutY="9.0" mnemonicParsing="false" onAction="#MyFlights" prefHeight="39.0" prefWidth="103.0" text="My Flights" />
-            <Pane fx:id="bookPayPane" layoutX="989.0" layoutY="71.0" prefHeight="556.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4; -fx-background-color: white;" styleClass="bookpaypaneLabel" visible="false">
+            <Pane fx:id="bookPayPane" layoutX="989.0" layoutY="71.0" prefHeight="556.0" prefWidth="253.0" style="-fx-border-color: #FF9B6A; -fx-border-width: 4; -fx-background-color: white;" styleClass="bookpaypaneLabel">
                <children>
                   <Label layoutX="27.0" layoutY="7.0" prefHeight="33.0" prefWidth="197.0" text="Book and Pay for Flight">
                      <font>
@@ -60,10 +60,10 @@
                   <Label fx:id="lblFlightOrigination" layoutX="117.0" layoutY="122.0" prefHeight="17.0" prefWidth="107.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <Label fx:id="lblFlightDestination" layoutX="118.0" layoutY="149.0" prefHeight="17.0" prefWidth="114.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
                   <Label fx:id="lblFlightDepartureDate" layoutX="118.0" layoutY="173.0" prefHeight="17.0" prefWidth="94.0" styleClass="bookpaypaneLabel" textFill="#ff5151" />
-                  <TextField fx:id="nameOnCardField" layoutX="25.0" layoutY="307.0" onAction="#CompleteBooking" promptText="Enter Name on Card" text="John Doe" />
-                  <TextField fx:id="creditCardNumberField" layoutX="25.0" layoutY="358.0" onAction="#CompleteBooking" promptText="Enter 13 to 16 digits" text="123456789012345" />
-                  <TextField fx:id="expirationDateField" layoutX="25.0" layoutY="410.0" onAction="#CompleteBooking" prefHeight="25.0" prefWidth="149.0" promptText="yyyy-mm-dd" text="2026-12-26" />
-                  <TextField fx:id="cVVField" layoutX="25.0" layoutY="459.0" onAction="#CompleteBooking" promptText="Enter your CVV" text="917" />
+                  <TextField fx:id="nameOnCardField" layoutX="25.0" layoutY="307.0" onAction="#CompleteBooking" promptText="Enter Name on Card" />
+                  <TextField fx:id="creditCardNumberField" layoutX="25.0" layoutY="358.0" onAction="#CompleteBooking" promptText="Enter 15 to 16 digits" />
+                  <TextField fx:id="expirationDateField" layoutX="25.0" layoutY="410.0" onAction="#CompleteBooking" prefHeight="25.0" prefWidth="149.0" promptText="yyyy-mm-dd" />
+                  <TextField fx:id="cVVField" layoutX="25.0" layoutY="459.0" onAction="#CompleteBooking" promptText="Enter your CVV" />
                   <Label layoutX="25.0" layoutY="290.0" styleClass="bookpaypaneLabel" text="Name on Card" />
                   <Label layoutX="25.0" layoutY="341.0" styleClass="bookpaypaneLabel" text="Credit Card Number" />
                   <Label layoutX="25.0" layoutY="393.0" styleClass="bookpaypaneLabel" text="Expiration Date" />

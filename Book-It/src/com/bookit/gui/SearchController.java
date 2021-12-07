@@ -167,7 +167,7 @@ public class SearchController{
         leavingFromComboBox2.getItems().addAll(leavingFromList);
         goingToComboBox2.getItems().addAll(goingToList);
 		
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //When user clicks search, get the values from the comboboxes and datepicker and uses those as parameters for the query.
 		searchButton.setOnAction(new EventHandler<ActionEvent>()
 	    {
 	        public void handle(ActionEvent e)
@@ -179,13 +179,10 @@ public class SearchController{
 	        			return;
 	        		}
 	        	
-	        	SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox.getValue()), String.valueOf(goingToComboBox.getValue()), String.valueOf(departureDate.getValue()));
+	        		SearchFlight search = new SearchFlight(String.valueOf(leavingFromComboBox.getValue()), String.valueOf(goingToComboBox.getValue()), String.valueOf(departureDate.getValue()));
 	        		
 	        		System.out.println(String.valueOf(leavingFromComboBox.getValue()));
-	        		System.out.println(String.valueOf(goingToComboBox.getValue()));
-	        		
-	        		
-	        		
+	        		System.out.println(String.valueOf(goingToComboBox.getValue()));        			        		
 	        		try {
 	        			getFlight(search);
 	        			System.out.println("Test");
@@ -209,7 +206,9 @@ public class SearchController{
 		    }
 	}
 	
-	//Get flight results from database and display
+	//Create Tableview and populate with columns
+	//Get flight results from database and display in the columns
+	//Populate the labels in the BookPay Pane with the flight data that the user chose
 	public void getFlight(SearchFlight Flight) throws SQLException{
 		flightResultsView.setVisible(true);
 		
@@ -322,9 +321,7 @@ public class SearchController{
 				return;
 			}
 			Bookings booking = new Bookings(0, sSN, lblFlightID.getText(), nameOnCardField.getText(), creditCardNumberField.getText(), expirationDateField.getText(), cVVField.getText());
-	    	System.out.println(booking.getNameOnCard());
-	    	//TODO-Call a method to insert record into database
-	    	
+	    	System.out.println(booking.getNameOnCard());	    	
 	    	
 			try {
 				String message = "";
@@ -351,7 +348,6 @@ public class SearchController{
 		            return;
 				}
 					
-				
 				if(message == null) {
 					try {
 						long validateCCN = Long.parseLong(creditCardNumberField.getText());
@@ -450,7 +446,6 @@ public class SearchController{
 	}
 	
 	//*********ComboBox********
-
 	public class HideableItem<T>
     {
         private final ObjectProperty<T> object = new SimpleObjectProperty<>();
@@ -475,7 +470,8 @@ public class SearchController{
             return getObject() == null ? null : getObject().toString();
         }
     }
-      
+     
+	//LeavingFrom and GoingTo combobox with auto-completion
     private <T> ComboBox<HideableItem<T>> createComboBoxWithAutoCompletionSupport(List<T> items)
     {
         ObservableList<HideableItem<T>> hideableHideableItems = FXCollections.observableArrayList(hideableItem -> new Observable[]{hideableItem.hiddenProperty()});
@@ -506,13 +502,11 @@ public class SearchController{
         {
             if(newValue)
             {
-                //@SuppressWarnings("unchecked")
             	ListView<HideableItem> lv = (ListView<HideableItem>) ((ComboBoxListViewSkin<?>) comboBox.getSkin()).getPopupContent();
-                //ListView<HideableItem> lv = ((ComboBoxListViewSkin<HideableItem>) comboBox.getSkin()).getListView();
                 
                 Platform.runLater(() ->
                 {
-                    if(selectedItem[0] == null) // first use
+                    if(selectedItem[0] == null)
                     {
                         double cellHeight = ((Control) lv.lookup(".list-cell")).getHeight();
                         lv.setFixedCellSize(cellHeight);
