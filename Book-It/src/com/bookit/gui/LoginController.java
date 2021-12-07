@@ -83,7 +83,7 @@ public class LoginController {
 		try {
 			if(dataAccess.validUser(user)) {
 				
-	    	SceneCreator.launchScene("/com/bookit/gui/Search.fxml");  	
+	    	SceneCreator.launchScene("/com/bookit/gui/MyFlights.fxml");  	
 			}
 			else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);

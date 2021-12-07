@@ -421,12 +421,14 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 				lblStatusText.setText("Flight " + flight.getFlightID() + " has been deleted");
 	    	}
 	    	else {
+	    		lblStatusText.textFillProperty().setValue(Paint.valueOf("0xf80202ff"));
 	    		lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not deleted");
 	    	}
         	
     	} catch (Exception e) {
 	        System.out.println(e);
 	        e.printStackTrace();
+	        lblStatusText.textFillProperty().setValue(Paint.valueOf("0xf80202ff"));
 	        lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not deleted");
 	        showErrorAlert("Error", "Error Occured! Flight " + flight.getFlightID() + " was not deleted"); 
  	    }
@@ -631,6 +633,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	catch(Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        lblStatusText.textFillProperty().setValue(Paint.valueOf("0xf80202ff"));
     		lblStatusText.setText("Error: Flight " + flight.getFlightID() + " was not updated");
 	        showErrorAlert("Error", "Flight " + flight.getFlightID() + " was not updated");
     	}
@@ -651,6 +654,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
 		    	}
 		    	else {
 		    		lblStatusText.applyCss();
+		    		lblStatusText.textFillProperty().setValue(Paint.valueOf("0xf80202ff"));
 		    		lblStatusText.setText("Error: Flight was not created");
 		    	}
     		}
@@ -658,6 +662,7 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
     	catch(Exception e) {
  	        System.out.println(e);
  	        e.printStackTrace();
+ 	        lblStatusText.textFillProperty().setValue(Paint.valueOf("0xf80202ff"));
     		lblStatusText.setText("Error: Flight was not created");
 	        showErrorAlert("Error", "Flight was not created.");
     	}
@@ -727,8 +732,6 @@ public class ManageFlightsController extends ControllerMenu implements ErrorAler
         alert.setHeaderText("");
         alert.setContentText(message);
         alert.show();
-
-        lblStatusText.setText("Error: Flight was not created");
 		
 	}
 }
