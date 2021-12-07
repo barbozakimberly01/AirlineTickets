@@ -230,6 +230,7 @@ public class SearchController{
 		    TableColumn flightIDColumn = new TableColumn("FlightID");
 	    	flightIDColumn.setCellValueFactory(new PropertyValueFactory<>("FlightID"));
 	    	flightIDColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+	    	flightIDColumn.setVisible(false);
 	    	
 	    	TableColumn airlineColumn = new TableColumn("Airline");
 	    	airlineColumn.setCellValueFactory(new PropertyValueFactory<>("Airline"));
@@ -453,7 +454,7 @@ public class SearchController{
 	@FXML
 	private void MyFlights(ActionEvent event) {
 		try {
-            SceneCreator.launchScene("/com/bookit/gui/MyFlights2.fxml");
+            SceneCreator.launchScene("/com/bookit/gui/MyFlights.fxml");
 		} 
 		catch (Exception e){
 			 System.out.println(e);

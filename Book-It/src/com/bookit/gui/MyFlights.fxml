@@ -16,7 +16,7 @@
             <Image url="@images/cloudBG.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="-4.0" prefHeight="53.0" prefWidth="1308.0" style="-fx-background-color: #add8e6;" text="My Flights" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="-4.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="-4.0" prefHeight="53.0" prefWidth="1308.0" style="-fx-background-color: #add8e6;" styleClass="headerLabel" text="My Flights" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="-4.0">
          <font>
             <Font name="Helvetica" size="39.0" />
          </font></Label>
@@ -40,14 +40,14 @@
         </buttons>
       </ButtonBar>
       <Button fx:id="btnManageFlights" layoutX="31.0" layoutY="13.0" mnemonicParsing="false" onAction="#manageFlightsAction" prefHeight="30.0" prefWidth="113.0" text="Manage Flights" />
-      <TableView fx:id="tblView" layoutX="82.0" layoutY="196.0" prefHeight="388.0" prefWidth="1140.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="196.0" />
+      <TableView fx:id="tblView" layoutX="82.0" layoutY="196.0" prefHeight="388.0" prefWidth="1140.0" styleClass="TableView" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="196.0" />
       <ButtonBar layoutX="761.0" layoutY="100.0" prefHeight="40.0" prefWidth="200.0" />
-      <Label fx:id="lblUserNameWelcome" alignment="CENTER" layoutX="-2.0" layoutY="84.0" prefHeight="30.0" prefWidth="1302.0" text="Welcome back,  John" textAlignment="CENTER">
+      <Label fx:id="lblUserNameWelcome" alignment="CENTER" layoutX="-2.0" layoutY="84.0" prefHeight="30.0" prefWidth="1302.0" styleClass="welcomeLabel" text="Welcome back,  John" textAlignment="CENTER">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutY="124.0" prefHeight="30.0" prefWidth="1296.0" text="Below are all of your booked flights:" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutY="124.0" prefHeight="30.0" prefWidth="1296.0" styleClass="welcomeLabel" text="Below are all of your booked flights" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>

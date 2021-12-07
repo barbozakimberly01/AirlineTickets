@@ -112,13 +112,13 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		    	
 	            TableColumn<Booking, String> colOrigination = new TableColumn<>("Origination");
 	            colOrigination.setCellValueFactory(new PropertyValueFactory<>("Origination"));
-	            colOrigination.setPrefWidth(150);
+	            colOrigination.setPrefWidth(160);
 	            colOrigination.setMaxWidth(colOrigination.getPrefWidth());
 	            colOrigination.setMinWidth(colOrigination.getPrefWidth());
 		    	
 		    	TableColumn<Booking, String> colDestination = new TableColumn<>("Destination");
 	            colDestination.setCellValueFactory(new PropertyValueFactory<>("Destination"));
-	            colDestination.setPrefWidth(150);
+	            colDestination.setPrefWidth(155);
 	            colDestination.setMaxWidth(colDestination.getPrefWidth());
 	            colDestination.setMinWidth(colDestination.getPrefWidth());
 		    	
@@ -130,6 +130,9 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		    	
 	            TableColumn<Booking, LocalDate> colArrivalDate = new TableColumn<>("ArrivalDate");
 	            colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("ArrivalDate"));
+	            colArrivalDate.setPrefWidth(100);
+	            colArrivalDate.setMaxWidth(colArrivalDate.getPrefWidth());
+	            colArrivalDate.setMinWidth(colArrivalDate.getPrefWidth());
 		    	
 		    	TableColumn<Booking, String> colArrivalTime = new TableColumn<>("ArrivalTime");
 		    	colArrivalTime.setCellValueFactory(new PropertyValueFactory<>("ArrivalTime"));
@@ -164,7 +167,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		            public TableCell<Booking, Void> call(final TableColumn<Booking, Void> param) {
 		                final TableCell<Booking, Void> cell = new TableCell<Booking, Void>() {
 		
-		                    private final Button btn = new Button("Delete");
+		                    private final Button btn = new Button("Cancel Booking");
 		                    {
 		                        btn.setOnAction((ActionEvent event) -> {                      	
 		                        	Booking booking = getTableView().getItems().get(getIndex());
@@ -180,7 +183,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		                            setGraphic(null);
 		                        } else {
 		                            setGraphic(btn);
-		                            btn.setPrefWidth(60);
+		                            btn.setPrefWidth(130);
 		                            btn.setMaxWidth(btn.getPrefWidth());
 		                            btn.setMinWidth(btn.getPrefWidth());
 		                        }
@@ -191,7 +194,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		        };
 		
 		        colBtn.setCellFactory(cellFactory);
-		        colBtn.setPrefWidth(73);
+		        colBtn.setPrefWidth(140);
 		        colBtn.setMaxWidth(colBtn.getPrefWidth());
 		        colBtn.setMinWidth(colBtn.getPrefWidth());
 		
