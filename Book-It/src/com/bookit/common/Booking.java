@@ -9,7 +9,6 @@ public class Booking extends Flight {
 	public Booking (int bookingID, String airlineName, String flightNumber, String origination, String destination, LocalDate departureDate,
 			String departureTime, LocalDate arrivalDate, String arrivalTime, int price){
 		this.bookingID = bookingID;
-		//this.flightID = flightID;
 		this.airlineName = airlineName;
 		this.flightNumber = flightNumber;
 		this.origination = origination;
