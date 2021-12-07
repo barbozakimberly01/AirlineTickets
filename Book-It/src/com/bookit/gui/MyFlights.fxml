@@ -39,7 +39,7 @@
             </Button>
         </buttons>
       </ButtonBar>
-      <Button fx:id="btnManageFlights" layoutX="31.0" layoutY="13.0" mnemonicParsing="false" onAction="#manageFlightsAction" prefHeight="30.0" prefWidth="113.0" text="Manage Flights" />
+      <Button fx:id="btnManageFlights" layoutX="12.0" layoutY="13.0" mnemonicParsing="false" onAction="#manageFlightsAction" prefHeight="30.0" prefWidth="113.0" text="Manage Flights" />
       <TableView fx:id="tblView" layoutX="82.0" layoutY="196.0" prefHeight="388.0" prefWidth="1140.0" styleClass="TableView" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="196.0" />
       <ButtonBar layoutX="761.0" layoutY="100.0" prefHeight="40.0" prefWidth="200.0" />
       <Label fx:id="lblUserNameWelcome" alignment="CENTER" layoutX="-2.0" layoutY="84.0" prefHeight="30.0" prefWidth="1302.0" styleClass="welcomeLabel" text="Welcome back,  John" textAlignment="CENTER">

@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -51,7 +50,6 @@ import com.bookit.common.Bookings;
 import com.bookit.common.SearchFlight;
 import com.bookit.db.*;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
-
 
 public class SearchController{
 	@FXML
@@ -129,6 +127,9 @@ public class SearchController{
 	//**********************************************
 	DataAccess dataAccess = new DataAccess();
 	@FXML
+	//Create a list containing flight locations
+	//Create two comboboxes with autocomplete function
+	//Populate the comboboxes with data from the database
     public void initialize() throws SQLException {
 		manageFlights.setVisible(false);
 		if(isAdmin == 1) {
@@ -155,7 +156,6 @@ public class SearchController{
 		con.close();
 		ComboBox<HideableItem<String>> leavingFromComboBox = createComboBoxWithAutoCompletionSupport(leavingFromList);
         ComboBox<HideableItem<String>> goingToComboBox = createComboBoxWithAutoCompletionSupport(goingToList);
-        
         
         anchorPane.getChildren().addAll(leavingFromComboBox, goingToComboBox);
         leavingFromComboBox.setLayoutX(108);
@@ -196,11 +196,9 @@ public class SearchController{
 	        		}
 	        }
 	    });
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        System.out.println(isAdmin + " is the admin value for " + userName);
     }
-	//**********************************************
 	
+	//Take the admin to the Flights page
 	public void manageFlights(Event event) {
 		try {
 			SceneCreator.launchScene("/com/bookit/gui/ManageFlights.fxml");
@@ -210,6 +208,7 @@ public class SearchController{
 		        e.printStackTrace();
 		    }
 	}
+	
 	//Get flight results from database and display
 	public void getFlight(SearchFlight Flight) throws SQLException{
 		flightResultsView.setVisible(true);
@@ -311,10 +310,9 @@ public class SearchController{
 			
 	}
 	
-	public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
-	    return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
-	}
-	
+	//Allow user to book a flight
+	//Check the flight for capacity
+	//Check the user's bookings to make sure they dont book the same flight
 	@FXML
 	private void CompleteBooking(Event event) {
 		try {
@@ -377,19 +375,13 @@ public class SearchController{
 		            alert.setTitle("Error");
 		            alert.setHeaderText("FLIGHT FULL!");
 		            alert.setContentText("The flight you are trying to book is full!");   
-		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
-		            //alert.show();
 		            
 		            Optional<ButtonType> option = alert.showAndWait();
 
 		            if (option.get() == null) {
-		               //this.label.setText("No selection!");
 		            } else if (option.get() == ButtonType.OK) {
-		               //this.label.setText("OK!");
 		            } else if (option.get() == ButtonType.CANCEL) {
-		               //this.label.setText("Cancelled!");
 		            } else {
-		               //this.label.setText("-");
 		            }
 		            bookPayPane.setVisible(false);
 				}
@@ -398,17 +390,12 @@ public class SearchController{
 		            alert.setTitle("Error");
 		            alert.setHeaderText("");
 		            alert.setContentText("You have booked this flight already!");  
-		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
-		            //alert.show();
+
 		            Optional<ButtonType> option = alert.showAndWait();
 		            if (option.get() == null) {
-		               //this.label.setText("No selection!");
 		            } else if (option.get() == ButtonType.OK) {
-		               //this.label.setText("OK!");
 		            } else if (option.get() == ButtonType.CANCEL) {
-		               //this.label.setText("Cancelled!");
 		            } else {
-		               //this.label.setText("-");
 		            }
 		            bookPayPane.setVisible(false);
 				}
@@ -417,18 +404,13 @@ public class SearchController{
 					alert.setTitle("Success");
 		            alert.setHeaderText("");
 		            alert.setContentText("You have booked your flight successfully!!");
-		            //alert.setGraphic(new ImageView(this.getClass().getResource("success.png").toString()));
-		            //alert.show(); //getResource("img/success.png")
+
 		            
 		            Optional<ButtonType> option = alert.showAndWait();
 		            if (option.get() == null) {
-		               //this.label.setText("No selection!");
 		            } else if (option.get() == ButtonType.OK) {
-		               //this.label.setText("OK!");
 		            } else if (option.get() == ButtonType.CANCEL) {
-		               //this.label.setText("Cancelled!");
 		            } else {
-		               //this.label.setText("-");
 		            }
 		            bookPayPane.setVisible(false);
 				}
@@ -440,6 +422,8 @@ public class SearchController{
 				System.out.println(error.getMessage());
 			}
 	} 
+	
+	//Enable the user to logout
 	@FXML
 	private void Logout(ActionEvent event) {
 		try {
@@ -451,6 +435,8 @@ public class SearchController{
 		}
 		
 	}
+	
+	//Take the user to their booked flights
 	@FXML
 	private void MyFlights(ActionEvent event) {
 		try {

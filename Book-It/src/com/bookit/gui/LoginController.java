@@ -11,7 +11,6 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 import javafx.stage.Stage.*;
-
 import com.bookit.common.User;
 import com.bookit.db.*;
 
@@ -80,6 +79,7 @@ public class LoginController {
         }
 		user = new User( 0, null, null, null, null, null, null, usernameField.getText(), passwordField.getText(), null, null, null, null, false);
 		DataAccess dataAccess = new DataAccess();
+		//Check if the login credentials entered are true. IF they are, log the user in
 		try {
 			if(dataAccess.validUser(user)) {
 				

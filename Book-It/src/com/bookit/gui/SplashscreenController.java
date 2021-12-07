@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import com.bookit.db.*;
 
-
 public class SplashscreenController implements Initializable{
 	public Button submitButton;
 	
@@ -35,6 +34,7 @@ public class SplashscreenController implements Initializable{
         delay.play();    
     }
 
+    //Take the user to the loginpage
 	private void goToLoginPage(Event event) {
 	    try {
 	    	SceneCreator.launchScene("/com/bookit/gui/Login.fxml");

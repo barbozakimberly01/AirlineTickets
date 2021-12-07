@@ -70,6 +70,7 @@ public class DataAccess implements UserInterface{
 		return false;	
 	}
 	
+	//Check if the username is valid
 	public boolean validUserName(User user) throws SQLException {
 		Connection con = GetConnecton();  
 		try {
@@ -120,6 +121,8 @@ public class DataAccess implements UserInterface{
 	    }				
 	}
 	
+	//Check flight capacity and determine if the user can book the flight.
+	// check if the user has booked the flight already.
 	public String BookPayFlight(Bookings booking) throws SQLException{
 		Connection con = GetConnecton();
 		try {		
@@ -175,6 +178,7 @@ public class DataAccess implements UserInterface{
 		return null;				
 	}
 	
+	//Check if the SSN is valid
 	public boolean validateSSN(User user) throws SQLException{
 		Connection con = GetConnecton();
 		try {

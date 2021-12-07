@@ -24,8 +24,6 @@ import java.sql.SQLException;
 
 //***********************
 
-
-
 public class Main extends Application {
 	  static Parent root;
 	  static Stage primaryStage;
@@ -48,24 +46,12 @@ public class Main extends Application {
 
         Main.primaryStage = stage;
     }
-	
-    
-  //*******COMBOBOX CODE***
-
-	 
-	//*********************
     
 	@Override
 	
 	public void start(Stage primaryStage) {
 		try {
-			 Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));
-			//--------
-			//Parent root = FXMLLoader.load(getClass().getResource("ManageFlights.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("UserBookings.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("Search.fxml"));		 
-			// --------
-			 
+			Parent root = FXMLLoader.load(getClass().getResource("Splashscreen.fxml"));		 
 			Scene scene = new Scene(root, 1300, 650);
 			Main.primaryStage = primaryStage;
 			primaryStage.setTitle("Book-It: Airline Reservation System");
@@ -73,9 +59,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/bookit/gui/images/logo-icon.png")));
 			primaryStage.show();
-			
-			
-			
+						
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

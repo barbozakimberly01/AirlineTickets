@@ -4,7 +4,7 @@ public class SQLStatements {
 		// Select Statements
 		public static final String LOGIN = "SELECT l.Username, u.SSN, u.FirstName, u.LastName, l.IsAdmin FROM cis3270bookit.LOGINS l inner join cis3270bookit.USERS u on l.Username = u.Username where l.Username = ? and l.Password = ?;";
 		public static final String GETPASSWORD = "SELECT Password FROM cis3270bookit.LOGINS where Username = ? and SecurityAnswer = ?;";
-		public static final String SEARCHFLIGHT = "SELECT * FROM cis3270bookit.FLIGHTS where Origination = ? and Destination = ? and DepartureDate = ?;";
+		public static final String SEARCHFLIGHT = "SELECT * FROM cis3270bookit.FLIGHTS where Origination = ? and Destination = ? and DepartureDate = ? and concat(DepartureDate, ' ', DepartureTime)> date_format(CONVERT_TZ(NOW(), 'UTC', 'America/New_York'), '%Y-%m-%d %l:%i:%s %p')";
 		public static final String SEARCHGOINGTO = "SELECT DISTINCT(Destination) FROM `cis3270bookit`.`FLIGHTS`;";
 		public static final String SEARCHLEAVINGFROM = "SELECT DISTINCT(Origination) FROM `cis3270bookit`.`FLIGHTS`;";
 		public static final String CHECKBOOKINGS = "SELECT * FROM `cis3270bookit`.`BOOKINGS` where SSN = ? and FlightID = ?;";

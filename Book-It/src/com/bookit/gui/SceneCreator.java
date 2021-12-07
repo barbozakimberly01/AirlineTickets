@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
 public class SceneCreator { 
+	//Create the stage and scene base
     public static void launchScene (String sceneName) throws IOException { 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(sceneName));
         Main.setRoot(loader.load());

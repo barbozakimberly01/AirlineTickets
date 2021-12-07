@@ -1,7 +1,6 @@
 package com.bookit.gui;
 
 import java.io.IOException;
-
 import com.bookit.common.User;
 import com.bookit.db.*;
 import javafx.event.Event;
