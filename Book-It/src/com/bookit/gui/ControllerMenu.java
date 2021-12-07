@@ -17,19 +17,19 @@ abstract class ControllerMenu {
     
     @FXML
     Button btnLogout;
-    
+
 	// Manage Flights
     @FXML
     void manageFlightsAction(ActionEvent event) {
     	try {
-			SceneCreator.launchScene("/com/bookit/gui/MaangeFlights.fxml");
+			SceneCreator.launchScene("/com/bookit/gui/ManageFlights.fxml");
 			} 
     	catch (Exception e) {
 	        System.out.println(e);
 	        e.printStackTrace();
 	    }
     } 
-    
+
 	// Book Flights
     @FXML
     void searchFlightsAction(ActionEvent event) {
