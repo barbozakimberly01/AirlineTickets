@@ -25,7 +25,8 @@ public class SplashscreenController implements Initializable{
     @Override
     // Delay the the transition for 2 sec, then take to login.
     public void initialize(URL url, ResourceBundle rb) {
-        PauseTransition delay = new PauseTransition(Duration.seconds(2.18));
+    	PauseTransition delay = new PauseTransition(Duration.seconds(4));
+    	//PauseTransition delay = new PauseTransition(Duration.seconds(2.18));
         delay.setOnFinished((ActionEvent event) -> {
             System.out.println("begin");
             goToLoginPage(event);
