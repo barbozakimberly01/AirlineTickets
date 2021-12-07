@@ -61,7 +61,6 @@ public class ForgotPasswordController {
 	        System.out.println(e);
 	        e.printStackTrace();
 	    }
-	
 	}
 
 	@FXML

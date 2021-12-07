@@ -16,7 +16,6 @@ public class Bookings {
 	private String expirationDate;
 	private String cVV;
 	
-	
 	public Bookings(){
 		
 	}
@@ -85,8 +84,6 @@ public class Bookings {
 
 	public void setcVV(String cVV) {
 		this.cVV = cVV;
-	}
-	
+	}	
 
 }
-

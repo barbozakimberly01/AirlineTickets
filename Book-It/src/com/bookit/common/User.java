@@ -5,7 +5,6 @@ import com.bookit.gui.*;
 
 //Encapsulation of the User Class
 public class User {
-	//TODO:Move to common.
 	private int id;
 	private String firstname;
 	private String lastname;

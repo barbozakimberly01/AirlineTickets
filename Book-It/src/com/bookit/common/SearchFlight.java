@@ -11,21 +11,11 @@ import javafx.scene.control.DatePicker;
 
 //Encapsulation of the SearchFlight Class
 public class SearchFlight extends Flights{
-//	private String origination;
-//	private String destination;
 	private String departureDate;
-//	//******
 	private String flightID;
 	private String airline;
-//	private String flightNumber;
-//	private String departureTime;
 	private String arrivalDate;
-//	private String arrivalTime;
-	private String price;
-//	private int totalSeats;
-	//******
-	//private Flight flight; //Composition
-	
+	private String price;	
 	
 	public SearchFlight(){
 		
@@ -43,13 +33,12 @@ public class SearchFlight extends Flights{
 		this.departureDate = departureDate;
 		
 	}
+	
 	public SearchFlight(String flightID, String airline, String flightNumber, String origination, String destination, String departureDate,
 			String departureTime, String arrivalDate, String arrivalTime, String price) {
 		this.flightID = flightID;
 		this.airline = airline;
-		//this.airline = flight.airlineName; //Composition
 		this.flightNumber = flightNumber;
-		//this.flightNumber = flight.flightNo
 		this.origination = origination;
 		this.destination = destination;
 		this.departureDate = departureDate;
@@ -58,6 +47,7 @@ public class SearchFlight extends Flights{
 		this.arrivalTime = arrivalTime;
 		this.price = price;	
 	}
+	
 	public String getFlightID() {
 		return flightID;
 	}

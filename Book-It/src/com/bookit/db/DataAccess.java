@@ -62,8 +62,7 @@ public class DataAccess implements UserInterface{
 			    	  user.setPassword(rs.getString(1));
 			    	  return true;
 			    }        
-	        }
-	        
+	        }    
 	        
 	    } catch (SQLException err) {
 	    	System.out.println(err.getMessage());
@@ -168,7 +167,6 @@ public class DataAccess implements UserInterface{
 		    } else {
 		    	return "bookedalready";
 		    }		 	
-			    //TODO:validate or convert date to yyyy-mm-dd 
 	    } 
 		catch (SQLException err) {
 	    	System.out.println(err.getMessage());
@@ -192,10 +190,8 @@ public class DataAccess implements UserInterface{
 	    	con.close();
 	    }
         return true;  
-
 	}
-		
-	
+			
 	//************************ Ron Code **************************************
 	
 	//Establish a connection to the database
