@@ -24,6 +24,7 @@
                </font>
             </Label>
             <TextField fx:id="usernameField" layoutX="723.0" layoutY="187.0" onAction="#validateUser" promptText="Enter your username" />
+            <PasswordField fx:id="passwordField" layoutX="723.0" layoutY="242.0" onAction="#validateUser" promptText="Enter your password" />
             <Label layoutX="593.0" layoutY="181.0" prefHeight="38.0" prefWidth="99.0" text="Username">
                <font>
                   <Font size="20.0" />
@@ -35,9 +36,8 @@
                </font>
             </Label>
             <Button fx:id="loginButton" layoutX="725.0" layoutY="301.0" mnemonicParsing="false" onAction="#validateUser" prefHeight="44.0" prefWidth="143.0" text="Login" />
-            <Button fx:id="forgotPassword" layoutX="725.0" layoutY="458.0" mnemonicParsing="false" onAction="#goToForgotPassword" prefHeight="38.0" prefWidth="155.0" stylesheets="@application.css" text="Forgot your password?" />
             <Button fx:id="signUp" layoutX="725.0" layoutY="386.0" mnemonicParsing="false" onAction="#goToSignUp" prefHeight="38.0" prefWidth="143.0" text="Sign up" />
-            <PasswordField fx:id="passwordField" layoutX="723.0" layoutY="242.0" onAction="#validateUser" promptText="Enter your password" />
+            <Button fx:id="forgotPassword" layoutX="725.0" layoutY="458.0" mnemonicParsing="false" onAction="#goToForgotPassword" prefHeight="38.0" prefWidth="155.0" stylesheets="@application.css" text="Forgot your password?" />
             <ImageView fitHeight="38.0" fitWidth="282.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@images/book-logo.png" />

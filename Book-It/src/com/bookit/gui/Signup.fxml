@@ -59,6 +59,12 @@
             <TextField fx:id="cityField" layoutX="375.0" layoutY="202.0" onAction="#UserSignup" />
             <TextField fx:id="stateField" layoutX="601.0" layoutY="202.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
             <TextField fx:id="zipcodeField" layoutX="793.0" layoutY="202.0" onAction="#UserSignup" prefHeight="26.0" prefWidth="87.0" />
+            <TextField fx:id="usernameField" layoutX="374.0" layoutY="246.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <PasswordField fx:id="passwordField" layoutX="600.0" layoutY="246.0" onAction="#UserSignup" />
+            <TextField fx:id="emailField" layoutX="373.0" layoutY="299.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
+            <TextField fx:id="ssnField" layoutX="374.0" layoutY="340.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" promptText="Enter 9 digits" />
+            <TextField editable="false" layoutX="497.0" layoutY="408.0" opacity="0.84" prefHeight="25.0" prefWidth="245.0" text="What was your favorite food as a child?" />
+            <TextField fx:id="securityAnswerField" layoutX="495.0" layoutY="454.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="178.0" />
             <Label layoutX="280.0" layoutY="245.0" text="Username:">
                <font>
                   <Font size="17.0" />
@@ -75,9 +81,6 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="securityAnswerField" layoutX="495.0" layoutY="454.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="178.0" />
-            <TextField editable="false" layoutX="497.0" layoutY="408.0" opacity="0.84" prefHeight="25.0" prefWidth="245.0" text="What was your favorite food as a child?" />
-            <TextField fx:id="usernameField" layoutX="374.0" layoutY="246.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
             <Label layoutX="508.0" layoutY="245.0" text="Password:">
                <font>
                   <Font size="17.0" />
@@ -88,14 +91,11 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="ssnField" layoutX="374.0" layoutY="340.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" promptText="Enter 9 digits" />
             <Label layoutX="280.0" layoutY="298.0" text="Email:">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="emailField" layoutX="373.0" layoutY="299.0" onAction="#UserSignup" prefHeight="25.0" prefWidth="111.0" />
-            <PasswordField fx:id="passwordField" layoutX="600.0" layoutY="246.0" onAction="#UserSignup" />
             <Button fx:id="backToLogin" layoutX="632.0" layoutY="504.0" mnemonicParsing="false" onAction="#BackToLogin" prefHeight="33.0" prefWidth="125.0" text="Back To Login" />
             <Label layoutX="499.0" layoutY="338.0" prefHeight="27.0" prefWidth="334.0" text="(No dashes and spaces. e.g. 123456789 )">
                <font>
