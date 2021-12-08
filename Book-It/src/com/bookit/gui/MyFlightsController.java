@@ -246,7 +246,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
     
     	try {
     		
-    		// Execute SQL command
+    		// Execute SQL command 
     		Connection conn = DataAccess.GetConnecton();
     		
     		sqlCmd = String.format(SQLStatements.DELETEBOOKING, currentBooking.getBookingID());
