@@ -38,8 +38,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
     
 	private Booking currentBooking;
 	
-	// 
-	
+	// ifo
 	Preferences userInfo = Preferences.userRoot();
 	private int isAdmin = userInfo.getInt("IsAdmin", 0);
 	private String ssn = userInfo.get("SSN", "");
