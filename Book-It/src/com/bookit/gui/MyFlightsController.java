@@ -38,19 +38,25 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
     
 	private Booking currentBooking;
 	
+	// 
+	
 	Preferences userInfo = Preferences.userRoot();
 	private int isAdmin = userInfo.getInt("IsAdmin", 0);
 	private String ssn = userInfo.get("SSN", "");
 	private String firstName = userInfo.get("FirstName", "");
 	
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try { 
-			
+			// Check if user is an admin
 			btnManageFlights.setVisible(false);
 			if(isAdmin == 1) {
 				btnManageFlights.setVisible(true);
 			}
+			
+			// Display welcome message with users name
 			lblUserNameWelcome.setText("Welcome back, " + firstName);
 			loadMyFlights();		
 			
@@ -60,21 +66,23 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 	    }	
 	}
 	
+	
+	// 
 	void loadMyFlights() {
 		try { 
 			
-			// Execute SQL command
+			// Execute SQL command 
 			String query = String.format(SQLStatements.BOOKINGS, ssn);
 			System.out.println("Query: " + query);
 			ResultSet rs = DataAccess.sqlCmd(query);
 			
 			if (!rs.isBeforeFirst()) {
-				// Check if flights available
+				// Check if bookings are available
 				showErrorAlert("Information", "No Bookings Found");
 
 			}
 			else {
-				// Begin loading flights
+				// Begin loading bookings
 				tblView.getItems().clear();
 				tblView.getColumns().clear();
 				ObservableList<Booking> bookingResultsList = FXCollections.observableArrayList();
@@ -143,8 +151,10 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
 		    	colPrice.setMaxWidth(colPrice.getPrefWidth());
 		    	colPrice.setMinWidth(colPrice.getPrefWidth());
 	            
+		    	// populate table 
 				tblView.setItems(bookingResultsList);
 				tblView.getColumns().addAll(colBookingID, colAirline, colFlightNumber, colOrigination, colDestination, colDepartureDate, colDepartureTime, colArrivalDate, colArrivalTime, colPrice);
+				
 				addButtonToTable();
 				System.out.println("ResultList: " + bookingResultsList.size());
 			
@@ -210,7 +220,7 @@ public class MyFlightsController extends ControllerMenu implements ErrorAlerts, 
     	currentBooking = booking;
     	try {
     		
-    		// Delete flight
+    		// Delete booking
 			int result = dbUpdate();
 	    	System.out.println("Delete result:" + result);
 	    	if (result == 1) {
